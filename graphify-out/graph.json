@@ -1705,6 +1705,54 @@
       "type": "external"
     },
     {
+      "id": "sqlalchemy_dialects",
+      "label": "sqlalchemy_dialects",
+      "_origin": "semantic",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sqlalchemy_dialects",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "sqlalchemy_schema",
+      "label": "sqlalchemy_schema",
+      "_origin": "semantic",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sqlalchemy_schema",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "unittest_mock",
+      "label": "unittest_mock",
+      "_origin": "semantic",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "unittest_mock",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "supabase",
+      "label": "supabase",
+      "_origin": "semantic",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "supabase",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "uuid",
       "label": "uuid",
       "_origin": "semantic",
@@ -1809,50 +1857,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "pydantic_settings",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "sqlalchemy_dialects",
-      "label": "sqlalchemy_dialects",
-      "community": 2,
-      "community_name": "test_rls_organization.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "sqlalchemy_dialects",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "sqlalchemy_schema",
-      "label": "sqlalchemy_schema",
-      "community": 2,
-      "community_name": "test_rls_organization.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "sqlalchemy_schema",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "unittest_mock",
-      "label": "unittest_mock",
-      "community": 2,
-      "community_name": "test_rls_organization.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "unittest_mock",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "supabase",
-      "label": "supabase",
-      "community": 29,
-      "community_name": "test_live_supabase_rls.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "supabase",
       "source_file": "",
       "type": "external"
     }
@@ -2520,19 +2524,19 @@
     },
     {
       "source": "tests_test_live_supabase_rls",
-      "target": "civicbrain_infra_config",
+      "target": "supabase",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_live_supabase_rls.py",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
       "source": "tests_test_live_supabase_rls",
-      "target": "supabase",
+      "target": "civicbrain_infra_config",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3811,5 +3815,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c4c956d6536154a6166660ae990237ba59a3c884"
+  "built_at_commit": "c1f2403e473a9706bbda748e1bf888fd16577525"
 }

@@ -96,15 +96,15 @@
     "semantic_hash": ""
   },
   "civicbrain/infra/config.py": {
-    "mtime": 1789787431.3280883,
-    "seen": 1789787576.1447158,
-    "ast_hash": "abfd40e79ad942365f21e131a1bf56ea",
+    "mtime": 1789812768.6548772,
+    "seen": 1789812819.7323601,
+    "ast_hash": "15949fc2a519820aa3e579db3ffa5e4c",
     "semantic_hash": ""
   },
   "civicbrain/infra/database.py": {
-    "mtime": 1789787521.7252955,
-    "seen": 1789787576.1447167,
-    "ast_hash": "4506513aa92dda08de415cdfcbff42f8",
+    "mtime": 1789812773.2667139,
+    "seen": 1789812819.732363,
+    "ast_hash": "da67dae13dcab72c06ebfb965f934986",
     "semantic_hash": ""
   },
   "civicbrain/main.py": {
@@ -215,16 +215,10 @@
     "ast_hash": "b2587da41730e9d043d75465aa6c5443",
     "semantic_hash": ""
   },
-  "supabase/.temp/linked-project.json": {
-    "mtime": 1789811874.1264067,
-    "seen": 1789812663.6804447,
-    "ast_hash": "12de683099fae807340d05ee2012d57a",
-    "semantic_hash": ""
-  },
   "tests/test_live_supabase_rls.py": {
-    "mtime": 1789810165.788505,
-    "seen": 1789812663.6804538,
-    "ast_hash": "8ed8b6612ff72791805a8622d2162731",
+    "mtime": 1789812793.0203414,
+    "seen": 1789812819.732384,
+    "ast_hash": "4877b636612cf616071ef3a3dfcdc5e4",
     "semantic_hash": ""
   },
   "README.md": {
