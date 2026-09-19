@@ -1,0 +1,46 @@
+name: CivicBrain CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    name: Lint, Typecheck & Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run Ruff Linter
+        run: |
+          ruff check civicbrain tests
+
+      - name: Run Ruff Format Check
+        run: |
+          ruff format --check civicbrain tests
+
+      - name: Run Mypy Type Checker
+        run: |
+          mypy civicbrain
+
+      - name: Run Test Suite
+        run: |
+          pytest -v tests/

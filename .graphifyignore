@@ -1,0 +1,31 @@
+# Node / Web
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+.output/
+
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+
+# Binary & Media files not needing semantic analysis
+*.zip
+*.tar.gz
+*.exe
+*.dll
+*.so
+*.iso
+*.bin
+
+# Version control & internal tools
+.git/
+.svn/
+.hg/
+graphify-out/
