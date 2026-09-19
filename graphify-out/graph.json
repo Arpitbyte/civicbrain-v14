@@ -768,18 +768,6 @@
       "source_location": "L1"
     },
     {
-      "id": "docs_phase_log_phase_0",
-      "label": "phase-0.md",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "test_rls_organization.py",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "phase-0.md",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L1"
-    },
-    {
       "id": "docs_phase_log_phase_0_1_what_was_built",
       "label": "1. What Was Built",
       "_origin": "ast",
@@ -790,54 +778,6 @@
       "norm_label": "1. what was built",
       "source_file": "docs/phase-log/phase-0.md",
       "source_location": "L9"
-    },
-    {
-      "id": "docs_phase_log_phase_0_2_key_architectural_decisions",
-      "label": "2. Key Architectural Decisions",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "test_rls_organization.py",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2. key architectural decisions",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L43"
-    },
-    {
-      "id": "docs_phase_log_phase_0_3_deviations_from_specification",
-      "label": "3. Deviations from Specification",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "test_rls_organization.py",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. deviations from specification",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L56"
-    },
-    {
-      "id": "docs_phase_log_phase_0_4_open_todos_prerequisites_for_phase_1",
-      "label": "4. Open TODOs & Prerequisites for Phase 1",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "test_rls_organization.py",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "4. open todos & prerequisites for phase 1",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L62"
-    },
-    {
-      "id": "docs_phase_log_phase_0_phase_0_foundations_kickoff_implementation_log",
-      "label": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "test_rls_organization.py",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "phase 0: foundations & kickoff \u2014 implementation log",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L1"
     },
     {
       "id": "civicbrain_domain_identity_models_rationale_15",
@@ -1293,6 +1233,78 @@
       "norm_label": "redirect or direct reference to api docs.",
       "source_file": "civicbrain/main.py",
       "source_location": "L57"
+    },
+    {
+      "id": "docs_phase_log_phase_0",
+      "label": "phase-0.md",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "phase-0.md",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_phase_log_phase_0_2_key_architectural_decisions",
+      "label": "2. Key Architectural Decisions",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. key architectural decisions",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "docs_phase_log_phase_0_3_deviations_from_specification",
+      "label": "3. Deviations from Specification",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. deviations from specification",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L56"
+    },
+    {
+      "id": "docs_phase_log_phase_0_4_verification_ci_status",
+      "label": "4. Verification & CI Status",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. verification & ci status",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L62"
+    },
+    {
+      "id": "docs_phase_log_phase_0_5_prerequisites_for_phase_1",
+      "label": "5. Prerequisites for Phase 1",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "5. prerequisites for phase 1",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "docs_phase_log_phase_0_phase_0_foundations_kickoff_implementation_log",
+      "label": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 0: foundations & kickoff \u2014 implementation log",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L1"
     },
     {
       "id": "asyncio",
@@ -2919,13 +2931,24 @@
     },
     {
       "source": "docs_phase_log_phase_0_phase_0_foundations_kickoff_implementation_log",
-      "target": "docs_phase_log_phase_0_4_open_todos_prerequisites_for_phase_1",
+      "target": "docs_phase_log_phase_0_4_verification_ci_status",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/phase-log/phase-0.md",
       "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_phase_log_phase_0_phase_0_foundations_kickoff_implementation_log",
+      "target": "docs_phase_log_phase_0_5_prerequisites_for_phase_1",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -3815,5 +3838,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c1f2403e473a9706bbda748e1bf888fd16577525"
+  "built_at_commit": "034e3e763a755cca48df8c4e84d43a8ac4522a77"
 }

@@ -59,7 +59,13 @@ None. All files and requirements strictly conform to Phase 0 of CivicBrain v14 P
 
 ---
 
-## 4. Open TODOs & Prerequisites for Phase 1
+## 4. Verification & CI Status
 
-- [ ] **Supabase Free Project Connection:** Supply live project `DATABASE_URL` and `SUPABASE_ANON_KEY` in `.env` to connect live database instance.
-- [ ] **Phase 1 (Identity & RBAC):** Implement user accounts, roles (`admin`, `dispatcher`, `inspector`, `field_worker`, `corporator`), PostGIS zones and wards, custom Supabase JWT claims, and RLS test coverage via client SDK.
+- [x] **Live Supabase Project Verification:** Connected live Supabase project `isqepbxkzxfpvfdkcntw` (PostGIS 3.4.2 enabled, migration `0001_phase0_init.sql` applied).
+- [x] **Live Client SDK RLS Test:** Verified `tests/test_live_supabase_rls.py` inserting a seeded organization via `service_role`, confirming 0 rows returned to anonymous client SDK, creating a live auth user, signing in via `sign_in_with_password` to get real JWT, confirming row returned to authenticated client SDK, and cleaning up.
+- [x] **GitHub Actions CI Pipeline:** Pushed to [`Arpitbyte/civicbrain-v14`](https://github.com/Arpitbyte/civicbrain-v14), with workflow run [`35436950342`](https://github.com/Arpitbyte/civicbrain-v14/actions/runs/35436950342) passing 100% on Python 3.11 and Python 3.12 across lint, format, mypy, and all 8 pytest tests.
+
+## 5. Prerequisites for Phase 1
+
+- [ ] **User Approval:** Explicit sign-off from user before writing Phase 1 code.
+- [ ] **Phase 1 Implementation (Identity & RBAC):** Implement user accounts, roles (`admin`, `dispatcher`, `inspector`, `field_worker`, `corporator`), PostGIS zones and wards, custom Supabase JWT claims, and RLS test coverage via client SDK.

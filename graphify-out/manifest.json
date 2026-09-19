@@ -204,9 +204,9 @@
     "semantic_hash": ""
   },
   "docs/phase-log/phase-0.md": {
-    "mtime": 1789809946.7177744,
-    "seen": 1789812663.680497,
-    "ast_hash": "e30019560a529031f2fa8386a8f1cad1",
+    "mtime": 1789813103.3095243,
+    "seen": 1789813108.0671191,
+    "ast_hash": "f54e3155b72961fbd7588aa54e4f9f2a",
     "semantic_hash": ""
   },
   "migrations/0001_phase0_init.sql": {

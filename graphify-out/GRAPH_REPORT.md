@@ -1,17 +1,17 @@
 # Graph Report - CivicBrain  (2026-09-19)
 
 ## Corpus Check
-- 37 files · ~5,325 words
+- 37 files · ~5,416 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: (none) 3, .mdc 1, .example 1)
 
 ## Summary
-- 160 nodes · 171 edges · 30 communities (9 shown, 21 thin omitted)
+- 161 nodes · 172 edges · 31 communities (10 shown, 21 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c1f2403e`
+- Built from commit: `034e3e76`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -45,18 +45,19 @@
 - civicbrain
 - CivicBrain v14
 - test_live_supabase_rls.py
+- Phase 0: Foundations & Kickoff — Implementation Log
 
 ## God Nodes (most connected - your core abstractions)
 1. `Organization` - 7 edges
 2. `CivicBrain v14 — Operational Rules & Architecture Ground Truth` - 6 edges
-3. `readiness_check()` - 5 edges
-4. `ULBType` - 5 edges
-5. `Settings` - 5 edges
-6. `Base` - 5 edges
-7. `HealthResponse` - 5 edges
-8. `ReadinessResponse` - 5 edges
-9. `CivicBrain v14` - 5 edges
-10. `Phase 0: Foundations & Kickoff — Implementation Log` - 5 edges
+3. `Phase 0: Foundations & Kickoff — Implementation Log` - 6 edges
+4. `readiness_check()` - 5 edges
+5. `ULBType` - 5 edges
+6. `Settings` - 5 edges
+7. `Base` - 5 edges
+8. `HealthResponse` - 5 edges
+9. `ReadinessResponse` - 5 edges
+10. `CivicBrain v14` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `1. What Was Built` --references--> `ULBType`  [INFERRED]
@@ -73,7 +74,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (30 total, 21 thin omitted)
+## Communities (31 total, 21 thin omitted)
 
 ### Community 0 - "v1/health.py"
 Cohesion: 0.15
@@ -84,8 +85,8 @@ Cohesion: 0.15
 Nodes (14): AsyncSession, Identity and Organization domain entities., Base, get_db(), Database engine, session management, and connectivity diagnostics., Base declarative class for all CivicBrain database entities., Dependency that provides an async session per request., collections_abc (+6 more)
 
 ### Community 2 - "test_rls_organization.py"
-Cohesion: 0.09
-Nodes (23): Organization, Urban Local Body classification under 74th Constitutional Amendment Act, 1992., Root tenant representing an Urban Local Body (ULB) or multi-ULB state…, ULBType, 1. What Was Built, 2. Key Architectural Decisions, 3. Deviations from Specification, 4. Open TODOs & Prerequisites for Phase 1 (+15 more)
+Cohesion: 0.11
+Nodes (19): Organization, Urban Local Body classification under 74th Constitutional Amendment Act, 1992., Root tenant representing an Urban Local Body (ULB) or multi-ULB state…, ULBType, 1. What Was Built, pathlib, sqlalchemy_dialects, sqlalchemy_schema (+11 more)
 
 ### Community 3 - "main.py"
 Cohesion: 0.15
@@ -111,21 +112,29 @@ Nodes (5): CivicBrain v14, Core Features, Getting Started, Overview, Running Tes
 Cohesion: 0.22
 Nodes (8): skipif, supabase, is_live_supabase_configured(), Live Supabase RLS and Auth integration test. In strict accordance with Phase 0…, Check if real Supabase credentials are provided in settings., End-to-end verification of RLS and Auth against a live Supabase project., test_live_supabase_rls_boundary(), uuid
 
+### Community 30 - "Phase 0: Foundations & Kickoff — Implementation Log"
+Cohesion: 0.33
+Nodes (5): 2. Key Architectural Decisions, 3. Deviations from Specification, 4. Verification & CI Status, 5. Prerequisites for Phase 1, Phase 0: Foundations & Kickoff — Implementation Log
+
 ## Knowledge Gaps
-- **19 isolated node(s):** `civicbrain`, `1. The 17 Hard Rules`, `2. The Bootstrap Principle (Self-Calibrating Intelligence)`, `3. Directory & File Skeleton`, `4. Phase Roadmap (Summary)` (+14 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 107 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **20 isolated node(s):** `civicbrain`, `1. The 17 Hard Rules`, `2. The Bootstrap Principle (Self-Calibrating Intelligence)`, `3. Directory & File Skeleton`, `4. Phase Roadmap (Summary)` (+15 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 108 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **21 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Organization` connect `test_rls_organization.py` to `models.py`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `1. What Was Built` connect `test_rls_organization.py` to `Phase 0: Foundations & Kickoff — Implementation Log`?**
+  _High betweenness centrality (0.047) - this node is a cross-community bridge._
+- **Why does `Phase 0: Foundations & Kickoff — Implementation Log` connect `Phase 0: Foundations & Kickoff — Implementation Log` to `test_rls_organization.py`?**
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `Organization` (e.g. with `1. What Was Built` and `test_organization_schema_structure()`) actually correct?**
   _`Organization` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 2 inferred relationships involving `ULBType` (e.g. with `1. What Was Built` and `test_organization_schema_structure()`) actually correct?**
   _`ULBType` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `civicbrain`, `1. The 17 Hard Rules`, `2. The Bootstrap Principle (Self-Calibrating Intelligence)` to the rest of the system?**
-  _19 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _20 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `test_rls_organization.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.08547008547008547 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10822510822510822 - nodes in this community are weakly interconnected._
