@@ -1,17 +1,17 @@
 # Graph Report - CivicBrain  (2026-09-19)
 
 ## Corpus Check
-- 35 files · ~4,231 words
+- 38 files · ~5,282 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 5 file(s) not represented in the graph (top: (none) 3, .mdc 1, .example 1)
+- Unclassified: 13 file(s) not represented in the graph (top: (none) 11, .mdc 1, .example 1)
 
 ## Summary
-- 132 nodes · 138 edges · 28 communities (8 shown, 20 thin omitted)
+- 141 nodes · 146 edges · 30 communities (9 shown, 21 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.95)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `568af05d`
+- Built from commit: `c4c956d6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -23,7 +23,7 @@
 - test_health.py
 - config.py
 - CivicBrain v14 — Operational Rules & Architecture Ground Truth
-- Phase 0: Foundations & Kickoff — Implementation Log
+- 0001_phase0_init.sql
 - AGENTS.md
 - rules/graphify.md
 - workflows/graphify.md
@@ -43,27 +43,29 @@
 - copilot-instructions.md
 - integrations/__init__.py
 - civicbrain
+- CivicBrain v14
+- Phase 0: Foundations & Kickoff — Implementation Log
 
 ## God Nodes (most connected - your core abstractions)
 1. `Organization` - 7 edges
-2. `readiness_check()` - 5 edges
-3. `ULBType` - 5 edges
-4. `Base` - 5 edges
-5. `HealthResponse` - 5 edges
-6. `ReadinessResponse` - 5 edges
-7. `test_rls_anonymous_client_policy_boundary()` - 5 edges
-8. `CivicBrain v14 — Operational Rules & Architecture Ground Truth` - 5 edges
+2. `CivicBrain v14` - 5 edges
+3. `HealthResponse` - 5 edges
+4. `ReadinessResponse` - 5 edges
+5. `Base` - 5 edges
+6. `ULBType` - 5 edges
+7. `readiness_check()` - 5 edges
+8. `test_rls_anonymous_client_policy_boundary()` - 5 edges
 9. `Phase 0: Foundations & Kickoff — Implementation Log` - 5 edges
-10. `health_check()` - 4 edges
+10. `CivicBrain v14 — Operational Rules & Architecture Ground Truth` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `1. What Was Built` --references--> `ULBType`  [INFERRED]
-  docs/phase-log/phase-0.md → civicbrain/domain/identity/models.py
 - `1. What Was Built` --references--> `Organization`  [INFERRED]
   docs/phase-log/phase-0.md → civicbrain/domain/identity/models.py
-- `test_rls_anonymous_client_policy_boundary()` --uses--> `ULBType`  [INFERRED]
-  tests/test_rls_organization.py → civicbrain/domain/identity/models.py
+- `1. What Was Built` --references--> `ULBType`  [INFERRED]
+  docs/phase-log/phase-0.md → civicbrain/domain/identity/models.py
 - `test_rls_anonymous_client_policy_boundary()` --uses--> `Organization`  [INFERRED]
+  tests/test_rls_organization.py → civicbrain/domain/identity/models.py
+- `test_rls_anonymous_client_policy_boundary()` --uses--> `ULBType`  [INFERRED]
   tests/test_rls_organization.py → civicbrain/domain/identity/models.py
 - `health_check()` --uses--> `HealthResponse`  [INFERRED]
   civicbrain/api/v1/health.py → civicbrain/schemas/health.py
@@ -71,7 +73,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (28 total, 20 thin omitted)
+## Communities (30 total, 21 thin omitted)
 
 ### Community 0 - "v1/health.py"
 Cohesion: 0.15
@@ -101,29 +103,31 @@ Nodes (6): BaseSettings, Application configuration via pydantic-settings., Civic
 Cohesion: 0.33
 Nodes (5): 1. The 17 Hard Rules, 2. The Bootstrap Principle (Self-Calibrating Intelligence), 3. Directory & File Skeleton, 4. Phase Roadmap (Summary), CivicBrain v14 — Operational Rules & Architecture Ground Truth
 
-### Community 7 - "Phase 0: Foundations & Kickoff — Implementation Log"
+### Community 28 - "CivicBrain v14"
+Cohesion: 0.33
+Nodes (5): CivicBrain v14, Core Features, Getting Started, Overview, Running Tests
+
+### Community 29 - "Phase 0: Foundations & Kickoff — Implementation Log"
 Cohesion: 0.40
 Nodes (4): 2. Key Architectural Decisions, 3. Deviations from Specification, 4. Open TODOs & Prerequisites for Phase 1, Phase 0: Foundations & Kickoff — Implementation Log
 
 ## Knowledge Gaps
-- **14 isolated node(s):** `civicbrain`, `1. The 17 Hard Rules`, `2. The Bootstrap Principle (Self-Calibrating Intelligence)`, `3. Directory & File Skeleton`, `4. Phase Roadmap (Summary)` (+9 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 93 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **20 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **18 isolated node(s):** `Overview`, `Core Features`, `Getting Started`, `Running Tests`, `Workflow: graphify` (+13 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 98 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **21 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Organization` connect `Organization` to `database.py`?**
-  _High betweenness centrality (0.076) - this node is a cross-community bridge._
+  _High betweenness centrality (0.067) - this node is a cross-community bridge._
 - **Why does `1. What Was Built` connect `Organization` to `Phase 0: Foundations & Kickoff — Implementation Log`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+  _High betweenness centrality (0.042) - this node is a cross-community bridge._
 - **Why does `ULBType` connect `Organization` to `database.py`?**
-  _High betweenness centrality (0.047) - this node is a cross-community bridge._
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `Organization` (e.g. with `1. What Was Built` and `test_rls_anonymous_client_policy_boundary()`) actually correct?**
   _`Organization` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 2 inferred relationships involving `ULBType` (e.g. with `1. What Was Built` and `test_rls_anonymous_client_policy_boundary()`) actually correct?**
-  _`ULBType` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `civicbrain`, `1. The 17 Hard Rules`, `2. The Bootstrap Principle (Self-Calibrating Intelligence)` to the rest of the system?**
-  _14 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `Overview`, `Core Features`, `Getting Started` to the rest of the system?**
+  _18 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `database.py` be split into smaller, more focused modules?**
   _Cohesion score 0.13970588235294118 - nodes in this community are weakly interconnected._

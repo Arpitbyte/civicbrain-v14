@@ -1,6 +1,6 @@
 """Application configuration via pydantic-settings."""
 
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -31,6 +31,15 @@ class Settings(BaseSettings):
     DB_POOL_SIZE: int = 5
     DB_MAX_OVERFLOW: int = 10
     DB_TIMEOUT_SECONDS: int = 10
+
+    @field_validator("DATABASE_URL", mode="after")
+    @classmethod
+    def assemble_async_db_url(cls, v: str) -> str:
+        if v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql+asyncpg://", 1)
+        if v.startswith("postgresql://"):
+            return v.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return v
 
     # Supabase (Auth, Storage, RLS)
     SUPABASE_URL: str = "https://mock.supabase.co"

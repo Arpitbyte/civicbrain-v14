@@ -54,3 +54,8 @@ CREATE POLICY "authenticated_read_organizations"
 
 -- Anonymous / unauthenticated clients cannot read organization rows
 -- (Implicitly denied because no policy grants access to anon)
+
+-- 6. Table Grants for PostgREST Roles
+GRANT ALL ON TABLE organization TO postgres, service_role;
+GRANT SELECT ON TABLE organization TO authenticated;
+GRANT SELECT ON TABLE organization TO anon;

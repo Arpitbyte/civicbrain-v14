@@ -11,9 +11,9 @@ In strict accordance with Phase 0 acceptance criterion:
 import uuid
 
 import pytest
-from supabase import Client, create_client
 
 from civicbrain.infra.config import settings
+from supabase import Client, create_client
 
 
 def is_live_supabase_configured() -> bool:

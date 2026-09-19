@@ -36,7 +36,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "code",
       "norm_label": "base",
       "source_file": "civicbrain/infra/database.py",
@@ -49,7 +49,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "code",
       "norm_label": "organization",
       "source_file": "civicbrain/domain/identity/models.py",
@@ -62,7 +62,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "code",
       "norm_label": "ulbtype",
       "source_file": "civicbrain/domain/identity/models.py",
@@ -115,7 +115,7 @@
       "file_type": "code",
       "norm_label": "check_database_connection()",
       "source_file": "civicbrain/infra/database.py",
-      "source_location": "L54"
+      "source_location": "L59"
     },
     {
       "id": "civicbrain_infra_database_get_db",
@@ -123,11 +123,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "code",
       "norm_label": "get_db()",
       "source_file": "civicbrain/infra/database.py",
-      "source_location": "L42"
+      "source_location": "L47"
     },
     {
       "id": "civicbrain_domain_identity_models_organization_repr",
@@ -135,11 +135,59 @@
       "_callable": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "code",
       "norm_label": ".__repr__()",
       "source_file": "civicbrain/domain/identity/models.py",
       "source_location": "L53"
+    },
+    {
+      "id": "tests_test_rls_organization_test_client_sdk_rls_anonymous_denial",
+      "label": "test_client_sdk_rls_anonymous_denial()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "file_type": "code",
+      "norm_label": "test_client_sdk_rls_anonymous_denial()",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L44"
+    },
+    {
+      "id": "tests_test_rls_organization_test_client_sdk_rls_anonymous_denial_mock_send",
+      "label": "mock_send()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "file_type": "code",
+      "norm_label": "mock_send()",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L58"
+    },
+    {
+      "id": "tests_test_rls_organization_test_client_sdk_rls_authenticated_access",
+      "label": "test_client_sdk_rls_authenticated_access()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "file_type": "code",
+      "norm_label": "test_client_sdk_rls_authenticated_access()",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L68"
+    },
+    {
+      "id": "tests_test_rls_organization_test_client_sdk_rls_authenticated_access_mock_send",
+      "label": "mock_send()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "file_type": "code",
+      "norm_label": "mock_send()",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L78"
     },
     {
       "id": "tests_test_rls_organization_test_migration_enforces_row_level_security",
@@ -147,23 +195,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "code",
       "norm_label": "test_migration_enforces_row_level_security()",
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L13"
+      "source_location": "L20"
     },
     {
-      "id": "tests_test_rls_organization_test_rls_anonymous_client_policy_boundary",
-      "label": "test_rls_anonymous_client_policy_boundary()",
+      "id": "tests_test_rls_organization_test_organization_schema_structure",
+      "label": "test_organization_schema_structure()",
       "_callable": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "code",
-      "norm_label": "test_rls_anonymous_client_policy_boundary()",
+      "norm_label": "test_organization_schema_structure()",
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L26"
+      "source_location": "L32"
+    },
+    {
+      "id": "tests_test_live_supabase_rls_is_live_supabase_configured",
+      "label": "is_live_supabase_configured()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
+      "file_type": "code",
+      "norm_label": "is_live_supabase_configured()",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L19"
+    },
+    {
+      "id": "tests_test_live_supabase_rls_test_live_supabase_rls_boundary",
+      "label": "test_live_supabase_rls_boundary()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
+      "file_type": "code",
+      "norm_label": "test_live_supabase_rls_boundary()",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L37"
     },
     {
       "id": "civicbrain_main_lifespan",
@@ -226,6 +298,18 @@
       "source_location": "L39"
     },
     {
+      "id": "civicbrain_infra_config_settings_assemble_async_db_url",
+      "label": ".assemble_async_db_url()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": ".assemble_async_db_url()",
+      "source_file": "civicbrain/infra/config.py",
+      "source_location": "L37"
+    },
+    {
       "id": "civicbrain_infra_config_settings_cors_origins_list",
       "label": ".cors_origins_list()",
       "_callable": true,
@@ -235,7 +319,7 @@
       "file_type": "code",
       "norm_label": ".cors_origins_list()",
       "source_file": "civicbrain/infra/config.py",
-      "source_location": "L47"
+      "source_location": "L56"
     },
     {
       "id": "basemodel",
@@ -315,7 +399,7 @@
       "source_location": "L40"
     },
     {
-      "id": "civicbrain_infra_database_rationale_55",
+      "id": "civicbrain_infra_database_rationale_60",
       "label": "Verifies that the database is reachable and PostGIS is enabled. Returns:\u2026",
       "_origin": "ast",
       "community": 0,
@@ -323,7 +407,7 @@
       "file_type": "rationale",
       "norm_label": "verifies that the database is reachable and postgis is enabled. returns:...",
       "source_file": "civicbrain/infra/database.py",
-      "source_location": "L55"
+      "source_location": "L60"
     },
     {
       "id": "civicbrain_schemas_health_rationale_1",
@@ -363,7 +447,7 @@
       "label": "AsyncSession",
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "code",
       "norm_label": "asyncsession",
       "source_file": "",
@@ -374,7 +458,7 @@
       "label": "models.py",
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "code",
       "norm_label": "models.py",
       "source_file": "civicbrain/domain/identity/models.py",
@@ -385,7 +469,7 @@
       "label": "database.py",
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "code",
       "norm_label": "database.py",
       "source_file": "civicbrain/infra/database.py",
@@ -396,7 +480,7 @@
       "label": "DeclarativeBase",
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "code",
       "norm_label": "declarativebase",
       "source_file": "",
@@ -407,7 +491,7 @@
       "label": "Identity and Organization domain entities.",
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "rationale",
       "norm_label": "identity and organization domain entities.",
       "source_file": "civicbrain/domain/identity/models.py",
@@ -418,7 +502,7 @@
       "label": "Database engine, session management, and connectivity diagnostics.",
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "rationale",
       "norm_label": "database engine, session management, and connectivity diagnostics.",
       "source_file": "civicbrain/infra/database.py",
@@ -429,22 +513,22 @@
       "label": "Base declarative class for all CivicBrain database entities.",
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "rationale",
       "norm_label": "base declarative class for all civicbrain database entities.",
       "source_file": "civicbrain/infra/database.py",
       "source_location": "L21"
     },
     {
-      "id": "civicbrain_infra_database_rationale_43",
+      "id": "civicbrain_infra_database_rationale_48",
       "label": "Dependency that provides an async session per request.",
       "_origin": "ast",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "file_type": "rationale",
       "norm_label": "dependency that provides an async session per request.",
       "source_file": "civicbrain/infra/database.py",
-      "source_location": "L43"
+      "source_location": "L48"
     },
     {
       "id": "agents_workflows_graphify",
@@ -677,29 +761,18 @@
       "label": "test_rls_organization.py",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "code",
       "norm_label": "test_rls_organization.py",
       "source_file": "tests/test_rls_organization.py",
       "source_location": "L1"
     },
     {
-      "id": "tests_test_rls_organization_py_asyncio",
-      "label": "asyncio",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Organization",
-      "file_type": "code",
-      "norm_label": "asyncio",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "docs_phase_log_phase_0",
       "label": "phase-0.md",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "phase-0.md",
@@ -711,7 +784,7 @@
       "label": "1. What Was Built",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "1. what was built",
@@ -723,7 +796,7 @@
       "label": "2. Key Architectural Decisions",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2. key architectural decisions",
@@ -735,7 +808,7 @@
       "label": "3. Deviations from Specification",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "3. deviations from specification",
@@ -747,7 +820,7 @@
       "label": "4. Open TODOs & Prerequisites for Phase 1",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "4. open todos & prerequisites for phase 1",
@@ -759,7 +832,7 @@
       "label": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "phase 0: foundations & kickoff \u2014 implementation log",
@@ -771,7 +844,7 @@
       "label": "Urban Local Body classification under 74th Constitutional Amendment Act, 1992.",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "rationale",
       "norm_label": "urban local body classification under 74th constitutional amendment act, 1992.",
       "source_file": "civicbrain/domain/identity/models.py",
@@ -782,7 +855,7 @@
       "label": "Root tenant representing an Urban Local Body (ULB) or multi-ULB state\u2026",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "rationale",
       "norm_label": "root tenant representing an urban local body (ulb) or multi-ulb state...",
       "source_file": "civicbrain/domain/identity/models.py",
@@ -793,33 +866,55 @@
       "label": "RLS verification tests for the organization entity. In accordance with Hard\u2026",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "rationale",
       "norm_label": "rls verification tests for the organization entity. in accordance with hard...",
       "source_file": "tests/test_rls_organization.py",
       "source_location": "L1"
     },
     {
-      "id": "tests_test_rls_organization_rationale_14",
+      "id": "tests_test_rls_organization_rationale_21",
       "label": "Verify that migration DDL explicitly enables RLS on organization table.",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "rationale",
       "norm_label": "verify that migration ddl explicitly enables rls on organization table.",
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L14"
+      "source_location": "L21"
     },
     {
-      "id": "tests_test_rls_organization_rationale_27",
-      "label": "Verify authorization boundary behavior for anonymous vs authenticated contexts.\u2026",
+      "id": "tests_test_rls_organization_rationale_33",
+      "label": "Verify SQLAlchemy model reflects the required columns and ULBType enum.",
       "_origin": "ast",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "file_type": "rationale",
-      "norm_label": "verify authorization boundary behavior for anonymous vs authenticated contexts....",
+      "norm_label": "verify sqlalchemy model reflects the required columns and ulbtype enum.",
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L27"
+      "source_location": "L33"
+    },
+    {
+      "id": "tests_test_rls_organization_rationale_45",
+      "label": "Verify that querying organization via client SDK as anonymous user is denied.\u2026",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "file_type": "rationale",
+      "norm_label": "verify that querying organization via client sdk as anonymous user is denied....",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L45"
+    },
+    {
+      "id": "tests_test_rls_organization_rationale_69",
+      "label": "Verify that querying organization via client SDK with authenticated JWT\u2026",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "file_type": "rationale",
+      "norm_label": "verify that querying organization via client sdk with authenticated jwt...",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L69"
     },
     {
       "id": "civicbrain_schemas_init",
@@ -985,6 +1080,133 @@
       "version": "0.14.0"
     },
     {
+      "id": "readme",
+      "label": "README.md",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "readme.md",
+      "source_file": "README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "readme_civicbrain_v14",
+      "label": "CivicBrain v14",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "civicbrain v14",
+      "source_file": "README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "readme_core_features",
+      "label": "Core Features",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "core features",
+      "source_file": "README.md",
+      "source_location": "L8"
+    },
+    {
+      "id": "readme_getting_started",
+      "label": "Getting Started",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "getting started",
+      "source_file": "README.md",
+      "source_location": "L15"
+    },
+    {
+      "id": "readme_overview",
+      "label": "Overview",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "overview",
+      "source_file": "README.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "readme_running_tests",
+      "label": "Running Tests",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "running tests",
+      "source_file": "README.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "skipif",
+      "label": "skipif",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
+      "file_type": "code",
+      "norm_label": "skipif",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_live_supabase_rls",
+      "label": "test_live_supabase_rls.py",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
+      "file_type": "code",
+      "norm_label": "test_live_supabase_rls.py",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_live_supabase_rls_rationale_1",
+      "label": "Live Supabase RLS and Auth integration test. In strict accordance with Phase 0\u2026",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
+      "file_type": "rationale",
+      "norm_label": "live supabase rls and auth integration test. in strict accordance with phase 0...",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_live_supabase_rls_rationale_20",
+      "label": "Check if real Supabase credentials are provided in settings.",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
+      "file_type": "rationale",
+      "norm_label": "check if real supabase credentials are provided in settings.",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L20"
+    },
+    {
+      "id": "tests_test_live_supabase_rls_rationale_38",
+      "label": "End-to-end verification of RLS and Auth against a live Supabase project.",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
+      "file_type": "rationale",
+      "norm_label": "end-to-end verification of rls and auth against a live supabase project.",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L38"
+    },
+    {
       "id": "civicbrain_api_v1_init",
       "label": "v1/__init__.py",
       "_origin": "ast",
@@ -1073,6 +1295,17 @@
       "source_location": "L57"
     },
     {
+      "id": "asyncio",
+      "label": "asyncio",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_health.py",
+      "file_type": "code",
+      "norm_label": "asyncio",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "tests_test_health",
       "label": "test_health.py",
       "_origin": "ast",
@@ -1082,17 +1315,6 @@
       "norm_label": "test_health.py",
       "source_file": "tests/test_health.py",
       "source_location": "L1"
-    },
-    {
-      "id": "tests_test_health_py_asyncio",
-      "label": "asyncio",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "test_health.py",
-      "file_type": "code",
-      "norm_label": "asyncio",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "tests_test_health_rationale_1",
@@ -1159,6 +1381,17 @@
       "norm_label": "config.py",
       "source_file": "civicbrain/infra/config.py",
       "source_location": "L1"
+    },
+    {
+      "id": "field_validator",
+      "label": "field_validator",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "field_validator",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "civicbrain_infra_config_rationale_1",
@@ -1241,6 +1474,18 @@
       "norm_label": "4. phase roadmap (summary)",
       "source_file": ".agents/RULES.md",
       "source_location": "L76"
+    },
+    {
+      "id": "agents_rules_5_specific_invariant_rules_v14_re_derivations",
+      "label": "5. Specific Invariant Rules (v14 Re-derivations)",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "CivicBrain v14 \u2014 Operational Rules & Architecture Ground Truth",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "5. specific invariant rules (v14 re-derivations)",
+      "source_file": ".agents/RULES.md",
+      "source_location": "L95"
     },
     {
       "id": "agents_rules_civicbrain_v14_operational_rules_architecture_ground_truth",
@@ -1380,7 +1625,7 @@
       "label": "collections_abc",
       "_origin": "semantic",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "collections_abc",
@@ -1392,7 +1637,7 @@
       "label": "enum",
       "_origin": "semantic",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "enum",
@@ -1404,7 +1649,7 @@
       "label": "sqlalchemy",
       "_origin": "semantic",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "sqlalchemy",
@@ -1416,7 +1661,7 @@
       "label": "sqlalchemy_dialects_postgresql",
       "_origin": "semantic",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "sqlalchemy_dialects_postgresql",
@@ -1428,7 +1673,7 @@
       "label": "sqlalchemy_ext_asyncio",
       "_origin": "semantic",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "sqlalchemy_ext_asyncio",
@@ -1440,22 +1685,10 @@
       "label": "sqlalchemy_orm",
       "_origin": "semantic",
       "community": 1,
-      "community_name": "database.py",
+      "community_name": "models.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "sqlalchemy_orm",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "uuid",
-      "label": "uuid",
-      "_origin": "semantic",
-      "community": 1,
-      "community_name": "database.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "uuid",
       "source_file": "",
       "type": "external"
     },
@@ -1464,7 +1697,7 @@
       "label": "pathlib",
       "_origin": "semantic",
       "community": 2,
-      "community_name": "Organization",
+      "community_name": "test_rls_organization.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "pathlib",
@@ -1472,14 +1705,14 @@
       "type": "external"
     },
     {
-      "id": "pytest",
-      "label": "pytest",
+      "id": "uuid",
+      "label": "uuid",
       "_origin": "semantic",
-      "community": 2,
-      "community_name": "Organization",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "pytest",
+      "norm_label": "uuid",
       "source_file": "",
       "type": "external"
     },
@@ -1544,6 +1777,18 @@
       "type": "external"
     },
     {
+      "id": "pytest",
+      "label": "pytest",
+      "_origin": "semantic",
+      "community": 4,
+      "community_name": "test_health.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "pytest",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "pydantic",
       "label": "pydantic",
       "_origin": "semantic",
@@ -1564,6 +1809,50 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "pydantic_settings",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "sqlalchemy_dialects",
+      "label": "sqlalchemy_dialects",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sqlalchemy_dialects",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "sqlalchemy_schema",
+      "label": "sqlalchemy_schema",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sqlalchemy_schema",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "unittest_mock",
+      "label": "unittest_mock",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "unittest_mock",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "supabase",
+      "label": "supabase",
+      "community": 29,
+      "community_name": "test_live_supabase_rls.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "supabase",
       "source_file": "",
       "type": "external"
     }
@@ -1606,6 +1895,18 @@
       "weight": 1.0
     },
     {
+      "source": "civicbrain_infra_config_settings_assemble_async_db_url",
+      "target": "field_validator",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "decorator",
+      "source_file": "civicbrain/infra/config.py",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
       "source": "civicbrain_main_root",
       "target": "civicbrain_main_py_get",
       "relation": "references",
@@ -1619,7 +1920,7 @@
     },
     {
       "source": "tests_test_health_test_health_endpoint_liveness",
-      "target": "tests_test_health_py_asyncio",
+      "target": "asyncio",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -1631,7 +1932,7 @@
     },
     {
       "source": "tests_test_health_test_ready_endpoint_schema",
-      "target": "tests_test_health_py_asyncio",
+      "target": "asyncio",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -1643,7 +1944,7 @@
     },
     {
       "source": "tests_test_health_test_root_endpoint_metadata",
-      "target": "tests_test_health_py_asyncio",
+      "target": "asyncio",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -1654,15 +1955,15 @@
       "weight": 1.0
     },
     {
-      "source": "tests_test_rls_organization_test_rls_anonymous_client_policy_boundary",
-      "target": "tests_test_rls_organization_py_asyncio",
+      "source": "tests_test_live_supabase_rls_test_live_supabase_rls_boundary",
+      "target": "skipif",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "decorator",
-      "source_file": "tests/test_rls_organization.py",
-      "source_location": "L25",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -1686,7 +1987,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "civicbrain/infra/database.py",
-      "source_location": "L42",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -1798,15 +2099,39 @@
       "weight": 1.0
     },
     {
-      "source": "tests_test_rls_organization",
+      "source": "tests_test_live_supabase_rls",
+      "target": "uuid",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_live_supabase_rls",
       "target": "pytest",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization",
+      "target": "httpx",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -1818,7 +2143,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L35",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -1830,7 +2155,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L35",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -2194,6 +2519,90 @@
       "weight": 1.0
     },
     {
+      "source": "tests_test_live_supabase_rls",
+      "target": "civicbrain_infra_config",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_live_supabase_rls",
+      "target": "supabase",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization",
+      "target": "sqlalchemy_dialects",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization",
+      "target": "sqlalchemy_schema",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization",
+      "target": "supabase",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization",
+      "target": "civicbrain_domain_identity_models",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization",
+      "target": "civicbrain_infra_config",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
       "source": "tests_test_rls_organization",
       "target": "pathlib",
       "relation": "imports_from",
@@ -2203,6 +2612,18 @@
       "context": "import",
       "source_file": "tests/test_rls_organization.py",
       "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization",
+      "target": "unittest_mock",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -2281,6 +2702,17 @@
       "confidence_score": 1.0,
       "source_file": ".agents/RULES.md",
       "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_rules_civicbrain_v14_operational_rules_architecture_ground_truth",
+      "target": "agents_rules_5_specific_invariant_rules_v14_re_derivations",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/RULES.md",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -2379,7 +2811,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/infra/database.py",
-      "source_location": "L42",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -2390,7 +2822,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/infra/database.py",
-      "source_location": "L54",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
@@ -2548,6 +2980,61 @@
       "weight": 1.0
     },
     {
+      "source": "readme",
+      "target": "readme_civicbrain_v14",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_civicbrain_v14",
+      "target": "readme_getting_started",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_civicbrain_v14",
+      "target": "readme_running_tests",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_civicbrain_v14",
+      "target": "readme_overview",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_civicbrain_v14",
+      "target": "readme_core_features",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
       "source": "tests_test_health",
       "target": "tests_test_health_test_health_endpoint_liveness",
       "relation": "contains",
@@ -2581,6 +3068,28 @@
       "weight": 1.0
     },
     {
+      "source": "tests_test_live_supabase_rls",
+      "target": "tests_test_live_supabase_rls_is_live_supabase_configured",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_live_supabase_rls",
+      "target": "tests_test_live_supabase_rls_test_live_supabase_rls_boundary",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
       "source": "tests_test_rls_organization",
       "target": "tests_test_rls_organization_test_migration_enforces_row_level_security",
       "relation": "contains",
@@ -2588,18 +3097,51 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L13",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
       "source": "tests_test_rls_organization",
-      "target": "tests_test_rls_organization_test_rls_anonymous_client_policy_boundary",
+      "target": "tests_test_rls_organization_test_organization_schema_structure",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L26",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization",
+      "target": "tests_test_rls_organization_test_client_sdk_rls_anonymous_denial",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization",
+      "target": "tests_test_rls_organization_test_client_sdk_rls_authenticated_access",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization_test_client_sdk_rls_authenticated_access",
+      "target": "tests_test_rls_organization_test_client_sdk_rls_authenticated_access_mock_send",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L78",
       "weight": 1.0
     },
     {
@@ -2681,13 +3223,24 @@
     },
     {
       "source": "civicbrain_infra_config_settings",
+      "target": "civicbrain_infra_config_settings_assemble_async_db_url",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "civicbrain/infra/config.py",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_infra_config_settings",
       "target": "civicbrain_infra_config_settings_cors_origins_list",
       "relation": "method",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/infra/config.py",
-      "source_location": "L47",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
@@ -2889,25 +3442,25 @@
       "weight": 1.0
     },
     {
-      "source": "civicbrain_infra_database_rationale_43",
+      "source": "civicbrain_infra_database_rationale_48",
       "target": "civicbrain_infra_database_get_db",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/infra/database.py",
-      "source_location": "L43",
+      "source_location": "L48",
       "weight": 1.0
     },
     {
-      "source": "civicbrain_infra_database_rationale_55",
+      "source": "civicbrain_infra_database_rationale_60",
       "target": "civicbrain_infra_database_check_database_connection",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/infra/database.py",
-      "source_location": "L55",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -3076,6 +3629,39 @@
       "weight": 1.0
     },
     {
+      "source": "tests_test_live_supabase_rls_rationale_1",
+      "target": "tests_test_live_supabase_rls",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_live_supabase_rls_rationale_20",
+      "target": "tests_test_live_supabase_rls_is_live_supabase_configured",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_live_supabase_rls_rationale_38",
+      "target": "tests_test_live_supabase_rls_test_live_supabase_rls_boundary",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
       "source": "tests_test_rls_organization_rationale_1",
       "target": "tests_test_rls_organization",
       "relation": "rationale_for",
@@ -3087,25 +3673,71 @@
       "weight": 1.0
     },
     {
-      "source": "tests_test_rls_organization_rationale_14",
+      "source": "tests_test_rls_organization_rationale_21",
       "target": "tests_test_rls_organization_test_migration_enforces_row_level_security",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L14",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
-      "source": "tests_test_rls_organization_rationale_27",
-      "target": "tests_test_rls_organization_test_rls_anonymous_client_policy_boundary",
+      "source": "tests_test_rls_organization_rationale_33",
+      "target": "tests_test_rls_organization_test_organization_schema_structure",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L27",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization_rationale_45",
+      "target": "tests_test_rls_organization_test_client_sdk_rls_anonymous_denial",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization_rationale_69",
+      "target": "tests_test_rls_organization_test_client_sdk_rls_authenticated_access",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization_test_client_sdk_rls_anonymous_denial",
+      "target": "tests_test_rls_organization_test_client_sdk_rls_anonymous_denial_mock_send",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_rls_organization_test_client_sdk_rls_authenticated_access",
+      "target": "tests_test_rls_organization_test_client_sdk_rls_anonymous_denial_mock_send",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "tests/test_rls_organization.py",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -3156,28 +3788,28 @@
       "weight": 0.8
     },
     {
-      "source": "tests_test_rls_organization_test_rls_anonymous_client_policy_boundary",
+      "source": "tests_test_rls_organization_test_organization_schema_structure",
       "target": "civicbrain_domain_identity_models_organization",
       "relation": "uses",
       "_origin": "ast",
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L38",
+      "source_location": "L34",
       "weight": 0.8
     },
     {
-      "source": "tests_test_rls_organization_test_rls_anonymous_client_policy_boundary",
+      "source": "tests_test_rls_organization_test_organization_schema_structure",
       "target": "civicbrain_domain_identity_models_ulbtype",
       "relation": "uses",
       "_origin": "ast",
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "tests/test_rls_organization.py",
-      "source_location": "L42",
+      "source_location": "L39",
       "weight": 0.8
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "568af05da26e2b6dd89df01ba408aa76ec857c56"
+  "built_at_commit": "c4c956d6536154a6166660ae990237ba59a3c884"
 }

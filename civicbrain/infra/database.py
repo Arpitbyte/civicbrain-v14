@@ -24,8 +24,13 @@ class Base(DeclarativeBase):
 
 
 # Initialize async engine
+connect_args: dict[str, int] = {}
+if "postgresql" in settings.DATABASE_URL:
+    connect_args["prepared_statement_cache_size"] = 0
+
 engine: AsyncEngine = create_async_engine(
     settings.DATABASE_URL,
+    connect_args=connect_args,
     pool_size=settings.DB_POOL_SIZE,
     max_overflow=settings.DB_MAX_OVERFLOW,
     pool_pre_ping=True,

@@ -23,6 +23,10 @@ yarn-error.log*
 .env.local
 .env.*.local
 
+# Supabase & CLI temp
+supabase/.temp/
+.pytest_cache/
+
 # OS
 .DS_Store
 Thumbs.db

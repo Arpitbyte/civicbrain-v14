@@ -925,6 +925,138 @@
       "version": "0.14.0"
     },
     {
+      "id": "readme",
+      "label": "README.md",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "readme.md",
+      "source_file": "README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "readme_civicbrain_v14",
+      "label": "CivicBrain v14",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "civicbrain v14",
+      "source_file": "README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "readme_core_features",
+      "label": "Core Features",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "core features",
+      "source_file": "README.md",
+      "source_location": "L8"
+    },
+    {
+      "id": "readme_getting_started",
+      "label": "Getting Started",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "getting started",
+      "source_file": "README.md",
+      "source_location": "L15"
+    },
+    {
+      "id": "readme_overview",
+      "label": "Overview",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "overview",
+      "source_file": "README.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "readme_running_tests",
+      "label": "Running Tests",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "CivicBrain v14",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "running tests",
+      "source_file": "README.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "docs_phase_log_phase_0",
+      "label": "phase-0.md",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "phase-0.md",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_phase_log_phase_0_2_key_architectural_decisions",
+      "label": "2. Key Architectural Decisions",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. key architectural decisions",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "docs_phase_log_phase_0_3_deviations_from_specification",
+      "label": "3. Deviations from Specification",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. deviations from specification",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L56"
+    },
+    {
+      "id": "docs_phase_log_phase_0_4_open_todos_prerequisites_for_phase_1",
+      "label": "4. Open TODOs & Prerequisites for Phase 1",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. open todos & prerequisites for phase 1",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L62"
+    },
+    {
+      "id": "docs_phase_log_phase_0_phase_0_foundations_kickoff_implementation_log",
+      "label": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 0: foundations & kickoff \u2014 implementation log",
+      "source_file": "docs/phase-log/phase-0.md",
+      "source_location": "L1"
+    },
+    {
       "id": "civicbrain_api_v1_init",
       "label": "v1/__init__.py",
       "_origin": "ast",
@@ -1195,64 +1327,37 @@
       "source_location": "L1"
     },
     {
-      "id": "docs_phase_log_phase_0",
-      "label": "phase-0.md",
+      "id": "migrations_0001_phase0_init",
+      "label": "0001_phase0_init.sql",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "phase-0.md",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L1"
+      "community_name": "0001_phase0_init.sql",
+      "file_type": "code",
+      "norm_label": "0001_phase0_init.sql",
+      "source_file": "migrations/0001_phase0_init.sql",
+      "source_location": null
     },
     {
-      "id": "docs_phase_log_phase_0_2_key_architectural_decisions",
-      "label": "2. Key Architectural Decisions",
+      "id": "migrations_0001_phase0_init_idx_organization_code",
+      "label": "idx_organization_code",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2. key architectural decisions",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L43"
+      "community_name": "0001_phase0_init.sql",
+      "file_type": "code",
+      "norm_label": "idx_organization_code",
+      "source_file": "migrations/0001_phase0_init.sql",
+      "source_location": "L32"
     },
     {
-      "id": "docs_phase_log_phase_0_3_deviations_from_specification",
-      "label": "3. Deviations from Specification",
+      "id": "migrations_0001_phase0_init_organization",
+      "label": "organization",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. deviations from specification",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L56"
-    },
-    {
-      "id": "docs_phase_log_phase_0_4_open_todos_prerequisites_for_phase_1",
-      "label": "4. Open TODOs & Prerequisites for Phase 1",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "4. open todos & prerequisites for phase 1",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L62"
-    },
-    {
-      "id": "docs_phase_log_phase_0_phase_0_foundations_kickoff_implementation_log",
-      "label": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Phase 0: Foundations & Kickoff \u2014 Implementation Log",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "phase 0: foundations & kickoff \u2014 implementation log",
-      "source_file": "docs/phase-log/phase-0.md",
-      "source_location": "L1"
+      "community_name": "0001_phase0_init.sql",
+      "file_type": "code",
+      "norm_label": "organization",
+      "source_file": "migrations/0001_phase0_init.sql",
+      "source_location": "L21"
     },
     {
       "id": "agents",
@@ -1309,6 +1414,7 @@
     {
       "id": "datetime",
       "label": "datetime",
+      "_origin": "semantic",
       "community": 0,
       "community_name": "v1/health.py",
       "external": true,
@@ -1320,6 +1426,7 @@
     {
       "id": "fastapi_responses",
       "label": "fastapi_responses",
+      "_origin": "semantic",
       "community": 0,
       "community_name": "v1/health.py",
       "external": true,
@@ -1331,6 +1438,7 @@
     {
       "id": "typing",
       "label": "typing",
+      "_origin": "semantic",
       "community": 0,
       "community_name": "v1/health.py",
       "external": true,
@@ -1342,6 +1450,7 @@
     {
       "id": "collections_abc",
       "label": "collections_abc",
+      "_origin": "semantic",
       "community": 1,
       "community_name": "database.py",
       "external": true,
@@ -1353,6 +1462,7 @@
     {
       "id": "enum",
       "label": "enum",
+      "_origin": "semantic",
       "community": 1,
       "community_name": "database.py",
       "external": true,
@@ -1364,6 +1474,7 @@
     {
       "id": "sqlalchemy",
       "label": "sqlalchemy",
+      "_origin": "semantic",
       "community": 1,
       "community_name": "database.py",
       "external": true,
@@ -1375,6 +1486,7 @@
     {
       "id": "sqlalchemy_dialects_postgresql",
       "label": "sqlalchemy_dialects_postgresql",
+      "_origin": "semantic",
       "community": 1,
       "community_name": "database.py",
       "external": true,
@@ -1386,6 +1498,7 @@
     {
       "id": "sqlalchemy_ext_asyncio",
       "label": "sqlalchemy_ext_asyncio",
+      "_origin": "semantic",
       "community": 1,
       "community_name": "database.py",
       "external": true,
@@ -1397,6 +1510,7 @@
     {
       "id": "sqlalchemy_orm",
       "label": "sqlalchemy_orm",
+      "_origin": "semantic",
       "community": 1,
       "community_name": "database.py",
       "external": true,
@@ -1408,6 +1522,7 @@
     {
       "id": "uuid",
       "label": "uuid",
+      "_origin": "semantic",
       "community": 1,
       "community_name": "database.py",
       "external": true,
@@ -1419,6 +1534,7 @@
     {
       "id": "pathlib",
       "label": "pathlib",
+      "_origin": "semantic",
       "community": 2,
       "community_name": "Organization",
       "external": true,
@@ -1430,6 +1546,7 @@
     {
       "id": "pytest",
       "label": "pytest",
+      "_origin": "semantic",
       "community": 2,
       "community_name": "Organization",
       "external": true,
@@ -1441,6 +1558,7 @@
     {
       "id": "civicbrain_api_v1",
       "label": "civicbrain_api_v1",
+      "_origin": "semantic",
       "community": 3,
       "community_name": "main.py",
       "external": true,
@@ -1452,6 +1570,7 @@
     {
       "id": "contextlib",
       "label": "contextlib",
+      "_origin": "semantic",
       "community": 3,
       "community_name": "main.py",
       "external": true,
@@ -1463,6 +1582,7 @@
     {
       "id": "fastapi_middleware_cors",
       "label": "fastapi_middleware_cors",
+      "_origin": "semantic",
       "community": 3,
       "community_name": "main.py",
       "external": true,
@@ -1474,6 +1594,7 @@
     {
       "id": "logging",
       "label": "logging",
+      "_origin": "semantic",
       "community": 3,
       "community_name": "main.py",
       "external": true,
@@ -1485,6 +1606,7 @@
     {
       "id": "httpx",
       "label": "httpx",
+      "_origin": "semantic",
       "community": 4,
       "community_name": "test_health.py",
       "external": true,
@@ -1496,6 +1618,7 @@
     {
       "id": "pydantic",
       "label": "pydantic",
+      "_origin": "semantic",
       "community": 5,
       "community_name": "config.py",
       "external": true,
@@ -1507,6 +1630,7 @@
     {
       "id": "pydantic_settings",
       "label": "pydantic_settings",
+      "_origin": "semantic",
       "community": 5,
       "community_name": "config.py",
       "external": true,
@@ -2474,6 +2598,83 @@
       "weight": 1.0
     },
     {
+      "source": "migrations_0001_phase0_init",
+      "target": "migrations_0001_phase0_init_organization",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "migrations/0001_phase0_init.sql",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "migrations_0001_phase0_init",
+      "target": "migrations_0001_phase0_init_idx_organization_code",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "migrations/0001_phase0_init.sql",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "readme",
+      "target": "readme_civicbrain_v14",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_civicbrain_v14",
+      "target": "readme_getting_started",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_civicbrain_v14",
+      "target": "readme_running_tests",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_civicbrain_v14",
+      "target": "readme_overview",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_civicbrain_v14",
+      "target": "readme_core_features",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
       "source": "tests_test_health",
       "target": "tests_test_health_test_health_endpoint_liveness",
       "relation": "contains",
@@ -2526,6 +2727,17 @@
       "confidence_score": 1.0,
       "source_file": "tests/test_rls_organization.py",
       "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "migrations_0001_phase0_init_idx_organization_code",
+      "target": "migrations_0001_phase0_init_organization",
+      "relation": "indexes",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "migrations/0001_phase0_init.sql",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -3094,5 +3306,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "568af05da26e2b6dd89df01ba408aa76ec857c56"
+  "built_at_commit": "c4c956d6536154a6166660ae990237ba59a3c884"
 }
