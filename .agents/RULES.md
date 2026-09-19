@@ -77,15 +77,24 @@ integrations/          # DIGIT/UPYOG and CPGRAMS stub adapters
 
 - **Phase 0 — Foundations:** Scaffolding, CI/CD, Postgres/PostGIS connection, health checks, empty RLS-enabled schema (`organization` table with `ulb_type`), Phase 0 docs.
 - **Phase 1 — Identity & RBAC:** Supabase Auth JWT claims, multi-tenant ULB hierarchy (`organization`, `zone`, `ward`), roles (Admin, Dispatcher, Inspector, Field Worker, Corporator), RLS client tests.
-- **Phase 2 — Domain Core:** `intake_report` → `observation` → `incident` split supporting multi-issue photos across departments; Fellegi-Sunter / Splink deduplication foundation.
+- **Phase 2 — Domain Core:** `intake_report` → `observation` → `incident` split supporting multi-issue photos across departments; `intake_report.status` tracks least-advanced child incident status while observations display individually (§A7); Fellegi-Sunter / Splink deduplication foundation.
 - **Phase 3 — Citizen Intake:** Multi-channel ingestion (PWA, WhatsApp, Missed-Call/IVR, CSC), accessibility-first voice/contrast flows, provenance stamping, citizen report integrity layer.
 - **Phase 4 — GIS Core:** PostGIS spatial queries, direct GeoJSON serving to MapLibre GL JS, spatial clustering, zero-cost architecture without self-hosted tile servers.
 - **Phase 5 — NLP Pipeline:** IndicBERT, IndicXlit transliteration, IndicWav2Vec IVR processing, romanized Hinglish test evaluations, Emotion-Severity Decoupling.
-- **Phase 6 — Computer Vision:** YOLO-World-v2 zero-shot detection for Indian civic categories, Living Taxonomy governance with HDBSCAN, mandatory face/license-plate redaction.
-- **Phase 7 — Priority Engine:** AHP pairwise weights with Consistency Ratio checking, self-bootstrapped Equity Compensator v2, Reasoning Trace deterministic validator, property-based tests, Causal Root-Cause Linking, Monsoon Surge Protocol.
+- **Phase 6 — Computer Vision:** YOLO-World-v2 zero-shot detection for Indian civic categories, Living Taxonomy governance with HDBSCAN (approving category requires severity rubric defaulting to Bühlmann-blended baseline; distinct from static AHP sub-score weights), mandatory face/license-plate redaction.
+- **Phase 7 — Priority Engine:** AHP pairwise weights with Consistency Ratio checking (weights compare Severity/Risk/Exposure/Criticality/Urgency against each other), self-bootstrapped Equity Compensator v2, Reasoning Trace deterministic validator, property-based tests, Causal Root-Cause Linking, Monsoon Surge Protocol.
 - **Phase 8 — Dispatch & ERP:** Full state machine (`Reported` to `Confirmed`), SLA timers, department handoffs, Command Deck APIs.
 - **Phase 9 — Field Companion:** Karmi Sahayak APIs, offline sync state lattice conflict resolution, post-resolution satisfaction loop, auto-escalation on dissatisfaction.
 - **Phase 10 — Analytics & ETA:** Ward Report Card, Corporator Digest, Service-Time / ETA prediction engine accounting for spatial and departmental workload queueing.
 - **Post-10 Addenda:** Proactive Inspection Engine (decay curves self-calibrated via Bühlmann credibility), Cross-Domain Signal Correlation (spatial leading indicators across departments).
-- **Phase 11 — Transparency Board:** Jan Sunwai Ledger, differential privacy (Laplace mechanism) on public aggregate exports, Nagar Pragati feed, read-only Civic Assistant.
+- **Phase 11 — Transparency Board:** Jan Sunwai Ledger, differential privacy on public exports (suppress below absolute floor n < 5; calibrated Laplace noise only above floor), Nagar Pragati feed, read-only Civic Assistant.
 - **Phase 12 — Hardening:** Full security, DPDP compliance audit, load tests, red-team penetration checks.
+
+---
+
+## 5. Specific Invariant Rules (v14 Re-derivations)
+
+1. **Living Taxonomy Category Governance (§A11):** Approving a new category into the taxonomy requires defining its severity rubric, defaulting to a Bühlmann-blended city-wide baseline until refined. This is entirely separate from the AHP weights in §A12 — AHP weights compare Severity, Risk, Exposure, Criticality, and Urgency against each other and are **never** re-run when a category is added.
+2. **Differential Privacy Floor & Laplace Calibration (§A23):** On public aggregate exports, counts below an absolute floor ($n < 5$) must be suppressed entirely rather than adding noise. Calibrated statistical noise (Laplace mechanism) is applied **only above that floor** ($n \ge 5$).
+3. **Multi-Issue Single Report State Aggregation (§A7):** For an `intake_report` containing multiple CV/NLP observations split across department-scoped child incidents, `intake_report.status` is strictly defined as the **least-advanced status** among its child incidents (e.g., if one child incident is `Resolved` and another is `InProgress`, the parent report status remains `InProgress`). Furthermore, Nagrik Setu must present the status of each child `observation` individually so citizens have complete visibility.
+

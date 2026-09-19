@@ -9,7 +9,7 @@
 ## 1. What Was Built
 
 - **Persistent Rules & Architectural Ground Truth:**
-  - Created `.agents/RULES.md` containing all 17 non-negotiable Hard Rules, the complete directory skeleton, the Bootstrap Principle formulation ($Z = \frac{n}{n + K}$), and one-paragraph roadmaps for Phases 0–12 + post-10 addenda.
+  - Created `.agents/RULES.md` containing all 17 non-negotiable Hard Rules, the complete directory skeleton, the Bootstrap Principle formulation ($Z = \frac{n}{n + K}$), one-paragraph roadmaps for Phases 0–12 + post-10 addenda, and the 3 critical domain invariants re-derived from v14 (§A11 Living Taxonomy severity rubric vs static AHP sub-score weights, §A23 differential privacy floor $n < 5$ suppression vs calibrated noise, and §A7 `intake_report.status` least-advanced child status aggregation with individual observation tracking).
 - **Repository Skeleton & Python Packaging:**
   - Standardized directory layout matching specification §A10:
     - `civicbrain/api/v1/`
@@ -20,7 +20,7 @@
     - `tests/`
     - `docs/phase-log/`
     - `integrations/`
-  - Created `pyproject.toml` with dependencies for FastAPI, Pydantic v2, SQLAlchemy 2.0 async, GeoAlchemy2, asyncpg, ruff, pytest, and mypy.
+  - Created `pyproject.toml` with dependencies for FastAPI, Pydantic v2, SQLAlchemy 2.0 async, GeoAlchemy2, asyncpg, ruff, pytest, supabase, and mypy.
   - Created `.env.example` template covering Supabase, Upstash Redis, and environment configs.
 - **Diagnostics & Health Endpoints:**
   - Implemented `GET /v1/health` (liveness probe reporting system version, environment, and ISO UTC timestamp).
@@ -35,8 +35,8 @@
   - Implemented SQLAlchemy `Organization` model using `enum.StrEnum` for `ULBType`.
 - **Automated CI/CD & Testing:**
   - Created `.github/workflows/ci.yml` running linting, formatting checks, type-checking, and test execution across Python versions.
-  - Developed test suite in `tests/test_health.py` and `tests/test_rls_organization.py` verifying liveness, readiness schema, root metadata, and RLS DDL enforcement.
-  - Verified 100% test pass rate (5 passed in 5.18s) with zero lint errors or warnings.
+  - Developed test suite in `tests/test_health.py` and `tests/test_rls_organization.py` verifying liveness, readiness schema, root metadata, RLS migration DDL, schema structure, client-SDK anonymous denial, and client-SDK authenticated access.
+  - Verified 100% test pass rate (7 passed in 8.54s) with zero lint errors or warnings.
 
 ---
 
