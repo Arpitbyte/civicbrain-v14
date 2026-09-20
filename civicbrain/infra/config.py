@@ -49,6 +49,9 @@ class Settings(BaseSettings):
     # Upstash Redis
     UPSTASH_REDIS_URL: str = "redis://localhost:6379"
 
+    # Scheduled Cron Secret
+    CRON_SECRET: str = "default-dev-cron-secret"
+
     # CORS
     CORS_ORIGINS: str = "http://localhost:3000,http://localhost:8000"
 

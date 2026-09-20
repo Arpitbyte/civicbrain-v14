@@ -245,6 +245,15 @@ class Incident(Base):
     downstream_symptom_count: Mapped[int] = mapped_column(default=0, nullable=False)
     root_cause_priority_boost: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
 
+    # Phase 8: Evidence-Gated Dispatch & Resolution Proofs (§A14, §A16)
+    resolution_proof_urls: Mapped[list[str]] = mapped_column(
+        ARRAY(String), default=list, server_default="{}", nullable=False
+    )
+    resolution_geom: Mapped[Any | None] = mapped_column(Geometry("POINT", srid=4326), nullable=True)
+    auto_confirm_deadline: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )

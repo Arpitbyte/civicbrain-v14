@@ -19,6 +19,10 @@ from fastapi import (
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from civicbrain.domain.dispatch.services import (
+    citizen_confirm_report,
+    citizen_dispute_report,
+)
 from civicbrain.domain.identity.jwt import SupabaseClaims, get_current_user_claims
 from civicbrain.domain.identity.models import Department, Organization
 from civicbrain.domain.intake.models import (
@@ -37,6 +41,11 @@ from civicbrain.domain.intake.services import (
 )
 from civicbrain.infra.database import get_db
 from civicbrain.infra.redis import get_redis_client
+from civicbrain.schemas.dispatch import (
+    ConfirmResponse,
+    DisputeRequest,
+    DisputeResponse,
+)
 from civicbrain.schemas.intake import (
     AnonymousTrackingResponse,
     IntakeReportCreate,
@@ -313,3 +322,26 @@ async def track_anonymous_report(
         )
 
     return report_data
+
+
+@router.post("/reports/{tracking_token}/confirm", response_model=ConfirmResponse)
+async def confirm_report_resolution(
+    tracking_token: str,
+    db: AsyncSession = Depends(get_db),
+) -> ConfirmResponse:
+    """Citizen confirms satisfaction with resolved incident(s)."""
+    res = await citizen_confirm_report(db, tracking_token)
+    await db.commit()
+    return res
+
+
+@router.post("/reports/{tracking_token}/dispute", response_model=DisputeResponse)
+async def dispute_report_resolution(
+    tracking_token: str,
+    payload: DisputeRequest,
+    db: AsyncSession = Depends(get_db),
+) -> DisputeResponse:
+    """Citizen disputes resolution; strictly routes incident(s) to APPEALED for supervisor review."""
+    res = await citizen_dispute_report(db, tracking_token, payload.reason)
+    await db.commit()
+    return res
