@@ -12,6 +12,7 @@ from civicbrain.domain.identity.jwt import (
     CurrentUserClaims,
     SupabaseClaims,
     get_current_user_claims,
+    get_optional_user_claims,
     require_roles,
 )
 from civicbrain.domain.identity.models import Department, Organization, StaffRole
@@ -41,7 +42,7 @@ async def list_categories(
     organization_id: uuid.UUID = Query(...),
     category_status: CategoryStatus | None = None,
     db: AsyncSession = Depends(get_db),
-    claims: SupabaseClaims | None = Depends(get_current_user_claims),
+    claims: SupabaseClaims | None = Depends(get_optional_user_claims),
 ) -> list[TaxonomyCategoryResponse]:
     """List taxonomy categories.
 

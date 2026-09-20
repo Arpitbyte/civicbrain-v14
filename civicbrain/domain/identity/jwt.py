@@ -97,6 +97,24 @@ def get_current_user_claims(
         ) from e
 
 
+def get_optional_user_claims(
+    credentials: HTTPAuthorizationCredentials | None = Security(security),
+) -> CurrentUserClaims | None:
+    """Dependency extracting Supabase JWT claims if present, returning None if unauthenticated."""
+    if not credentials:
+        return None
+    try:
+        payload = decode(
+            credentials.credentials,
+            settings.SECRET_KEY,
+            algorithms=["HS256"],
+            options={"verify_signature": False},
+        )
+        return CurrentUserClaims(payload)
+    except Exception:
+        return None
+
+
 def require_roles(allowed_roles: list[StaffRole]):
     """Role-check dependency factory."""
 

@@ -51,3 +51,13 @@ async def test_incidents_listing_nonexistent_org():
         )
         assert res.status_code == 200
         assert res.json() == []
+
+
+@pytest.mark.asyncio
+async def test_taxonomy_categories_listing_empty():
+    """Verify /v1/taxonomy/categories returns empty list for org with no categories."""
+    random_org_id = uuid.uuid4()
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        res = await client.get(f"/v1/taxonomy/categories?organization_id={random_org_id}")
+        assert res.status_code == 200
+        assert res.json() == []
