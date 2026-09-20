@@ -227,6 +227,19 @@ class Incident(Base):
     appeal_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
     resolution_notes: Mapped[str | None] = mapped_column(Text, nullable=True)
 
+    # Phase 6: 5 AHP Sub-scores, Equity Boost, Priority & Confidence Gating (§A12, §A13)
+    subscore_severity: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+    subscore_risk: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+    subscore_exposure: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+    subscore_criticality: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+    subscore_urgency: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+    raw_priority_score: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+    equity_boost: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+    priority_score: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+    confidence_score: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+    requires_human_review: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    review_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )

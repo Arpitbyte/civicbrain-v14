@@ -2,7 +2,7 @@
 
 **Version:** CivicBrain v14.6.0  
 **Phase:** 6  
-**Status:** SPECIFICATION PENDING APPROVAL (Corrected per User Review)  
+**Status:** APPROVED & IMPLEMENTED  
 
 ---
 
@@ -16,11 +16,11 @@ Phase 6 implements the authoritative, deterministic civic prioritization and cre
      2. $C_2$: **Risk** ($w_R$): Public safety hazard, potential for secondary accidents, structural collapse, or contagion.
      3. $C_3$: **Exposure** ($w_E$): Footfall volume, commuter density, school zones, hospital perimeters, arterial vs. residential thoroughfare.
      4. $C_4$: **Criticality** ($w_C$): Municipal infrastructure tier, vulnerability of downstream network, vital lifeline status.
-     5. $C_5$: **Urgency** ($w_U$): Temporal aging, SLA breach proximity, and rate of decay (strictly decoupled from citizen emotional expression per §A11).
+     5. $C_5$: **Urgency** ($w_U$): Temporal aging, SLA breach proximity, and rate of decay (strictly decoupled from citizen emotional expression and citizen urgency score per §A11).
    - Saaty pairwise comparison matrix $A \in \mathbb{R}^{5 \times 5}$ solved via principal eigenvector extraction ($\lambda_{\max}$ and normalized vector $w$).
    - Strict Consistency Ratio verification:
      $$CI = \frac{\lambda_{\max} - n}{n - 1}, \quad CR = \frac{CI}{RI_5} < 0.10 \quad (\text{where } RI_5 = 1.12)$$
-   - Rejection gate: Any matrix with $CR \ge 0.10$ raises validation error and cannot be activated.
+   - Rejection gate: Any matrix with $CR \ge 0.10$ raises validation error and cannot be activated or persisted (enforced by DB `CHECK` constraint).
    - Five separate stored sub-scores ($s_S, s_R, s_E, s_C, s_U \in [0.0, 1.0]$) and five separate weights per incident, producing the raw multi-criteria score:
      $$P_{\text{raw}} = \sum_{k \in \{S, R, E, C, U\}} w_k \cdot s_k \in [0.0, 1.0]$$
 
@@ -29,14 +29,14 @@ Phase 6 implements the authoritative, deterministic civic prioritization and cre
    - **Expected vs. Observed Issue Rate Formulation:**
      - For each ward $i$, compute an expected issue rate $\hat{\mu}_i$ by blending the city-wide prior issue rate $\mu_0$ with that ward's own verified historical incident record $\bar{X}_i$:
        $$\hat{\mu}_i = Z_i \bar{X}_i + (1 - Z_i) \mu_0$$
-       where Bühlmann credibility factor $Z_i = \frac{n_i}{n_i + K}$, $n_i$ is the number of historical verified/resolved incidents in ward $i$, and $K$ is the structural actuarial variance parameter ($K = s^2 / a$).
+       where Bühlmann credibility factor $Z_i = \frac{n_i}{n_i + K}$, $n_i$ is the number of historical verified/resolved incidents in ward $i$, and $K$ is the structural actuarial variance parameter ($K = s^2 / a$, with cold-start provisional default $K = 10.0$).
      - Let $O_i$ be the observed reporting rate for ward $i$ over the active evaluation window (e.g. active complaints per 10,000 population or normalized ward area baseline).
      - Compute the **Equity Gap** ($\Delta_i$):
        $$\Delta_i = \max(0, \hat{\mu}_i - O_i)$$
      - If $\hat{\mu}_i > O_i$, the ward is demonstrably **underreported** relative to its actuarially expected infrastructure defect rate.
      - The **Equity Boost** $\beta_i \in [0.0, \beta_{\max}]$ is proportional to this expected-vs-observed gap:
        $$\beta_i = \min\left(\beta_{\max}, \gamma \cdot \frac{\Delta_i}{\hat{\mu}_i + \epsilon}\right)$$
-       (with standard defaults $\beta_{\max} = 0.25, \gamma = 0.5$).
+       (with provisional cold-start defaults $\beta_{\max} = 0.25, \gamma = 0.5$, explicitly subject to re-estimation pending real empirical data tuning per Bootstrap Principle §A3).
      - Stored explicitly on the ward credibility table as `expected_issue_rate`, `observed_issue_rate`, `equity_gap`, and `equity_boost`.
      - Final Priority Score:
        $$P_{\text{final}} = \min(100.0, (P_{\text{raw}} + \beta_i) \times 100.0)$$
@@ -62,12 +62,14 @@ Phase 6 implements the authoritative, deterministic civic prioritization and cre
 1. **Deterministic Glass-Box Reproducibility (Standing Invariant 2):**
    - Given identical incident sub-scores ($s_S, s_R, s_E, s_C, s_U$), identical ward stats ($n_i, \bar{X}_i, O_i$), and identical AHP matrix $A$, the resulting $P_{\text{final}}$ must be identical to 6 decimal places. Zero LLM hallucinations or hidden stochastic terms.
 2. **Saaty Consistency Ratio Hard Gate ($CR < 0.10$):**
-   - For $n=5$, Random Index $RI_5 = 1.12$. A matrix proposal with $CR \ge 0.10$ is rejected with an explicit HTTP 422 error.
-3. **Pure CPU Computation with Zero External APIs (Hard Rule 1):**
+   - For $n=5$, Random Index $RI_5 = 1.12$. A matrix proposal with $CR \ge 0.10$ is rejected with an explicit HTTP 422 error and blocked by PostgreSQL table constraint `chk_ahp_cr`.
+3. **Decoupled Urgency Subscore (§A11, §A12):**
+   - `subscore_urgency` reflects temporal decay and SLA proximity; it must NEVER be derived from or correlated with `intake_report.citizen_urgency_score`.
+4. **Pure CPU Computation with Zero External APIs (Hard Rule 1):**
    - NumPy / pure Python for power iteration / eigenvalue extraction and Bühlmann variance calculations. No external paid/black-box APIs.
-4. **Mandatory Scoped Grants (Standing Invariant 4):**
+5. **Mandatory Scoped Grants (Standing Invariant 4):**
    - Every new table and function in migration 0007 has explicit scoped grants (`service_role`, `authenticated`, `anon`), zero `GRANT ALL`.
-5. **Real Seeded Tests with Clean Teardown (Standing Invariant 5):**
+6. **Real Seeded Tests with Clean Teardown (Standing Invariant 5):**
    - Live Supabase integration tests use real pre-seeded organizations, wards, incidents, and valid JWTs, completely cleaning up in `finally` blocks.
 
 ---
@@ -88,7 +90,8 @@ CREATE TABLE IF NOT EXISTS public.ahp_matrix_config (
     consistency_ratio DOUBLE PRECISION NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT true,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    CONSTRAINT uq_ahp_org_active UNIQUE (organization_id, is_active)
+    CONSTRAINT uq_ahp_org_active UNIQUE (organization_id, is_active),
+    CONSTRAINT chk_ahp_cr CHECK (consistency_ratio < 0.10)
 );
 
 -- 2. Ward Equity Credibility Table (Bühlmann Expected vs. Observed Rates)
@@ -148,29 +151,62 @@ ALTER TABLE public.ahp_matrix_config ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.ward_equity_credibility ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.ward_resolution_stat ENABLE ROW LEVEL SECURITY;
 
--- Policies: Organization-scoped read for authenticated, admin write
+-- Service Role full access
+CREATE POLICY service_role_ahp_config_all ON public.ahp_matrix_config
+    FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+CREATE POLICY service_role_ward_equity_all ON public.ward_equity_credibility
+    FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+CREATE POLICY service_role_ward_res_all ON public.ward_resolution_stat
+    FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- Authenticated Staff: Select scoped by organization membership in user_role_assignment
 CREATE POLICY ahp_config_select_org ON public.ahp_matrix_config
     FOR SELECT TO authenticated
-    USING (organization_id = ((auth.jwt() -> 'app_metadata' ->> 'organization_id')::uuid));
-
-CREATE POLICY ahp_config_admin_all ON public.ahp_matrix_config
-    FOR ALL TO authenticated
     USING (
-        organization_id = ((auth.jwt() -> 'app_metadata' ->> 'organization_id')::uuid)
-        AND (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
-    )
-    WITH CHECK (
-        organization_id = ((auth.jwt() -> 'app_metadata' ->> 'organization_id')::uuid)
-        AND (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
+        EXISTS (
+            SELECT 1 FROM public.user_role_assignment ura
+            WHERE ura.user_id = auth.uid()
+              AND ura.organization_id = ahp_matrix_config.organization_id
+        )
     );
+
+-- Admin Manage Policy: Writes strictly gated by is_org_admin(organization_id)
+CREATE POLICY ahp_config_admin_manage ON public.ahp_matrix_config
+    FOR ALL TO authenticated
+    USING (is_org_admin(organization_id))
+    WITH CHECK (is_org_admin(organization_id));
 
 CREATE POLICY ward_equity_select_org ON public.ward_equity_credibility
     FOR SELECT TO authenticated
-    USING (organization_id = ((auth.jwt() -> 'app_metadata' ->> 'organization_id')::uuid));
+    USING (
+        EXISTS (
+            SELECT 1 FROM public.user_role_assignment ura
+            WHERE ura.user_id = auth.uid()
+              AND ura.organization_id = ward_equity_credibility.organization_id
+        )
+    );
+
+CREATE POLICY ward_equity_admin_manage ON public.ward_equity_credibility
+    FOR ALL TO authenticated
+    USING (is_org_admin(organization_id))
+    WITH CHECK (is_org_admin(organization_id));
 
 CREATE POLICY ward_res_select_org ON public.ward_resolution_stat
     FOR SELECT TO authenticated
-    USING (organization_id = ((auth.jwt() -> 'app_metadata' ->> 'organization_id')::uuid));
+    USING (
+        EXISTS (
+            SELECT 1 FROM public.user_role_assignment ura
+            WHERE ura.user_id = auth.uid()
+              AND ura.organization_id = ward_resolution_stat.organization_id
+        )
+    );
+
+CREATE POLICY ward_res_admin_manage ON public.ward_resolution_stat
+    FOR ALL TO authenticated
+    USING (is_org_admin(organization_id))
+    WITH CHECK (is_org_admin(organization_id));
 
 -- Scoped Grants (Zero GRANT ALL)
 REVOKE ALL ON TABLE public.ahp_matrix_config FROM PUBLIC;
@@ -181,10 +217,12 @@ GRANT INSERT, UPDATE ON TABLE public.ahp_matrix_config TO authenticated;
 REVOKE ALL ON TABLE public.ward_equity_credibility FROM PUBLIC;
 GRANT SELECT ON TABLE public.ward_equity_credibility TO anon, authenticated;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.ward_equity_credibility TO service_role;
+GRANT INSERT, UPDATE ON TABLE public.ward_equity_credibility TO authenticated;
 
 REVOKE ALL ON TABLE public.ward_resolution_stat FROM PUBLIC;
 GRANT SELECT ON TABLE public.ward_resolution_stat TO anon, authenticated;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.ward_resolution_stat TO service_role;
+GRANT INSERT, UPDATE ON TABLE public.ward_resolution_stat TO authenticated;
 ```
 
 ---
@@ -200,7 +238,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.ward_resolution_stat TO ser
      - Normalizes eigenvector to sum to $1.0$: $(w_S, w_R, w_E, w_C, w_U)$.
      - Verifies $CR = \frac{\lambda_{\max} - 5}{4 \times 1.12} < 0.10$.
      - Default §A12 calibrated 5-criteria Saaty matrix:
-       - Pairwise importances: Severity (1), Risk (1.2), Exposure (0.9), Criticality (1.5), Urgency (0.8).
+       - Pairwise importances: Severity (1.0), Risk (1.2), Exposure (0.9), Criticality (1.5), Urgency (0.8).
    - Dataclass `CriteriaSubscores`:
      - Holds 5 explicit floats in $[0.0, 1.0]$: `severity`, `risk`, `exposure`, `criticality`, `urgency`.
    - Function `calculate_raw_priority(subscores: CriteriaSubscores, weights: dict[str, float]) -> float`.
@@ -215,6 +253,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.ward_resolution_stat TO ser
        $$\Delta_i = \max(0.0, \hat{\mu}_i - O_i)$$
      - Method `calculate_equity_boost(equity_gap: float, expected_rate: float, max_boost: float = 0.25, gamma: float = 0.5) -> float`:
        $$\beta_i = \min\left(\beta_{\max}, \gamma \cdot \frac{\Delta_i}{\hat{\mu}_i + 1e-6}\right)$$
+       where $\beta_{\max} = 0.25$ and $\gamma = 0.5$ are provisional defaults pending real-data tuning.
 
 3. **`gate.py`:**
    - Function `evaluate_confidence_gate(raw_priority: float, equity_boost: float, confidence: float, priority_threshold: float = 70.0, confidence_threshold: float = 0.50) -> PriorityEvaluationResult`:
@@ -247,6 +286,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.ward_resolution_stat TO ser
      - Saaty $5 \times 5$ matrix computes exact 5 weights summing to $1.0 \pm 10^{-6}$.
      - Consistency Ratio: Valid matrix yields $CR < 0.10$; inconsistent matrix ($CR \ge 0.10$) raises validation error.
      - Glass-box determinism: 1,000 evaluations yield identical float results to 6 decimal places.
+   - **Decoupling Assertion:**
+     - Explicit test verifying `subscore_urgency` is never derived from or correlated with `citizen_urgency_score`.
    - **Equity Compensator:**
      - Cold-start ward ($n_i = 0 \implies Z_i = 0$): Expected rate equals city prior $\mu_0$ exactly.
      - Underreported ward ($O_i \ll \hat{\mu}_i$): Produces positive $\Delta_i$ and positive equity boost $\beta_i$.
@@ -259,7 +300,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.ward_resolution_stat TO ser
 2. **Live Supabase Integration (`tests/test_live_supabase_phase6_ahp.py`):**
    - Execute against live Supabase (`isqepbxkzxfpvfdkcntw`).
    - Insert 5x5 AHP matrix, assert check constraints on all 5 sub-scores ($[0.0, 1.0]$) and priority ($[0.0, 100.0]$).
-   - Test RLS: Non-admin staff cannot insert/update AHP config; staff cannot read other org's equity tables.
+   - Verify DB-level CHECK constraint rejects matrix with $CR \ge 0.10$.
+   - Test RLS: Non-admin staff cannot insert/update AHP config (via `is_org_admin(organization_id)`); staff cannot read other org's equity tables.
    - Assert clean teardown in `finally` block (Standing Invariant 5).
 
 3. **CI & Quality Gates:**
