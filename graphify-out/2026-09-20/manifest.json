@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "civicbrain/api/v1/__init__.py": {
-    "mtime": 1789918450.6297014,
-    "seen": 1789918982.5021405,
-    "ast_hash": "98c1b367de7ea7d8781aff8ce6505ff9",
+    "mtime": 1789919992.5618858,
+    "seen": 1789920026.8142006,
+    "ast_hash": "9b8dbda4f7caa5c7f66ef877aa8f8e84",
     "semantic_hash": ""
   },
   "civicbrain/api/v1/health.py": {
@@ -429,6 +429,48 @@
     "mtime": 1789919011.710386,
     "seen": 1789919296.9545999,
     "ast_hash": "0b688bd1247ac30f01b291f15a4fdcb6",
+    "semantic_hash": ""
+  },
+  "civicbrain/api/v1/gis.py": {
+    "mtime": 1789919992.5625248,
+    "seen": 1789920026.8142047,
+    "ast_hash": "ebeec2cbdd0767d6b9f3a9b35a298a0f",
+    "semantic_hash": ""
+  },
+  "civicbrain/schemas/gis.py": {
+    "mtime": 1789919833.1511116,
+    "seen": 1789920026.8142502,
+    "ast_hash": "acbe3e12171cb2150ec0b683f69c9b8e",
+    "semantic_hash": ""
+  },
+  "migrations/0005_phase4_gis_core.sql": {
+    "mtime": 1789919745.3357537,
+    "seen": 1789920026.8142672,
+    "ast_hash": "d80dac2c120d9e303172c792656370e8",
+    "semantic_hash": ""
+  },
+  "tests/test_gis_core.py": {
+    "mtime": 1789919816.5861537,
+    "seen": 1789920026.81427,
+    "ast_hash": "e728e01e4cd0a373041739efe3e37924",
+    "semantic_hash": ""
+  },
+  "tests/test_live_supabase_phase4_gis.py": {
+    "mtime": 1789919990.006342,
+    "seen": 1789920026.8142884,
+    "ast_hash": "ac14bd765447b7d8e9509317b4b16312",
+    "semantic_hash": ""
+  },
+  "docs/phase-log/phase-4.md": {
+    "mtime": 1789920008.9282174,
+    "seen": 1789920026.8143377,
+    "ast_hash": "a98a1050e14cc79faa846ce91f97c1b5",
+    "semantic_hash": ""
+  },
+  "docs/specs/phase-5.md": {
+    "mtime": 1789920019.4629607,
+    "seen": 1789920026.8143458,
+    "ast_hash": "316ca638d139d68739d01a7a738f2510",
     "semantic_hash": ""
   }
 }
