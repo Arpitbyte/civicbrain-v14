@@ -187,10 +187,10 @@ async def submit_intake_report(
 
 @router.get("/reports/track", response_model=AnonymousTrackingResponse)
 async def track_anonymous_report(
+    request: Request,
     token: str = Query(
         ..., min_length=16, description="Cryptographic tracking token issued at submission"
     ),
-    request: Request = None,
     db: AsyncSession = Depends(get_db),
 ) -> Any:
     """Anonymous tracking lookup backed by the get_anonymous_intake_report SECURITY DEFINER RPC.
