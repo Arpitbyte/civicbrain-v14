@@ -142,6 +142,16 @@ class IntakeReport(Base):
         "metadata", JSONB, default=dict, nullable=False
     )
 
+    detected_language: Mapped[str] = mapped_column(
+        String(20), default="en", server_default="en", nullable=False
+    )
+    detected_script: Mapped[str] = mapped_column(
+        String(20), default="Latin", server_default="Latin", nullable=False
+    )
+    citizen_urgency_score: Mapped[float] = mapped_column(
+        Double, default=0.0, server_default="0.0", nullable=False
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
@@ -274,6 +284,10 @@ class Observation(Base):
         String(64), default="citizen_declared", nullable=False
     )
     needs_manual_triage: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    extracted_keywords: Mapped[list[str]] = mapped_column(
+        ARRAY(Text), default=list, server_default="{}", nullable=False
+    )
+    text_severity_hint: Mapped[int | None] = mapped_column(SmallInteger, nullable=True)
     status: Mapped[ObservationStatus] = mapped_column(
         Enum(
             ObservationStatus,

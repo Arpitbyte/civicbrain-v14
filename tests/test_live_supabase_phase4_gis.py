@@ -176,6 +176,20 @@ async def test_live_supabase_phase4_gis():
         )
         dept_b_id = dept_b_res.data[0]["id"]
 
+        # Sanitation Department in Org A (for department isolation verification)
+        dept_san_res = (
+            service_client.table("department")
+            .insert(
+                {
+                    "organization_id": org_a_id,
+                    "name": "Sanitation A",
+                    "code": f"SAN_A_{run_id}",
+                }
+            )
+            .execute()
+        )
+        dept_san_id = dept_san_res.data[0]["id"]
+
         # =====================================================================
         # 2. Create Real Auth Users & Real JWTs for Org A and Org B Staff
         # =====================================================================
@@ -249,6 +263,28 @@ async def test_live_supabase_phase4_gis():
             }
         ).execute()
 
+        # Department Staff in Org A (Roads Department only)
+        roads_staff_uid, roads_staff_jwt, roads_staff_client = create_and_login_user(
+            "roads_staff_a",
+            {"org_id": org_a_id, "role": "department_staff", "department_ids": [dept_a_id]},
+        )
+        service_client.table("user_account").insert(
+            {
+                "id": roads_staff_uid,
+                "organization_id": org_a_id,
+                "phone": f"+919800{run_id[:4]}13",
+                "full_name": f"Roads Staff {run_id}",
+            }
+        ).execute()
+        service_client.table("user_role_assignment").insert(
+            {
+                "user_id": roads_staff_uid,
+                "organization_id": org_a_id,
+                "role": "department_staff",
+                "department_id": dept_a_id,
+            }
+        ).execute()
+
         # =====================================================================
         # 3. Seed Incidents in Org B (4 in a cluster <20m apart, 1 isolated >10km away)
         # =====================================================================
@@ -296,27 +332,45 @@ async def test_live_supabase_phase4_gis():
         )
         isolated_b_incident_id = iso_res.data[0]["id"]
 
-        # Also seed 1 incident in Org A
-        (
+        # Also seed 1 Roads incident and 1 Sanitation incident in Org A
+        roads_inc_res = (
             service_client.table("incident")
             .insert(
                 {
                     "organization_id": org_a_id,
                     "department_id": dept_a_id,
                     "ward_id": ward_a_id,
-                    "category_code": "STREETLIGHT",
+                    "category_code": "POTHOLE",
                     "geom": "SRID=4326;POINT(77.5500 12.9500)",
                     "status": "reported",
-                    "severity": 1,
+                    "severity": 2,
                 }
             )
             .execute()
         )
+        roads_inc_id = roads_inc_res.data[0]["id"]
+
+        san_inc_res = (
+            service_client.table("incident")
+            .insert(
+                {
+                    "organization_id": org_a_id,
+                    "department_id": dept_san_id,
+                    "ward_id": ward_a_id,
+                    "category_code": "GARBAGE",
+                    "geom": "SRID=4326;POINT(77.5600 12.9600)",
+                    "status": "reported",
+                    "severity": 2,
+                }
+            )
+            .execute()
+        )
+        san_inc_id = san_inc_res.data[0]["id"]
 
         # =====================================================================
-        # 4. Mandatory User Correction 1 Verification:
-        # Org A calling get_incident_clusters with Org B's organization_id returns ZERO rows
-        # using real seeded data and a real JWT.
+        # 4. Mandatory User Correction 1 & Department Isolation Verification:
+        # 4.1 Cross-tenant isolation: Org A calling get_incident_clusters with Org B's ID returns 0 rows
+        # 4.2 Department isolation: Roads staff CAN read Roads incident, but CANNOT read Sanitation incident
         # =====================================================================
         cross_tenant_rpc_res = staff_a_client.rpc(
             "get_incident_clusters",
@@ -331,6 +385,18 @@ async def test_live_supabase_phase4_gis():
         assert len(cross_tenant_rpc_res.data) == 0, (
             "Cross-tenant leakage violation! Org A staff calling get_incident_clusters with "
             "Org B's organization_id MUST return zero rows due to incident table RLS inheritance."
+        )
+
+        # 4.2 Department isolation: Roads staff CAN read Roads incident
+        roads_read = (
+            roads_staff_client.table("incident").select("*").eq("id", roads_inc_id).execute()
+        )
+        assert len(roads_read.data) == 1, "Roads department staff should read Roads incident"
+
+        # 4.3 Department isolation: Roads staff CANNOT read Sanitation incident
+        san_read = roads_staff_client.table("incident").select("*").eq("id", san_inc_id).execute()
+        assert len(san_read.data) == 0, (
+            "Department isolation violation! Roads department staff CANNOT read Sanitation incident."
         )
 
         # =====================================================================

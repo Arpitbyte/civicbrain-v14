@@ -1,5 +1,5 @@
 -- CivicBrain v14 — Phase 4: GIS Core & Spatial Analysis Pipeline (§A14)
--- Migration 0005: Spatial Indexes, RLS Tenant Scoping, and In-Database Spatial Clustering
+-- Migration 0005: Spatial Indexes, Granular RLS Scoping, and In-Database Spatial Clustering
 
 -- 1. Ensure GIST Spatial Indexes Exist on All Core Geometry Columns
 CREATE INDEX IF NOT EXISTS idx_zone_geom_gist ON public.zone USING GIST (geom);
@@ -7,23 +7,84 @@ CREATE INDEX IF NOT EXISTS idx_ward_geom_gist ON public.ward USING GIST (geom);
 CREATE INDEX IF NOT EXISTS idx_intake_report_geom_gist ON public.intake_report USING GIST (geom);
 CREATE INDEX IF NOT EXISTS idx_incident_geom_gist ON public.incident USING GIST (geom);
 
--- 2. Refine RLS Policies on Incident Table for Tenant Isolation (§A10, §A14)
+-- 2. Refine RLS Policies on Incident Table for Strict Tenant & Role Isolation (§A10, §A14, §A18)
 -- Public read on incident table strictly for anonymous transparency (with spatial scrubbing at API layer)
 DROP POLICY IF EXISTS "public_read_incidents" ON public.incident;
 CREATE POLICY "public_read_incidents" ON public.incident
     FOR SELECT TO anon
     USING (true);
 
--- Authenticated staff/admins can strictly only select incidents within their organization
+-- Remove broad staff_read_incidents to prevent OR-combination bypass of department boundaries
 DROP POLICY IF EXISTS "staff_read_incidents" ON public.incident;
-CREATE POLICY "staff_read_incidents" ON public.incident
+
+-- 2.1 Department Staff: Can only read incidents within their assigned department
+DROP POLICY IF EXISTS "dept_staff_select_incidents" ON public.incident;
+CREATE POLICY "dept_staff_select_incidents" ON public.incident
     FOR SELECT TO authenticated
     USING (
-        is_org_admin(organization_id)
+        EXISTS (
+            SELECT 1 FROM public.user_role_assignment ura
+            WHERE ura.user_id = auth.uid()
+              AND ura.organization_id = incident.organization_id
+              AND ura.role = 'department_staff'
+              AND ura.department_id = incident.department_id
+        )
+    );
+
+-- 2.2 Zonal Supervisor: Can read incidents in wards belonging to their supervised zone
+DROP POLICY IF EXISTS "zonal_supervisor_select_incidents" ON public.incident;
+CREATE POLICY "zonal_supervisor_select_incidents" ON public.incident
+    FOR SELECT TO authenticated
+    USING (
+        EXISTS (
+            SELECT 1 FROM public.user_role_assignment ura
+            JOIN public.ward w ON w.id = incident.ward_id
+            WHERE ura.user_id = auth.uid()
+              AND ura.organization_id = incident.organization_id
+              AND ura.role = 'zonal_supervisor'
+              AND ura.zone_id = w.zone_id
+        )
+    );
+
+-- 2.3 Corporator: Can read incidents within their assigned ward constituency
+DROP POLICY IF EXISTS "corporator_select_incidents" ON public.incident;
+CREATE POLICY "corporator_select_incidents" ON public.incident
+    FOR SELECT TO authenticated
+    USING (
+        EXISTS (
+            SELECT 1 FROM public.user_role_assignment ura
+            WHERE ura.user_id = auth.uid()
+              AND ura.organization_id = incident.organization_id
+              AND ura.role = 'corporator'
+              AND ura.ward_id = incident.ward_id
+        )
+    );
+
+-- 2.4 Field Worker: Can read incidents assigned to them or within their department
+DROP POLICY IF EXISTS "field_worker_select_incidents" ON public.incident;
+CREATE POLICY "field_worker_select_incidents" ON public.incident
+    FOR SELECT TO authenticated
+    USING (
+        assigned_worker_id = auth.uid()
         OR EXISTS (
             SELECT 1 FROM public.user_role_assignment ura
             WHERE ura.user_id = auth.uid()
               AND ura.organization_id = incident.organization_id
+              AND ura.role = 'field_worker'
+              AND ura.department_id = incident.department_id
+        )
+    );
+
+-- 2.5 Dispatcher: Command Deck operations across organization
+DROP POLICY IF EXISTS "dispatcher_select_incidents" ON public.incident;
+CREATE POLICY "dispatcher_select_incidents" ON public.incident
+    FOR SELECT TO authenticated
+    USING (
+        EXISTS (
+            SELECT 1 FROM public.user_role_assignment ura
+            WHERE ura.user_id = auth.uid()
+              AND ura.organization_id = incident.organization_id
+              AND ura.role = 'dispatcher'
         )
     );
 
