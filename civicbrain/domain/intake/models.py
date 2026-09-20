@@ -240,6 +240,11 @@ class Incident(Base):
     requires_human_review: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     review_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
 
+    # Phase 7: Causal Root-Cause Linking & Centrality Metadata (§A13)
+    is_root_cause: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    downstream_symptom_count: Mapped[int] = mapped_column(default=0, nullable=False)
+    root_cause_priority_boost: Mapped[float] = mapped_column(Double, default=0.0, nullable=False)
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )

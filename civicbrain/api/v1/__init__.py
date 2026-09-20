@@ -3,6 +3,7 @@
 from fastapi import APIRouter
 
 from civicbrain.api.v1.auth import router as auth_router
+from civicbrain.api.v1.causal import router as causal_router
 from civicbrain.api.v1.gis import router as gis_router
 from civicbrain.api.v1.health import router as health_router
 from civicbrain.api.v1.hierarchy import router as hierarchy_router
@@ -23,4 +24,7 @@ api_v1_router.include_router(gis_router, prefix="/gis", tags=["GIS & Spatial Ana
 api_v1_router.include_router(nlp_router, prefix="/nlp", tags=["NLP & Multilingual Pipeline"])
 api_v1_router.include_router(
     prioritization_router, prefix="/prioritization", tags=["Prioritization & Equity Engine"]
+)
+api_v1_router.include_router(
+    causal_router, prefix="/causal", tags=["Causal Root-Cause Linking & Centrality"]
 )
