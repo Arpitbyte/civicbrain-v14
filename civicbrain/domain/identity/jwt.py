@@ -62,6 +62,9 @@ class CurrentUserClaims:
         self.phone: str | None = raw_claims.get("phone")
 
 
+SupabaseClaims = CurrentUserClaims
+
+
 def get_current_user_claims(
     credentials: HTTPAuthorizationCredentials | None = Security(security),
 ) -> CurrentUserClaims:

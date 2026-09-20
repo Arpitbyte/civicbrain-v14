@@ -69,17 +69,17 @@
       "source_location": "L346"
     },
     {
-      "id": "civicbrain_domain_identity_models_organization",
-      "label": "Organization",
+      "id": "civicbrain_domain_identity_models_useraccount",
+      "label": "UserAccount",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
       "community_name": "models.py",
       "file_type": "code",
-      "norm_label": "organization",
+      "norm_label": "useraccount",
       "source_file": "civicbrain/domain/identity/models.py",
-      "source_location": "L54"
+      "source_location": "L238"
     },
     {
       "id": "civicbrain_domain_identity_models_userroleassignment",
@@ -147,6 +147,71 @@
       "source_location": "L165"
     },
     {
+      "id": "civicbrain_schemas_identity_hierarchytreeresponse",
+      "label": "HierarchyTreeResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "models.py",
+      "file_type": "code",
+      "norm_label": "hierarchytreeresponse",
+      "source_file": "civicbrain/schemas/identity.py",
+      "source_location": "L197"
+    },
+    {
+      "id": "civicbrain_schemas_identity_useraccountcreate",
+      "label": "UserAccountCreate",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "models.py",
+      "file_type": "code",
+      "norm_label": "useraccountcreate",
+      "source_file": "civicbrain/schemas/identity.py",
+      "source_location": "L128"
+    },
+    {
+      "id": "civicbrain_schemas_identity_wardhierarchynode",
+      "label": "WardHierarchyNode",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "models.py",
+      "file_type": "code",
+      "norm_label": "wardhierarchynode",
+      "source_file": "civicbrain/schemas/identity.py",
+      "source_location": "L182"
+    },
+    {
+      "id": "civicbrain_schemas_identity_zonehierarchynode",
+      "label": "ZoneHierarchyNode",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "models.py",
+      "file_type": "code",
+      "norm_label": "zonehierarchynode",
+      "source_file": "civicbrain/schemas/identity.py",
+      "source_location": "L190"
+    },
+    {
+      "id": "civicbrain_domain_identity_models_organization",
+      "label": "Organization",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "file_type": "code",
+      "norm_label": "organization",
+      "source_file": "civicbrain/domain/identity/models.py",
+      "source_location": "L54"
+    },
+    {
       "id": "civicbrain_domain_identity_models_ulbtype",
       "label": "ULBType",
       "_callable": true,
@@ -173,58 +238,6 @@
       "source_location": "L16"
     },
     {
-      "id": "civicbrain_domain_identity_models_staffrole",
-      "label": "StaffRole",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "hierarchy.py",
-      "file_type": "code",
-      "norm_label": "staffrole",
-      "source_file": "civicbrain/domain/identity/models.py",
-      "source_location": "L34"
-    },
-    {
-      "id": "civicbrain_domain_identity_models_useraccount",
-      "label": "UserAccount",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "hierarchy.py",
-      "file_type": "code",
-      "norm_label": "useraccount",
-      "source_file": "civicbrain/domain/identity/models.py",
-      "source_location": "L238"
-    },
-    {
-      "id": "civicbrain_schemas_identity_useraccountcreate",
-      "label": "UserAccountCreate",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "hierarchy.py",
-      "file_type": "code",
-      "norm_label": "useraccountcreate",
-      "source_file": "civicbrain/schemas/identity.py",
-      "source_location": "L128"
-    },
-    {
-      "id": "civicbrain_schemas_identity_useraccountresponse",
-      "label": "UserAccountResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "hierarchy.py",
-      "file_type": "code",
-      "norm_label": "useraccountresponse",
-      "source_file": "civicbrain/schemas/identity.py",
-      "source_location": "L136"
-    },
-    {
       "id": "civicbrain_domain_identity_models_citizenverificationmethod",
       "label": "CitizenVerificationMethod",
       "_callable": true,
@@ -236,6 +249,19 @@
       "norm_label": "citizenverificationmethod",
       "source_file": "civicbrain/domain/identity/models.py",
       "source_location": "L47"
+    },
+    {
+      "id": "civicbrain_domain_identity_models_staffrole",
+      "label": "StaffRole",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "identity.py",
+      "file_type": "code",
+      "norm_label": "staffrole",
+      "source_file": "civicbrain/domain/identity/models.py",
+      "source_location": "L34"
     },
     {
       "id": "civicbrain_schemas_identity_baseschema",
@@ -355,19 +381,6 @@
       "source_location": "L101"
     },
     {
-      "id": "civicbrain_schemas_identity_hierarchytreeresponse",
-      "label": "HierarchyTreeResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "identity.py",
-      "file_type": "code",
-      "norm_label": "hierarchytreeresponse",
-      "source_file": "civicbrain/schemas/identity.py",
-      "source_location": "L197"
-    },
-    {
       "id": "civicbrain_schemas_identity_organizationresponse",
       "label": "OrganizationResponse",
       "_callable": true,
@@ -379,6 +392,19 @@
       "norm_label": "organizationresponse",
       "source_file": "civicbrain/schemas/identity.py",
       "source_location": "L16"
+    },
+    {
+      "id": "civicbrain_schemas_identity_useraccountresponse",
+      "label": "UserAccountResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "identity.py",
+      "file_type": "code",
+      "norm_label": "useraccountresponse",
+      "source_file": "civicbrain/schemas/identity.py",
+      "source_location": "L136"
     },
     {
       "id": "civicbrain_schemas_identity_userroleassignmentcreate",
@@ -433,19 +459,6 @@
       "source_location": "L71"
     },
     {
-      "id": "civicbrain_schemas_identity_wardhierarchynode",
-      "label": "WardHierarchyNode",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "identity.py",
-      "file_type": "code",
-      "norm_label": "wardhierarchynode",
-      "source_file": "civicbrain/schemas/identity.py",
-      "source_location": "L182"
-    },
-    {
       "id": "civicbrain_schemas_identity_wardresponse",
       "label": "WardResponse",
       "_callable": true,
@@ -483,19 +496,6 @@
       "norm_label": "zonecreate",
       "source_file": "civicbrain/schemas/identity.py",
       "source_location": "L49"
-    },
-    {
-      "id": "civicbrain_schemas_identity_zonehierarchynode",
-      "label": "ZoneHierarchyNode",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "identity.py",
-      "file_type": "code",
-      "norm_label": "zonehierarchynode",
-      "source_file": "civicbrain/schemas/identity.py",
-      "source_location": "L190"
     },
     {
       "id": "civicbrain_schemas_identity_zoneresponse",
@@ -560,28 +560,16 @@
       "source_location": "L59"
     },
     {
-      "id": "civicbrain_api_v1_auth_get_my_profile",
-      "label": "get_my_profile()",
+      "id": "civicbrain_domain_identity_services_create_staff_user",
+      "label": "create_staff_user()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
       "community_name": "models.py",
       "file_type": "code",
-      "norm_label": "get_my_profile()",
-      "source_file": "civicbrain/api/v1/auth.py",
-      "source_location": "L19"
-    },
-    {
-      "id": "civicbrain_domain_identity_models_organization_repr",
-      "label": ".__repr__()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "code",
-      "norm_label": ".__repr__()",
-      "source_file": "civicbrain/domain/identity/models.py",
-      "source_location": "L95"
+      "norm_label": "create_staff_user()",
+      "source_file": "civicbrain/domain/identity/services.py",
+      "source_location": "L149"
     },
     {
       "id": "civicbrain_domain_identity_services_get_departments",
@@ -632,16 +620,16 @@
       "source_location": "L93"
     },
     {
-      "id": "civicbrain_infra_database_get_db",
-      "label": "get_db()",
+      "id": "civicbrain_domain_identity_models_organization_repr",
+      "label": ".__repr__()",
       "_callable": true,
       "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
       "file_type": "code",
-      "norm_label": "get_db()",
-      "source_file": "civicbrain/infra/database.py",
-      "source_location": "L47"
+      "norm_label": ".__repr__()",
+      "source_file": "civicbrain/domain/identity/models.py",
+      "source_location": "L95"
     },
     {
       "id": "tests_test_rls_organization_test_client_sdk_rls_anonymous_denial",
@@ -714,6 +702,18 @@
       "norm_label": "test_organization_schema_structure()",
       "source_file": "tests/test_rls_organization.py",
       "source_location": "L32"
+    },
+    {
+      "id": "civicbrain_api_v1_auth_get_my_profile",
+      "label": "get_my_profile()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "file_type": "code",
+      "norm_label": "get_my_profile()",
+      "source_file": "civicbrain/api/v1/auth.py",
+      "source_location": "L19"
     },
     {
       "id": "civicbrain_api_v1_hierarchy_create_staff_member",
@@ -824,28 +824,16 @@
       "source_location": "L100"
     },
     {
-      "id": "civicbrain_domain_identity_services_create_staff_user",
-      "label": "create_staff_user()",
+      "id": "civicbrain_infra_database_get_db",
+      "label": "get_db()",
       "_callable": true,
       "_origin": "ast",
       "community": 29,
       "community_name": "hierarchy.py",
       "file_type": "code",
-      "norm_label": "create_staff_user()",
-      "source_file": "civicbrain/domain/identity/services.py",
-      "source_location": "L149"
-    },
-    {
-      "id": "tests_test_identity_models_test_jwt_claims_parsing",
-      "label": "test_jwt_claims_parsing()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "hierarchy.py",
-      "file_type": "code",
-      "norm_label": "test_jwt_claims_parsing()",
-      "source_file": "tests/test_identity_models.py",
-      "source_location": "L35"
+      "norm_label": "get_db()",
+      "source_file": "civicbrain/infra/database.py",
+      "source_location": "L47"
     },
     {
       "id": "civicbrain_main_lifespan",
@@ -884,6 +872,18 @@
       "source_location": "L29"
     },
     {
+      "id": "tests_test_identity_models_test_jwt_claims_parsing",
+      "label": "test_jwt_claims_parsing()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "identity.py",
+      "file_type": "code",
+      "norm_label": "test_jwt_claims_parsing()",
+      "source_file": "tests/test_identity_models.py",
+      "source_location": "L35"
+    },
+    {
       "id": "tests_test_identity_models_test_pydantic_schemas_validation",
       "label": "test_pydantic_schemas_validation()",
       "_callable": true,
@@ -906,42 +906,6 @@
       "norm_label": "test_staff_role_enum_values()",
       "source_file": "tests/test_identity_models.py",
       "source_location": "L18"
-    },
-    {
-      "id": "tests_test_health_test_health_endpoint_liveness",
-      "label": "test_health_endpoint_liveness()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
-      "file_type": "code",
-      "norm_label": "test_health_endpoint_liveness()",
-      "source_file": "tests/test_health.py",
-      "source_location": "L11"
-    },
-    {
-      "id": "tests_test_health_test_ready_endpoint_schema",
-      "label": "test_ready_endpoint_schema()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
-      "file_type": "code",
-      "norm_label": "test_ready_endpoint_schema()",
-      "source_file": "tests/test_health.py",
-      "source_location": "L24"
-    },
-    {
-      "id": "tests_test_health_test_root_endpoint_metadata",
-      "label": "test_root_endpoint_metadata()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
-      "file_type": "code",
-      "norm_label": "test_root_endpoint_metadata()",
-      "source_file": "tests/test_health.py",
-      "source_location": "L39"
     },
     {
       "id": "tests_test_hierarchy_api_create_test_token",
@@ -1014,6 +978,42 @@
       "norm_label": ".cors_origins_list()",
       "source_file": "civicbrain/infra/config.py",
       "source_location": "L56"
+    },
+    {
+      "id": "tests_test_health_test_health_endpoint_liveness",
+      "label": "test_health_endpoint_liveness()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "test_health_endpoint_liveness()",
+      "source_file": "tests/test_health.py",
+      "source_location": "L11"
+    },
+    {
+      "id": "tests_test_health_test_ready_endpoint_schema",
+      "label": "test_ready_endpoint_schema()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "test_ready_endpoint_schema()",
+      "source_file": "tests/test_health.py",
+      "source_location": "L24"
+    },
+    {
+      "id": "tests_test_health_test_root_endpoint_metadata",
+      "label": "test_root_endpoint_metadata()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "test_root_endpoint_metadata()",
+      "source_file": "tests/test_health.py",
+      "source_location": "L39"
     },
     {
       "id": "tests_test_live_supabase_rbac_rls_is_live_supabase_configured",
@@ -1197,39 +1197,6 @@
       "source_location": "L21"
     },
     {
-      "id": "civicbrain_api_v1_auth",
-      "label": "auth.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "code",
-      "norm_label": "auth.py",
-      "source_file": "civicbrain/api/v1/auth.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "civicbrain_api_v1_auth_py_asyncsession",
-      "label": "AsyncSession",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "code",
-      "norm_label": "asyncsession",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "civicbrain_api_v1_auth_py_get",
-      "label": "get",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "code",
-      "norm_label": "get",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "civicbrain_domain_identity_models",
       "label": "models.py",
       "_origin": "ast",
@@ -1274,24 +1241,13 @@
       "source_location": ""
     },
     {
-      "id": "civicbrain_infra_database",
-      "label": "database.py",
+      "id": "civicbrain_schemas_identity_py_basemodel",
+      "label": "BaseModel",
       "_origin": "ast",
       "community": 1,
       "community_name": "models.py",
       "file_type": "code",
-      "norm_label": "database.py",
-      "source_file": "civicbrain/infra/database.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "civicbrain_infra_database_py_asyncsession",
-      "label": "AsyncSession",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "code",
-      "norm_label": "asyncsession",
+      "norm_label": "basemodel",
       "source_file": "",
       "source_location": ""
     },
@@ -1305,28 +1261,6 @@
       "norm_label": "declarativebase",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "civicbrain_api_v1_auth_rationale_1",
-      "label": "Authentication and user session endpoints.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "rationale",
-      "norm_label": "authentication and user session endpoints.",
-      "source_file": "civicbrain/api/v1/auth.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "civicbrain_api_v1_auth_rationale_23",
-      "label": "Returns the authenticated identity, role assignments, and jurisdictional scopes\u2026",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "rationale",
-      "norm_label": "returns the authenticated identity, role assignments, and jurisdictional scopes...",
-      "source_file": "civicbrain/api/v1/auth.py",
-      "source_location": "L23"
     },
     {
       "id": "civicbrain_domain_identity_models_rationale_1",
@@ -1373,6 +1307,17 @@
       "source_location": "L201"
     },
     {
+      "id": "civicbrain_domain_identity_models_rationale_239",
+      "label": "Staff user account linked to Supabase Auth auth.users.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "models.py",
+      "file_type": "rationale",
+      "norm_label": "staff user account linked to supabase auth auth.users.",
+      "source_file": "civicbrain/domain/identity/models.py",
+      "source_location": "L239"
+    },
+    {
       "id": "civicbrain_domain_identity_models_rationale_280",
       "label": "Explicit role assignment for staff users with optional department, zone, or\u2026",
       "_origin": "ast",
@@ -1406,17 +1351,6 @@
       "source_location": "L400"
     },
     {
-      "id": "civicbrain_domain_identity_models_rationale_55",
-      "label": "Root tenant representing an Urban Local Body (ULB) or multi-ULB state\u2026",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "rationale",
-      "norm_label": "root tenant representing an urban local body (ulb) or multi-ulb state...",
-      "source_file": "civicbrain/domain/identity/models.py",
-      "source_location": "L55"
-    },
-    {
       "id": "civicbrain_domain_identity_services_rationale_1",
       "label": "Domain services for identity, administrative hierarchy, and role management.",
       "_origin": "ast",
@@ -1426,6 +1360,17 @@
       "norm_label": "domain services for identity, administrative hierarchy, and role management.",
       "source_file": "civicbrain/domain/identity/services.py",
       "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_domain_identity_services_rationale_155",
+      "label": "Create staff user record and assign initial roles.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "models.py",
+      "file_type": "rationale",
+      "norm_label": "create staff user record and assign initial roles.",
+      "source_file": "civicbrain/domain/identity/services.py",
+      "source_location": "L155"
     },
     {
       "id": "civicbrain_domain_identity_services_rationale_30",
@@ -1472,17 +1417,6 @@
       "source_location": "L94"
     },
     {
-      "id": "civicbrain_infra_database_rationale_1",
-      "label": "Database engine, session management, and connectivity diagnostics.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "rationale",
-      "norm_label": "database engine, session management, and connectivity diagnostics.",
-      "source_file": "civicbrain/infra/database.py",
-      "source_location": "L1"
-    },
-    {
       "id": "civicbrain_infra_database_rationale_22",
       "label": "Base declarative class for all CivicBrain database entities.",
       "_origin": "ast",
@@ -1492,17 +1426,6 @@
       "norm_label": "base declarative class for all civicbrain database entities.",
       "source_file": "civicbrain/infra/database.py",
       "source_location": "L22"
-    },
-    {
-      "id": "civicbrain_infra_database_rationale_48",
-      "label": "Dependency that provides an async session per request.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "models.py",
-      "file_type": "rationale",
-      "norm_label": "dependency that provides an async session per request.",
-      "source_file": "civicbrain/infra/database.py",
-      "source_location": "L48"
     },
     {
       "id": "civicbrain_schemas_identity_rationale_166",
@@ -1848,6 +1771,17 @@
       "source_location": "L27"
     },
     {
+      "id": "civicbrain_domain_identity_models_rationale_55",
+      "label": "Root tenant representing an Urban Local Body (ULB) or multi-ULB state\u2026",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "test_rls_organization.py",
+      "file_type": "rationale",
+      "norm_label": "root tenant representing an urban local body (ulb) or multi-ulb state...",
+      "source_file": "civicbrain/domain/identity/models.py",
+      "source_location": "L55"
+    },
+    {
       "id": "tests_test_rls_organization_rationale_1",
       "label": "RLS verification tests for the organization entity. In accordance with Hard\u2026",
       "_origin": "ast",
@@ -2149,6 +2083,39 @@
       "source_location": ""
     },
     {
+      "id": "civicbrain_api_v1_auth",
+      "label": "auth.py",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "file_type": "code",
+      "norm_label": "auth.py",
+      "source_file": "civicbrain/api/v1/auth.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_api_v1_auth_py_asyncsession",
+      "label": "AsyncSession",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "file_type": "code",
+      "norm_label": "asyncsession",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "civicbrain_api_v1_auth_py_get",
+      "label": "get",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "file_type": "code",
+      "norm_label": "get",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "civicbrain_api_v1_hierarchy",
       "label": "hierarchy.py",
       "_origin": "ast",
@@ -2204,6 +2171,28 @@
       "source_location": "L1"
     },
     {
+      "id": "civicbrain_infra_database",
+      "label": "database.py",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "file_type": "code",
+      "norm_label": "database.py",
+      "source_file": "civicbrain/infra/database.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_infra_database_py_asyncsession",
+      "label": "AsyncSession",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "file_type": "code",
+      "norm_label": "asyncsession",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "httpauthorizationcredentials",
       "label": "HTTPAuthorizationCredentials",
       "_origin": "ast",
@@ -2224,6 +2213,28 @@
       "norm_label": "post",
       "source_file": "",
       "source_location": ""
+    },
+    {
+      "id": "civicbrain_api_v1_auth_rationale_1",
+      "label": "Authentication and user session endpoints.",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "file_type": "rationale",
+      "norm_label": "authentication and user session endpoints.",
+      "source_file": "civicbrain/api/v1/auth.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_api_v1_auth_rationale_23",
+      "label": "Returns the authenticated identity, role assignments, and jurisdictional scopes\u2026",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "file_type": "rationale",
+      "norm_label": "returns the authenticated identity, role assignments, and jurisdictional scopes...",
+      "source_file": "civicbrain/api/v1/auth.py",
+      "source_location": "L23"
     },
     {
       "id": "civicbrain_api_v1_hierarchy_rationale_1",
@@ -2336,48 +2347,26 @@
       "source_location": "L98"
     },
     {
-      "id": "civicbrain_domain_identity_models_rationale_239",
-      "label": "Staff user account linked to Supabase Auth auth.users.",
+      "id": "civicbrain_infra_database_rationale_1",
+      "label": "Database engine, session management, and connectivity diagnostics.",
       "_origin": "ast",
       "community": 29,
       "community_name": "hierarchy.py",
       "file_type": "rationale",
-      "norm_label": "staff user account linked to supabase auth auth.users.",
-      "source_file": "civicbrain/domain/identity/models.py",
-      "source_location": "L239"
+      "norm_label": "database engine, session management, and connectivity diagnostics.",
+      "source_file": "civicbrain/infra/database.py",
+      "source_location": "L1"
     },
     {
-      "id": "civicbrain_domain_identity_models_rationale_35",
-      "label": "Staff roles mapped to \u00a7A18 named workspaces.",
+      "id": "civicbrain_infra_database_rationale_48",
+      "label": "Dependency that provides an async session per request.",
       "_origin": "ast",
       "community": 29,
       "community_name": "hierarchy.py",
       "file_type": "rationale",
-      "norm_label": "staff roles mapped to \u00a7a18 named workspaces.",
-      "source_file": "civicbrain/domain/identity/models.py",
-      "source_location": "L35"
-    },
-    {
-      "id": "civicbrain_domain_identity_services_rationale_155",
-      "label": "Create staff user record and assign initial roles.",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "hierarchy.py",
-      "file_type": "rationale",
-      "norm_label": "create staff user record and assign initial roles.",
-      "source_file": "civicbrain/domain/identity/services.py",
-      "source_location": "L155"
-    },
-    {
-      "id": "tests_test_identity_models_rationale_36",
-      "label": "Verify CurrentUserClaims parses custom Supabase app_metadata.",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "hierarchy.py",
-      "file_type": "rationale",
-      "norm_label": "verify currentuserclaims parses custom supabase app_metadata.",
-      "source_file": "tests/test_identity_models.py",
-      "source_location": "L36"
+      "norm_label": "dependency that provides an async session per request.",
+      "source_file": "civicbrain/infra/database.py",
+      "source_location": "L48"
     },
     {
       "id": "civicbrain_api_v1_init",
@@ -2479,17 +2468,6 @@
       "source_location": "L1"
     },
     {
-      "id": "civicbrain_schemas_identity_py_basemodel",
-      "label": "BaseModel",
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "identity.py",
-      "file_type": "code",
-      "norm_label": "basemodel",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "tests_test_identity_models",
       "label": "test_identity_models.py",
       "_origin": "ast",
@@ -2499,6 +2477,17 @@
       "norm_label": "test_identity_models.py",
       "source_file": "tests/test_identity_models.py",
       "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_domain_identity_models_rationale_35",
+      "label": "Staff roles mapped to \u00a7A18 named workspaces.",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "identity.py",
+      "file_type": "rationale",
+      "norm_label": "staff roles mapped to \u00a7a18 named workspaces.",
+      "source_file": "civicbrain/domain/identity/models.py",
+      "source_location": "L35"
     },
     {
       "id": "civicbrain_domain_identity_models_rationale_48",
@@ -2554,6 +2543,17 @@
       "norm_label": "verify citizen verification methods per \u00a7a8.",
       "source_file": "tests/test_identity_models.py",
       "source_location": "L30"
+    },
+    {
+      "id": "tests_test_identity_models_rationale_36",
+      "label": "Verify CurrentUserClaims parses custom Supabase app_metadata.",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "identity.py",
+      "file_type": "rationale",
+      "norm_label": "verify currentuserclaims parses custom supabase app_metadata.",
+      "source_file": "tests/test_identity_models.py",
+      "source_location": "L36"
     },
     {
       "id": "tests_test_identity_models_rationale_65",
@@ -2639,26 +2639,37 @@
       "source_location": "L1"
     },
     {
-      "id": "tests_test_health",
-      "label": "test_health.py",
+      "id": "migrations_0001_phase0_init",
+      "label": "0001_phase0_init.sql",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community": 32,
+      "community_name": "0001_phase0_init.sql",
       "file_type": "code",
-      "norm_label": "test_health.py",
-      "source_file": "tests/test_health.py",
-      "source_location": "L1"
+      "norm_label": "0001_phase0_init.sql",
+      "source_file": "migrations/0001_phase0_init.sql",
+      "source_location": null
     },
     {
-      "id": "tests_test_health_py_asyncio",
-      "label": "asyncio",
+      "id": "migrations_0001_phase0_init_idx_organization_code",
+      "label": "idx_organization_code",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community": 32,
+      "community_name": "0001_phase0_init.sql",
       "file_type": "code",
-      "norm_label": "asyncio",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "idx_organization_code",
+      "source_file": "migrations/0001_phase0_init.sql",
+      "source_location": "L32"
+    },
+    {
+      "id": "migrations_0001_phase0_init_organization",
+      "label": "organization",
+      "_origin": "ast",
+      "community": 32,
+      "community_name": "0001_phase0_init.sql",
+      "file_type": "code",
+      "norm_label": "organization",
+      "source_file": "migrations/0001_phase0_init.sql",
+      "source_location": "L21"
     },
     {
       "id": "tests_test_hierarchy_api",
@@ -2692,50 +2703,6 @@
       "norm_label": "uuid",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "tests_test_health_rationale_1",
-      "label": "Smoke and integration tests for health and readiness endpoints.",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
-      "file_type": "rationale",
-      "norm_label": "smoke and integration tests for health and readiness endpoints.",
-      "source_file": "tests/test_health.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_health_rationale_12",
-      "label": "Verify that /v1/health returns HTTP 200 and expected liveness schema.",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
-      "file_type": "rationale",
-      "norm_label": "verify that /v1/health returns http 200 and expected liveness schema.",
-      "source_file": "tests/test_health.py",
-      "source_location": "L12"
-    },
-    {
-      "id": "tests_test_health_rationale_25",
-      "label": "Verify that /v1/ready returns valid readiness response format.",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
-      "file_type": "rationale",
-      "norm_label": "verify that /v1/ready returns valid readiness response format.",
-      "source_file": "tests/test_health.py",
-      "source_location": "L25"
-    },
-    {
-      "id": "tests_test_health_rationale_40",
-      "label": "Verify that root endpoint provides documentation links.",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
-      "file_type": "rationale",
-      "norm_label": "verify that root endpoint provides documentation links.",
-      "source_file": "tests/test_health.py",
-      "source_location": "L40"
     },
     {
       "id": "tests_test_hierarchy_api_rationale_1",
@@ -2826,6 +2793,28 @@
       "source_location": ""
     },
     {
+      "id": "tests_test_health",
+      "label": "test_health.py",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "test_health.py",
+      "source_file": "tests/test_health.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_health_py_asyncio",
+      "label": "asyncio",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "asyncio",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "tests_test_live_supabase_rbac_rls",
       "label": "test_live_supabase_rbac_rls.py",
       "_origin": "ast",
@@ -2890,6 +2879,50 @@
       "norm_label": "civicbrain system settings loaded from environment or .env.",
       "source_file": "civicbrain/infra/config.py",
       "source_location": "L8"
+    },
+    {
+      "id": "tests_test_health_rationale_1",
+      "label": "Smoke and integration tests for health and readiness endpoints.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "smoke and integration tests for health and readiness endpoints.",
+      "source_file": "tests/test_health.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_health_rationale_12",
+      "label": "Verify that /v1/health returns HTTP 200 and expected liveness schema.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "verify that /v1/health returns http 200 and expected liveness schema.",
+      "source_file": "tests/test_health.py",
+      "source_location": "L12"
+    },
+    {
+      "id": "tests_test_health_rationale_25",
+      "label": "Verify that /v1/ready returns valid readiness response format.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "verify that /v1/ready returns valid readiness response format.",
+      "source_file": "tests/test_health.py",
+      "source_location": "L25"
+    },
+    {
+      "id": "tests_test_health_rationale_40",
+      "label": "Verify that root endpoint provides documentation links.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "verify that root endpoint provides documentation links.",
+      "source_file": "tests/test_health.py",
+      "source_location": "L40"
     },
     {
       "id": "tests_test_live_supabase_rbac_rls_rationale_1",
@@ -3051,39 +3084,6 @@
       "norm_label": "auth.users",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "migrations_0001_phase0_init",
-      "label": "0001_phase0_init.sql",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "0002_phase1_identity_rbac.sql",
-      "file_type": "code",
-      "norm_label": "0001_phase0_init.sql",
-      "source_file": "migrations/0001_phase0_init.sql",
-      "source_location": null
-    },
-    {
-      "id": "migrations_0001_phase0_init_idx_organization_code",
-      "label": "idx_organization_code",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "0002_phase1_identity_rbac.sql",
-      "file_type": "code",
-      "norm_label": "idx_organization_code",
-      "source_file": "migrations/0001_phase0_init.sql",
-      "source_location": "L32"
-    },
-    {
-      "id": "migrations_0001_phase0_init_organization",
-      "label": "organization",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "0002_phase1_identity_rbac.sql",
-      "file_type": "code",
-      "norm_label": "organization",
-      "source_file": "migrations/0001_phase0_init.sql",
-      "source_location": "L21"
     },
     {
       "id": "migrations_0002_phase1_identity_rbac",
@@ -3306,6 +3306,17 @@
       "source_location": "L29"
     },
     {
+      "id": "organization",
+      "label": "organization",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "0002_phase1_identity_rbac.sql",
+      "file_type": "code",
+      "norm_label": "organization",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "agents",
       "label": "AGENTS.md",
       "_origin": "ast",
@@ -3382,6 +3393,18 @@
       "type": "external"
     },
     {
+      "id": "pydantic",
+      "label": "pydantic",
+      "_origin": "semantic",
+      "community": 0,
+      "community_name": "v1/health.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "pydantic",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "typing",
       "label": "typing",
       "_origin": "semantic",
@@ -3390,18 +3413,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "typing",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "collections_abc",
-      "label": "collections_abc",
-      "_origin": "semantic",
-      "community": 1,
-      "community_name": "models.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "collections_abc",
       "source_file": "",
       "type": "external"
     },
@@ -3430,18 +3441,6 @@
       "type": "external"
     },
     {
-      "id": "sqlalchemy",
-      "label": "sqlalchemy",
-      "_origin": "semantic",
-      "community": 1,
-      "community_name": "models.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "sqlalchemy",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "sqlalchemy_dialects_postgresql",
       "label": "sqlalchemy_dialects_postgresql",
       "_origin": "semantic",
@@ -3450,42 +3449,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "sqlalchemy_dialects_postgresql",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "sqlalchemy_ext_asyncio",
-      "label": "sqlalchemy_ext_asyncio",
-      "_origin": "semantic",
-      "community": 1,
-      "community_name": "models.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "sqlalchemy_ext_asyncio",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "sqlalchemy_orm",
-      "label": "sqlalchemy_orm",
-      "_origin": "semantic",
-      "community": 1,
-      "community_name": "models.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "sqlalchemy_orm",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "sqlalchemy_pool",
-      "label": "sqlalchemy_pool",
-      "_origin": "semantic",
-      "community": 1,
-      "community_name": "models.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "sqlalchemy_pool",
       "source_file": "",
       "type": "external"
     },
@@ -3538,6 +3501,18 @@
       "type": "external"
     },
     {
+      "id": "collections_abc",
+      "label": "collections_abc",
+      "_origin": "semantic",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "collections_abc",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "fastapi_security",
       "label": "fastapi_security",
       "_origin": "semantic",
@@ -3546,6 +3521,54 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "fastapi_security",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "sqlalchemy",
+      "label": "sqlalchemy",
+      "_origin": "semantic",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sqlalchemy",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "sqlalchemy_ext_asyncio",
+      "label": "sqlalchemy_ext_asyncio",
+      "_origin": "semantic",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sqlalchemy_ext_asyncio",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "sqlalchemy_orm",
+      "label": "sqlalchemy_orm",
+      "_origin": "semantic",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sqlalchemy_orm",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "sqlalchemy_pool",
+      "label": "sqlalchemy_pool",
+      "_origin": "semantic",
+      "community": 29,
+      "community_name": "hierarchy.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sqlalchemy_pool",
       "source_file": "",
       "type": "external"
     },
@@ -3601,23 +3624,11 @@
       "id": "httpx",
       "label": "httpx",
       "_origin": "semantic",
-      "community": 4,
-      "community_name": "test_hierarchy_api.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "httpx",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "pydantic",
-      "label": "pydantic",
-      "_origin": "semantic",
       "community": 5,
       "community_name": "config.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "pydantic",
+      "norm_label": "httpx",
       "source_file": "",
       "type": "external"
     },
@@ -9152,24 +9163,13 @@
     },
     {
       "source": "migrations_0002_phase1_identity_rbac_department",
-      "target": "migrations_0001_phase0_init_organization",
+      "target": "organization",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "migrations/0002_phase1_identity_rbac.sql",
       "source_location": "L65",
-      "weight": 1.0
-    },
-    {
-      "source": "migrations_0002_phase1_identity_rbac_elected_representative",
-      "target": "migrations_0001_phase0_init_organization",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "migrations/0002_phase1_identity_rbac.sql",
-      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -9195,6 +9195,17 @@
       "weight": 1.0
     },
     {
+      "source": "migrations_0002_phase1_identity_rbac_elected_representative",
+      "target": "organization",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "migrations/0002_phase1_identity_rbac.sql",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
       "source": "migrations_0002_phase1_identity_rbac_user_account",
       "target": "auth_users",
       "relation": "references",
@@ -9207,24 +9218,13 @@
     },
     {
       "source": "migrations_0002_phase1_identity_rbac_user_account",
-      "target": "migrations_0001_phase0_init_organization",
+      "target": "organization",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "migrations/0002_phase1_identity_rbac.sql",
       "source_location": "L79",
-      "weight": 1.0
-    },
-    {
-      "source": "migrations_0002_phase1_identity_rbac_user_role_assignment",
-      "target": "migrations_0001_phase0_init_organization",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "migrations/0002_phase1_identity_rbac.sql",
-      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -9272,14 +9272,14 @@
       "weight": 1.0
     },
     {
-      "source": "migrations_0002_phase1_identity_rbac_ward",
-      "target": "migrations_0001_phase0_init_organization",
+      "source": "migrations_0002_phase1_identity_rbac_user_role_assignment",
+      "target": "organization",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "migrations/0002_phase1_identity_rbac.sql",
-      "source_location": "L44",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -9294,8 +9294,19 @@
       "weight": 1.0
     },
     {
+      "source": "migrations_0002_phase1_identity_rbac_ward",
+      "target": "organization",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "migrations/0002_phase1_identity_rbac.sql",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
       "source": "migrations_0002_phase1_identity_rbac_zone",
-      "target": "migrations_0001_phase0_init_organization",
+      "target": "organization",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -9766,5 +9777,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f24f7195218243db9c934f9c5b78d5f25486532e"
+  "built_at_commit": "d8f7b2f8c4e2125fa57b4d92c24459075dc04dce"
 }
