@@ -156,9 +156,9 @@
     "semantic_hash": ""
   },
   ".agents/RULES.md": {
-    "mtime": 1789809846.3182263,
-    "seen": 1789812663.6804624,
-    "ast_hash": "c9bf7d3e926de29273a1ff8ff7595e9c",
+    "mtime": 1789881914.5307658,
+    "seen": 1789881927.2130089,
+    "ast_hash": "7280af33595bcf76f2bd783d855078d6",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
@@ -210,9 +210,9 @@
     "semantic_hash": ""
   },
   "migrations/0001_phase0_init.sql": {
-    "mtime": 1789811932.488465,
-    "seen": 1789812663.6804345,
-    "ast_hash": "b2587da41730e9d043d75465aa6c5443",
+    "mtime": 1789881883.8023815,
+    "seen": 1789881927.2129877,
+    "ast_hash": "18a654cf2e9e2a8418a38d4ba609a1e5",
     "semantic_hash": ""
   },
   "tests/test_live_supabase_rls.py": {
