@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "civicbrain/api/v1/__init__.py": {
-    "mtime": 1789787521.6733048,
-    "seen": 1789787576.144704,
-    "ast_hash": "84a43f6fca177773f906f61f4594b933",
+    "mtime": 1789882397.9753766,
+    "seen": 1789882699.4492111,
+    "ast_hash": "9a8daa823487be513044a3fe785b69ab",
     "semantic_hash": ""
   },
   "civicbrain/api/v1/health.py": {
@@ -66,9 +66,9 @@
     "semantic_hash": ""
   },
   "civicbrain/domain/identity/models.py": {
-    "mtime": 1789787535.5440202,
-    "seen": 1789787576.1447103,
-    "ast_hash": "82c09d410234e267e6eeb201f51fc8b8",
+    "mtime": 1789882601.2387037,
+    "seen": 1789882699.449233,
+    "ast_hash": "abb1f66a79f4c6c5da87147430d12f71",
     "semantic_hash": ""
   },
   "civicbrain/domain/intake/__init__.py": {
@@ -102,9 +102,9 @@
     "semantic_hash": ""
   },
   "civicbrain/infra/database.py": {
-    "mtime": 1789812773.2667139,
-    "seen": 1789812819.732363,
-    "ast_hash": "da67dae13dcab72c06ebfb965f934986",
+    "mtime": 1789882621.8791685,
+    "seen": 1789882699.4492502,
+    "ast_hash": "e27bc8ee4fc028a2a686794d43fdb4c1",
     "semantic_hash": ""
   },
   "civicbrain/main.py": {
@@ -138,9 +138,9 @@
     "semantic_hash": ""
   },
   "pyproject.toml": {
-    "mtime": 1789812933.3877406,
-    "seen": 1789812982.812121,
-    "ast_hash": "25286e96d83cf8438a36922bd0b95f1b",
+    "mtime": 1789882613.6356761,
+    "seen": 1789882699.449269,
+    "ast_hash": "1d0643d691f569a15e7dad56e8d6991b",
     "semantic_hash": ""
   },
   "tests/test_health.py": {
@@ -225,6 +225,66 @@
     "mtime": 1789812636.5632756,
     "seen": 1789812663.6804934,
     "ast_hash": "ebf0ea942b38ff2ce99f40d433c3c7c2",
+    "semantic_hash": ""
+  },
+  "civicbrain/api/v1/auth.py": {
+    "mtime": 1789882629.7183661,
+    "seen": 1789882699.4492142,
+    "ast_hash": "6a44dcecff8ef8eb09cfc6c5d8aacc28",
+    "semantic_hash": ""
+  },
+  "civicbrain/api/v1/hierarchy.py": {
+    "mtime": 1789882609.3406813,
+    "seen": 1789882699.4492188,
+    "ast_hash": "a475e9a9b1e19f35ecd0b3bbbf1946dc",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/identity/jwt.py": {
+    "mtime": 1789882637.2034962,
+    "seen": 1789882699.4492302,
+    "ast_hash": "50f2a3de7885cc68cd9de450acc65b92",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/identity/services.py": {
+    "mtime": 1789882609.3398576,
+    "seen": 1789882699.449235,
+    "ast_hash": "2daf2d83509ad36937aa53f45a0051ec",
+    "semantic_hash": ""
+  },
+  "civicbrain/schemas/identity.py": {
+    "mtime": 1789882369.235806,
+    "seen": 1789882699.449258,
+    "ast_hash": "6e1888bf30d50779661be24ca93b4333",
+    "semantic_hash": ""
+  },
+  "migrations/0002_phase1_identity_rbac.sql": {
+    "mtime": 1789882531.840192,
+    "seen": 1789882699.4492671,
+    "ast_hash": "d26243420467e9ecde81fba6ae058cbe",
+    "semantic_hash": ""
+  },
+  "tests/test_hierarchy_api.py": {
+    "mtime": 1789882407.460154,
+    "seen": 1789882699.449273,
+    "ast_hash": "a5426e7b87780d505d0e28017d55b0b4",
+    "semantic_hash": ""
+  },
+  "tests/test_identity_models.py": {
+    "mtime": 1789882609.3406813,
+    "seen": 1789882699.4492748,
+    "ast_hash": "1ae04f1141bd3e66976a1a2d925eee36",
+    "semantic_hash": ""
+  },
+  "tests/test_live_supabase_rbac_rls.py": {
+    "mtime": 1789882646.6086414,
+    "seen": 1789882699.4492764,
+    "ast_hash": "9a9010672b9bf7f77a9e229a48f262da",
+    "semantic_hash": ""
+  },
+  "docs/phase-log/phase-1.md": {
+    "mtime": 1789882689.4963694,
+    "seen": 1789882699.4493055,
+    "ast_hash": "af0734546fd4fde3dcca36fec4d0795d",
     "semantic_hash": ""
   }
 }
