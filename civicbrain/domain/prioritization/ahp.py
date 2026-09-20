@@ -7,13 +7,11 @@ Dimensions:
 4. Criticality (C)
 5. Urgency (U)
 
-Pure CPU computation using NumPy / power iteration. Zero external math APIs.
+Pure CPU computation using pure Python power iteration. Zero external math APIs or C-extensions.
 """
 
 from dataclasses import dataclass
 from typing import ClassVar
-
-import numpy as np
 
 # Saaty Random Consistency Index for n=1..10 (RI_5 = 1.12)
 SAATY_RANDOM_INDEX: dict[int, float] = {
@@ -48,11 +46,8 @@ class CriteriaSubscores:
             if not (0.0 <= val <= 1.0):
                 raise ValueError(f"Subscore '{key}' must be within [0.0, 1.0], got {val}")
 
-    def to_vector(self) -> np.ndarray:
-        return np.array(
-            [self.severity, self.risk, self.exposure, self.criticality, self.urgency],
-            dtype=np.float64,
-        )
+    def to_list(self) -> list[float]:
+        return [self.severity, self.risk, self.exposure, self.criticality, self.urgency]
 
 
 @dataclass
@@ -85,59 +80,66 @@ class AHPMatrix:
 
     def __init__(self, matrix: list[list[float]] | None = None) -> None:
         raw_mat = matrix if matrix is not None else self.DEFAULT_MATRIX
-        self.matrix = np.array(raw_mat, dtype=np.float64)
+        if len(raw_mat) != self.N or any(len(row) != self.N for row in raw_mat):
+            raise ValueError(f"AHP matrix must be of shape ({self.N}, {self.N})")
 
-        if self.matrix.shape != (self.N, self.N):
-            raise ValueError(
-                f"AHP matrix must be of shape ({self.N}, {self.N}), got {self.matrix.shape}"
-            )
-
+        self.matrix = [[float(val) for val in row] for row in raw_mat]
         self._validate_reciprocal()
 
     def _validate_reciprocal(self) -> None:
         """Verify matrix is positive and reciprocal: A[i, j] * A[j, i] == 1, A[i, i] == 1."""
         for i in range(self.N):
-            if not np.isclose(self.matrix[i, i], 1.0, atol=1e-5):
+            if abs(self.matrix[i][i] - 1.0) > 1e-5:
                 raise ValueError(
-                    f"Diagonal element A[{i},{i}] must be 1.0, got {self.matrix[i, i]}"
+                    f"Diagonal element A[{i},{i}] must be 1.0, got {self.matrix[i][i]}"
                 )
             for j in range(self.N):
-                if self.matrix[i, j] <= 0:
-                    raise ValueError(
-                        f"Matrix elements must be positive, got A[{i},{j}] = {self.matrix[i, j]}"
-                    )
-                product = self.matrix[i, j] * self.matrix[j, i]
-                if not np.isclose(product, 1.0, atol=1e-4):
+                val = self.matrix[i][j]
+                if val <= 0:
+                    raise ValueError(f"Matrix elements must be positive, got A[{i},{j}] = {val}")
+                reciprocal_val = self.matrix[j][i]
+                product = val * reciprocal_val
+                if abs(product - 1.0) > 1e-4:
                     raise ValueError(
                         f"Matrix must be reciprocal: A[{i},{j}] * A[{j},{i}] = {product} != 1.0"
                     )
 
-    def solve(self) -> AHPResult:
-        """Extract principal eigenvector via power iteration / NumPy eigen decomposition.
+    def solve(self, max_iter: int = 100, tol: float = 1e-9) -> AHPResult:
+        """Extract principal eigenvector via power iteration in pure Python.
 
         Enforces strict Consistency Ratio CR = CI / RI < 0.10.
         """
-        eigvals, eigvecs = np.linalg.eig(self.matrix)
-        max_idx = int(np.argmax(np.real(eigvals)))
-        lambda_max = float(np.real(eigvals[max_idx]))
+        # Initial uniform vector
+        v = [1.0 / self.N] * self.N
 
-        # Principal eigenvector (normalized to sum to 1.0)
-        vec = np.real(eigvecs[:, max_idx])
-        vec = np.abs(vec)
-        weights_arr = vec / np.sum(vec)
+        # Power iteration
+        for _ in range(max_iter):
+            # v_next = A * v
+            v_next = [sum(self.matrix[i][j] * v[j] for j in range(self.N)) for i in range(self.N)]
+            norm = sum(v_next)
+            v_next = [x / norm for x in v_next]
+
+            # Check convergence
+            diff = max(abs(v_next[i] - v[i]) for i in range(self.N))
+            v = v_next
+            if diff < tol:
+                break
+
+        # Compute lambda_max: average of (A * v)_i / v_i
+        av = [sum(self.matrix[i][j] * v[j] for j in range(self.N)) for i in range(self.N)]
+        lambda_max = sum(av[i] / v[i] for i in range(self.N)) / self.N
 
         # Consistency metrics
-        ci = float((lambda_max - self.N) / (self.N - 1))
-        # Handle numerical precision: small negative ci is treated as 0.0
+        ci = (lambda_max - self.N) / (self.N - 1)
         if ci < 0.0 and ci > -1e-9:
             ci = 0.0
-        cr = float(ci / self.RI) if self.RI > 0 else 0.0
+        cr = ci / self.RI if self.RI > 0 else 0.0
 
-        weights_dict = {CRITERIA_KEYS[i]: round(float(weights_arr[i]), 6) for i in range(self.N)}
-        # Re-normalize to exact 1.0
+        weights_dict = {CRITERIA_KEYS[i]: round(v[i], 6) for i in range(self.N)}
+        # Re-normalize to sum to exact 1.0
         total_w = sum(weights_dict.values())
         if total_w > 0:
-            weights_dict = {k: round(v / total_w, 6) for k, v in weights_dict.items()}
+            weights_dict = {k: round(val / total_w, 6) for k, val in weights_dict.items()}
 
         is_consistent = cr < 0.10
 
@@ -162,4 +164,5 @@ def calculate_raw_priority(subscores: CriteriaSubscores, weights: dict[str, floa
         + weights["criticality"] * subscores.criticality
         + weights["urgency"] * subscores.urgency
     )
-    return round(float(np.clip(raw_score, 0.0, 1.0)), 6)
+    clamped = max(0.0, min(1.0, raw_score))
+    return round(clamped, 6)
