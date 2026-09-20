@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.pool import NullPool
 
 from civicbrain.infra.config import settings
 
@@ -26,14 +27,13 @@ class Base(DeclarativeBase):
 # Initialize async engine
 connect_args: dict[str, int] = {}
 if "postgresql" in settings.DATABASE_URL:
+    connect_args["statement_cache_size"] = 0
     connect_args["prepared_statement_cache_size"] = 0
 
 engine: AsyncEngine = create_async_engine(
     settings.DATABASE_URL,
     connect_args=connect_args,
-    pool_size=settings.DB_POOL_SIZE,
-    max_overflow=settings.DB_MAX_OVERFLOW,
-    pool_pre_ping=True,
+    poolclass=NullPool,
     future=True,
 )
 
