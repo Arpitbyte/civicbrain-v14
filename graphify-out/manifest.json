@@ -258,9 +258,9 @@
     "semantic_hash": ""
   },
   "migrations/0002_phase1_identity_rbac.sql": {
-    "mtime": 1789882531.840192,
-    "seen": 1789882699.4492671,
-    "ast_hash": "d26243420467e9ecde81fba6ae058cbe",
+    "mtime": 1789883133.6046386,
+    "seen": 1789883172.8162436,
+    "ast_hash": "16b41fd61285c2a3c4bdc131584c1af8",
     "semantic_hash": ""
   },
   "tests/test_hierarchy_api.py": {
@@ -282,9 +282,9 @@
     "semantic_hash": ""
   },
   "docs/phase-log/phase-1.md": {
-    "mtime": 1789882689.4963694,
-    "seen": 1789882699.4493055,
-    "ast_hash": "af0734546fd4fde3dcca36fec4d0795d",
+    "mtime": 1789883139.398428,
+    "seen": 1789883172.816282,
+    "ast_hash": "5b564b586a727c310d7c33c618d4cd8e",
     "semantic_hash": ""
   }
 }

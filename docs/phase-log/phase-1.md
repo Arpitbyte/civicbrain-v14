@@ -60,7 +60,10 @@
 
 ## 3. Deviations from Specification
 
-None. All files and requirements strictly conform to Phase 1 of CivicBrain v14 Part A and Part B.
+1. **Denormalized `organization_id` on `user_role_assignment`:**
+   - **Rationale:** In the strictly normalized domain model, `user_role_assignment` links `user_id` to a role and optional administrative/electoral scopes (`department_id`, `zone_id`, `ward_id`), while ULB tenancy is held on `user_account.organization_id`. However, evaluating Row-Level Security (RLS) policies and the security-definer helper `is_org_admin(p_org_id UUID)` on every staff access check would require an inner join back to `user_account`, introducing significant query overhead and recursion risks in PostgREST.
+   - **Design Choice:** Added a foreign key column `organization_id REFERENCES organization(id) ON DELETE CASCADE` directly on `user_role_assignment` (indexed via `idx_user_role_organization_id`). This denormalization enables $O(1)$ indexed lookup within `is_org_admin(organization_id)` and direct multi-tenant isolation policies without table joins.
+   - **Naming Consistency:** Confirmed named strictly as `organization_id` across the database migration, live Supabase schema, SQLAlchemy model (`UserRoleAssignment.organization_id`), and all RLS policies and helper functions, matching the schema convention used across `zone`, `ward`, `department`, `user_account`, and `elected_representative`.
 
 ---
 

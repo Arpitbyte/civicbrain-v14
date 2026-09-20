@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS user_role_assignment (
 );
 
 CREATE INDEX IF NOT EXISTS idx_user_role_user_id ON user_role_assignment(user_id);
-CREATE INDEX IF NOT EXISTS idx_user_role_org_id ON user_role_assignment(organization_id);
+CREATE INDEX IF NOT EXISTS idx_user_role_organization_id ON user_role_assignment(organization_id);
 
 -- 7. Elected Representative (Corporator / Councillor per 74th CAA, 1992)
 CREATE TABLE IF NOT EXISTS elected_representative (
