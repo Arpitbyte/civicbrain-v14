@@ -1,10 +1,12 @@
-"""Pure deterministic Splink integration for civic defect deduplication (§A11).
+"""Direct Fellegi-Sunter implementation using provisional cold-start weights (§A11).
 
 In accordance with:
 - Hard Rule 4: Deterministic over LLM (zero LLM calls for deduplication).
-- The Bootstrap Principle (§A3): Uses Splink's deterministic comparison mode with
+- The Bootstrap Principle (§A3): Uses direct Fellegi-Sunter record linkage math with
   explicit 'provisional cold-start defaults pending re-estimation' until operational
-  pairwise volume enables empirical EM parameter estimation.
+  pairwise volume enables empirical EM parameter estimation. Full Splink Linker/EM
+  batch estimation is deferred as a documented future upgrade once empirical pair volume
+  accumulates.
 """
 
 import logging
@@ -14,7 +16,7 @@ from civicbrain.domain.intake.models import DedupDecision
 
 logger = logging.getLogger(__name__)
 
-# Provisional cold-start parameters pending re-estimation via Splink EM
+# Provisional cold-start parameters pending re-estimation via Splink EM in a future upgrade
 COLD_START_PARAMS = {
     "spatial_exact_threshold_m": 15.0,
     "spatial_near_threshold_m": 50.0,
@@ -107,7 +109,7 @@ def evaluate_splink_record_linkage(
     category_match: bool,
     text_similarity: float,
 ) -> tuple[float, float, DedupDecision]:
-    """Evaluates pairwise record linkage under Splink provisional cold-start model.
+    """Evaluates pairwise record linkage using direct Fellegi-Sunter cold-start math.
 
     Returns:
         (total_match_weight, posterior_probability, decision)

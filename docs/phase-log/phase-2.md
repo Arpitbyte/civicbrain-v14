@@ -10,10 +10,10 @@
 
 - **Domain Core Entities & Split (§A7, §A16):**
   - Conformed 3-way domain separation decoupling citizen reports from physical municipal incidents:
-    - `intake_report`: Citizen/channel ingress record (`channel` in `pwa`, `whatsapp`, `phone_ivr`, `staff_proxy`, `transparency_appeal`; `status` in `submitted`, `triaged`, `assigned`, `in_progress`, `resolved`, `rejected`, `closed`; `tracking_token` for unauthenticated lookup).
+    - `intake_report`: Citizen/channel ingress record (`channel` in `pwa`, `whatsapp`, `ivr`, `csc`, `field_worker`; `status` in `submitted`, `processing`, `triaged`, `in_progress`, `partially_resolved`, `resolved`, `closed`, `rejected`; `tracking_token` for unauthenticated lookup).
     - `observation`: Atomic departmental finding or photo analysis routed to a specific department (`detected`, `verified`, `dismissed`, `merged`).
     - `incident`: The canonical physical entity on the ground managed by municipal crews, scoped to an administrative ward and department.
-    - `incident_dedup_link`: Fellegi-Sunter / Splink record linkage pair recording similarity scores, match probability, and dedup decision (`exact_match`, `probable_match`, `distinct`, `manual_review`).
+    - `incident_dedup_link`: Fellegi-Sunter record linkage pair recording similarity scores, match probability, and dedup decision (`exact_match`, `probable_match`, `distinct`, `manual_review`).
 - **Multi-Department Photo Routing (§A7):**
   - Modeled one-to-many relationship from `intake_report` to `observation`, allowing a single citizen report (or uploaded image) to generate multiple departmental observations routed to different service departments (e.g. ROADS for potholes, SWM for waste alongside the road).
 - **Incident State Machine (§A16):**
@@ -29,8 +29,7 @@
     - `resolved` -> `resolved`
     - `confirmed` -> `closed`
     - `rejected` -> `rejected`
-- **Splink Deduplication Integration (§A11, Bootstrap Principle §A3):**
-  - Integrated `splink>=4.0.0` dependency.
+- **Deduplication: Direct Fellegi-Sunter Implementation with Provisional Cold-Start Weights (§A11, Bootstrap Principle §A3):**
   - Implemented spatial proximity comparisons (Euclidean/Haversine distance in meters) and deterministic Jaro-Winkler string similarity on category codes and descriptions.
   - Formulated cold-start provisional priors ($P(\text{Match}) = 0.05$, spatial $m/u$ ratio of 10.0, category match $m/u$ ratio of 5.0) explicitly labeled as cold-start defaults pending re-estimation via Expectation-Maximization as real municipal datasets accumulate.
   - Reconciled decision enum thresholds against `dedup_decision_enum`:
@@ -76,8 +75,9 @@
 2. **Deduplication Decision Enum Reconciliation:**
    - Earlier working notes referenced conceptual labels (`duplicate_auto`, `duplicate_suspected`, `distinct`). The database migration (`dedup_decision_enum`) and Python domain models (`DedupDecision`) formally define: `exact_match`, `probable_match`, `distinct`, `manual_review`.
    - The decision logic in `civicbrain/domain/intake/dedup.py` maps $P \ge 0.85 \to$ `exact_match`, $0.50 \le P < 0.85 \to$ `probable_match`, and $P < 0.50 \to$ `distinct`, matching the database enum exactly.
-3. **Pure Math Implementation of Cold-Start Linkage vs Full DuckDB Linker Batch:**
-   - `civicbrain/domain/intake/dedup.py` implements the Fellegi-Sunter log-likelihood math with explicit cold-start weights directly rather than instantiating an in-memory DuckDB `splink.Linker` on every atomic single-record HTTP request. This achieves sub-millisecond evaluation latency per ingress report while adhering to the Bootstrap Principle (§A3) until bulk batch volume warrants empirical EM parameter estimation.
+3. **Direct Fellegi-Sunter Implementation vs. Splink Linker/EM Deferred Upgrade:**
+   - `civicbrain/domain/intake/dedup.py` directly executes Fellegi-Sunter log-likelihood math with provisional cold-start weights ($m/u$ ratios, Bayes odds update, Jaro-Winkler) for sub-millisecond evaluation on single incoming observations.
+   - Splink 4 (`splink>=4.0.0`) is retained as a project dependency, but invoking Splink's DuckDB `Linker` and running empirical EM parameter estimation is deferred as a documented future upgrade once operational pairwise volume accumulates, in strict adherence to the Bootstrap Principle (§A3).
 
 ---
 

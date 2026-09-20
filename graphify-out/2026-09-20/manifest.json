@@ -138,9 +138,9 @@
     "semantic_hash": ""
   },
   "pyproject.toml": {
-    "mtime": 1789899948.7579086,
-    "seen": 1789900762.8546026,
-    "ast_hash": "e8db1307881f1871b172ce4ef0d2f429",
+    "mtime": 1789902965.142902,
+    "seen": 1789903119.4037616,
+    "ast_hash": "51fa25edd53b926d620d057619caca9b",
     "semantic_hash": ""
   },
   "tests/test_health.py": {
@@ -294,15 +294,15 @@
     "semantic_hash": ""
   },
   "civicbrain/api/v1/intake.py": {
-    "mtime": 1789900918.7155316,
-    "seen": 1789900958.2449422,
-    "ast_hash": "d75669641d576cde5fe963ea8b9fb3e4",
+    "mtime": 1789903023.50042,
+    "seen": 1789903119.4037147,
+    "ast_hash": "461e53b3c6aead0e1b40f1764fc18bff",
     "semantic_hash": ""
   },
   "civicbrain/domain/intake/dedup.py": {
-    "mtime": 1789900196.141041,
-    "seen": 1789900762.8545654,
-    "ast_hash": "844ee752207ad73d90a8b2a98db7884e",
+    "mtime": 1789902910.2638557,
+    "seen": 1789903119.40373,
+    "ast_hash": "d52370976299d80bab9d26094c6838a6",
     "semantic_hash": ""
   },
   "civicbrain/domain/intake/models.py": {
@@ -330,9 +330,9 @@
     "semantic_hash": ""
   },
   "tests/test_intake_api.py": {
-    "mtime": 1789900340.9450192,
-    "seen": 1789900762.8546102,
-    "ast_hash": "1da66793e47f6a701594d636b96f9467",
+    "mtime": 1789903033.0274417,
+    "seen": 1789903119.4037676,
+    "ast_hash": "720f711ea796b65ee6bb7e0cc0551708",
     "semantic_hash": ""
   },
   "tests/test_intake_models.py": {
@@ -348,15 +348,21 @@
     "semantic_hash": ""
   },
   "tests/test_splink_dedup.py": {
-    "mtime": 1789900348.4697177,
-    "seen": 1789900762.8546212,
-    "ast_hash": "d4a779e32347703b43d88cfd45039415",
+    "mtime": 1789903037.1576996,
+    "seen": 1789903119.403777,
+    "ast_hash": "c8baa9b33571a3e9af6f52dd14ac97f2",
     "semantic_hash": ""
   },
   "docs/phase-log/phase-2.md": {
-    "mtime": 1789900755.3573897,
-    "seen": 1789900762.8546455,
-    "ast_hash": "e7a4c58c256d7a9d6f32ff8a492d22e5",
+    "mtime": 1789903010.1742938,
+    "seen": 1789903119.4037938,
+    "ast_hash": "c0a5133ee70b2030b76f30ce5351f626",
+    "semantic_hash": ""
+  },
+  "civicbrain/infra/redis.py": {
+    "mtime": 1789903060.0892515,
+    "seen": 1789903119.4037437,
+    "ast_hash": "dcefc6806b63c2b5376bb16e9be81a04",
     "semantic_hash": ""
   }
 }
