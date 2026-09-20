@@ -10,7 +10,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "healthresponse",
       "source_file": "civicbrain/schemas/health.py",
@@ -23,7 +23,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "readinessresponse",
       "source_file": "civicbrain/schemas/health.py",
@@ -80,6 +80,19 @@
       "norm_label": "electedrepresentative",
       "source_file": "civicbrain/domain/identity/models.py",
       "source_location": "L346"
+    },
+    {
+      "id": "civicbrain_domain_identity_models_staffrole",
+      "label": "StaffRole",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hierarchy.py",
+      "file_type": "code",
+      "norm_label": "staffrole",
+      "source_file": "civicbrain/domain/identity/models.py",
+      "source_location": "L34"
     },
     {
       "id": "civicbrain_domain_identity_models_useraccount",
@@ -251,32 +264,6 @@
       "source_location": "L147"
     },
     {
-      "id": "civicbrain_domain_intake_models_intakechannel",
-      "label": "IntakeChannel",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "code",
-      "norm_label": "intakechannel",
-      "source_file": "civicbrain/domain/intake/models.py",
-      "source_location": "L27"
-    },
-    {
-      "id": "civicbrain_schemas_intake_anonymoustrackingresponse",
-      "label": "AnonymousTrackingResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "code",
-      "norm_label": "anonymoustrackingresponse",
-      "source_file": "civicbrain/schemas/intake.py",
-      "source_location": "L74"
-    },
-    {
       "id": "civicbrain_schemas_intake_baseschema",
       "label": "BaseSchema",
       "_callable": true,
@@ -314,32 +301,6 @@
       "norm_label": "incidentstatusupdate",
       "source_file": "civicbrain/schemas/intake.py",
       "source_location": "L88"
-    },
-    {
-      "id": "civicbrain_schemas_intake_intakereportcreate",
-      "label": "IntakeReportCreate",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "code",
-      "norm_label": "intakereportcreate",
-      "source_file": "civicbrain/schemas/intake.py",
-      "source_location": "L45"
-    },
-    {
-      "id": "civicbrain_schemas_intake_intakereportresponse",
-      "label": "IntakeReportResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "code",
-      "norm_label": "intakereportresponse",
-      "source_file": "civicbrain/schemas/intake.py",
-      "source_location": "L61"
     },
     {
       "id": "civicbrain_schemas_intake_observationcreate",
@@ -420,6 +381,19 @@
       "source_location": "L60"
     },
     {
+      "id": "civicbrain_domain_intake_models_intakechannel",
+      "label": "IntakeChannel",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "code",
+      "norm_label": "intakechannel",
+      "source_file": "civicbrain/domain/intake/models.py",
+      "source_location": "L27"
+    },
+    {
       "id": "civicbrain_domain_intake_models_intakereport",
       "label": "IntakeReport",
       "_callable": true,
@@ -472,6 +446,45 @@
       "source_location": "L50"
     },
     {
+      "id": "civicbrain_schemas_intake_anonymoustrackingresponse",
+      "label": "AnonymousTrackingResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "code",
+      "norm_label": "anonymoustrackingresponse",
+      "source_file": "civicbrain/schemas/intake.py",
+      "source_location": "L74"
+    },
+    {
+      "id": "civicbrain_schemas_intake_intakereportcreate",
+      "label": "IntakeReportCreate",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "code",
+      "norm_label": "intakereportcreate",
+      "source_file": "civicbrain/schemas/intake.py",
+      "source_location": "L45"
+    },
+    {
+      "id": "civicbrain_schemas_intake_intakereportresponse",
+      "label": "IntakeReportResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "code",
+      "norm_label": "intakereportresponse",
+      "source_file": "civicbrain/schemas/intake.py",
+      "source_location": "L61"
+    },
+    {
       "id": "civicbrain_domain_identity_models_citizenverificationmethod",
       "label": "CitizenVerificationMethod",
       "_callable": true,
@@ -483,19 +496,6 @@
       "norm_label": "citizenverificationmethod",
       "source_file": "civicbrain/domain/identity/models.py",
       "source_location": "L47"
-    },
-    {
-      "id": "civicbrain_domain_identity_models_staffrole",
-      "label": "StaffRole",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "identity.py",
-      "file_type": "code",
-      "norm_label": "staffrole",
-      "source_file": "civicbrain/domain/identity/models.py",
-      "source_location": "L34"
     },
     {
       "id": "civicbrain_schemas_identity_baseschema",
@@ -737,8 +737,8 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 32,
-      "community_name": "config.py",
+      "community": 5,
+      "community_name": "jwt.py",
       "file_type": "code",
       "norm_label": "settings",
       "source_file": "civicbrain/infra/config.py",
@@ -750,7 +750,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "health_check()",
       "source_file": "civicbrain/api/v1/health.py",
@@ -762,47 +762,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "readiness_check()",
       "source_file": "civicbrain/api/v1/health.py",
       "source_location": "L39"
-    },
-    {
-      "id": "civicbrain_domain_identity_jwt_get_current_user_claims",
-      "label": "get_current_user_claims()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "code",
-      "norm_label": "get_current_user_claims()",
-      "source_file": "civicbrain/domain/identity/jwt.py",
-      "source_location": "L68"
-    },
-    {
-      "id": "civicbrain_domain_identity_jwt_require_roles",
-      "label": "require_roles()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "code",
-      "norm_label": "require_roles()",
-      "source_file": "civicbrain/domain/identity/jwt.py",
-      "source_location": "L100"
-    },
-    {
-      "id": "civicbrain_domain_identity_jwt_require_roles_role_checker",
-      "label": "role_checker()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "code",
-      "norm_label": "role_checker()",
-      "source_file": "civicbrain/domain/identity/jwt.py",
-      "source_location": "L103"
     },
     {
       "id": "civicbrain_infra_database_check_database_connection",
@@ -810,7 +774,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "check_database_connection()",
       "source_file": "civicbrain/infra/database.py",
@@ -822,7 +786,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "lifespan()",
       "source_file": "civicbrain/main.py",
@@ -834,7 +798,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "root()",
       "source_file": "civicbrain/main.py",
@@ -997,6 +961,18 @@
       "source_location": "L47"
     },
     {
+      "id": "tests_test_identity_models_test_jwt_claims_parsing",
+      "label": "test_jwt_claims_parsing()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hierarchy.py",
+      "file_type": "code",
+      "norm_label": "test_jwt_claims_parsing()",
+      "source_file": "tests/test_identity_models.py",
+      "source_location": "L35"
+    },
+    {
       "id": "civicbrain_domain_identity_models_organization_repr",
       "label": ".__repr__()",
       "_callable": true,
@@ -1138,7 +1114,7 @@
       "file_type": "code",
       "norm_label": "submit_intake_report()",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L66"
+      "source_location": "L71"
     },
     {
       "id": "civicbrain_domain_intake_dedup_calculate_jaro_winkler_similarity",
@@ -1273,6 +1249,18 @@
       "source_location": "L20"
     },
     {
+      "id": "tests_test_splink_dedup_test_splink_cold_start_dedup_probable_match",
+      "label": "test_splink_cold_start_dedup_probable_match()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "code",
+      "norm_label": "test_splink_cold_start_dedup_probable_match()",
+      "source_file": "tests/test_splink_dedup.py",
+      "source_location": "L57"
+    },
+    {
       "id": "tests_test_identity_models_test_citizen_verification_enum_values",
       "label": "test_citizen_verification_enum_values()",
       "_callable": true,
@@ -1283,18 +1271,6 @@
       "norm_label": "test_citizen_verification_enum_values()",
       "source_file": "tests/test_identity_models.py",
       "source_location": "L29"
-    },
-    {
-      "id": "tests_test_identity_models_test_jwt_claims_parsing",
-      "label": "test_jwt_claims_parsing()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "identity.py",
-      "file_type": "code",
-      "norm_label": "test_jwt_claims_parsing()",
-      "source_file": "tests/test_identity_models.py",
-      "source_location": "L35"
     },
     {
       "id": "tests_test_identity_models_test_pydantic_schemas_validation",
@@ -1321,102 +1297,6 @@
       "source_location": "L18"
     },
     {
-      "id": "civicbrain_infra_config_settings_assemble_async_db_url",
-      "label": ".assemble_async_db_url()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": ".assemble_async_db_url()",
-      "source_file": "civicbrain/infra/config.py",
-      "source_location": "L37"
-    },
-    {
-      "id": "civicbrain_infra_config_settings_cors_origins_list",
-      "label": ".cors_origins_list()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": ".cors_origins_list()",
-      "source_file": "civicbrain/infra/config.py",
-      "source_location": "L56"
-    },
-    {
-      "id": "tests_test_health_test_health_endpoint_liveness",
-      "label": "test_health_endpoint_liveness()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "test_health.py",
-      "file_type": "code",
-      "norm_label": "test_health_endpoint_liveness()",
-      "source_file": "tests/test_health.py",
-      "source_location": "L11"
-    },
-    {
-      "id": "tests_test_health_test_ready_endpoint_schema",
-      "label": "test_ready_endpoint_schema()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "test_health.py",
-      "file_type": "code",
-      "norm_label": "test_ready_endpoint_schema()",
-      "source_file": "tests/test_health.py",
-      "source_location": "L24"
-    },
-    {
-      "id": "tests_test_health_test_root_endpoint_metadata",
-      "label": "test_root_endpoint_metadata()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "test_health.py",
-      "file_type": "code",
-      "norm_label": "test_root_endpoint_metadata()",
-      "source_file": "tests/test_health.py",
-      "source_location": "L39"
-    },
-    {
-      "id": "tests_test_intake_api_test_incidents_listing_nonexistent_org",
-      "label": "test_incidents_listing_nonexistent_org()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "test_intake_api.py",
-      "file_type": "code",
-      "norm_label": "test_incidents_listing_nonexistent_org()",
-      "source_file": "tests/test_intake_api.py",
-      "source_location": "L34"
-    },
-    {
-      "id": "tests_test_intake_api_test_track_anonymous_report_not_found",
-      "label": "test_track_anonymous_report_not_found()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "test_intake_api.py",
-      "file_type": "code",
-      "norm_label": "test_track_anonymous_report_not_found()",
-      "source_file": "tests/test_intake_api.py",
-      "source_location": "L12"
-    },
-    {
-      "id": "tests_test_intake_api_test_track_anonymous_report_rate_limit",
-      "label": "test_track_anonymous_report_rate_limit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "test_intake_api.py",
-      "file_type": "code",
-      "norm_label": "test_track_anonymous_report_rate_limit()",
-      "source_file": "tests/test_intake_api.py",
-      "source_location": "L20"
-    },
-    {
       "id": "civicbrain_api_v1_intake_check_rate_limit",
       "label": "check_rate_limit()",
       "_callable": true,
@@ -1426,7 +1306,7 @@
       "file_type": "code",
       "norm_label": "check_rate_limit()",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L45"
+      "source_location": "L44"
     },
     {
       "id": "civicbrain_api_v1_intake_track_anonymous_report",
@@ -1438,55 +1318,67 @@
       "file_type": "code",
       "norm_label": "track_anonymous_report()",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L189"
+      "source_location": "L194"
     },
     {
-      "id": "tests_test_live_supabase_rbac_rls_test_live_supabase_rbac_rls",
-      "label": "test_live_supabase_rbac_rls()",
+      "id": "civicbrain_infra_redis_get_redis_client",
+      "label": "get_redis_client()",
       "_callable": true,
       "_origin": "ast",
-      "community": 37,
-      "community_name": "test_live_supabase_rbac_rls",
+      "community": 35,
+      "community_name": "track_anonymous_report",
       "file_type": "code",
-      "norm_label": "test_live_supabase_rbac_rls()",
-      "source_file": "tests/test_live_supabase_rbac_rls.py",
+      "norm_label": "get_redis_client()",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L15"
+    },
+    {
+      "id": "civicbrain_infra_redis_set_redis_client",
+      "label": "set_redis_client()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "set_redis_client()",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L28"
+    },
+    {
+      "id": "tests_test_health_test_health_endpoint_liveness",
+      "label": "test_health_endpoint_liveness()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "test_health_endpoint_liveness()",
+      "source_file": "tests/test_health.py",
+      "source_location": "L11"
+    },
+    {
+      "id": "tests_test_health_test_ready_endpoint_schema",
+      "label": "test_ready_endpoint_schema()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "test_ready_endpoint_schema()",
+      "source_file": "tests/test_health.py",
+      "source_location": "L24"
+    },
+    {
+      "id": "tests_test_health_test_root_endpoint_metadata",
+      "label": "test_root_endpoint_metadata()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "test_root_endpoint_metadata()",
+      "source_file": "tests/test_health.py",
       "source_location": "L39"
-    },
-    {
-      "id": "tests_test_live_supabase_rbac_rls_test_live_supabase_rbac_rls_create_and_login_user",
-      "label": "create_and_login_user()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 37,
-      "community_name": "test_live_supabase_rbac_rls",
-      "file_type": "code",
-      "norm_label": "create_and_login_user()",
-      "source_file": "tests/test_live_supabase_rbac_rls.py",
-      "source_location": "L173"
-    },
-    {
-      "id": "tests_test_live_supabase_phase2_rls_test_live_supabase_phase2_rls",
-      "label": "test_live_supabase_phase2_rls()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "test_live_supabase_phase2_rls",
-      "file_type": "code",
-      "norm_label": "test_live_supabase_phase2_rls()",
-      "source_file": "tests/test_live_supabase_phase2_rls.py",
-      "source_location": "L35"
-    },
-    {
-      "id": "tests_test_live_supabase_rls_test_live_supabase_rls_boundary",
-      "label": "test_live_supabase_rls_boundary()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "test_live_supabase_rls_boundary",
-      "file_type": "code",
-      "norm_label": "test_live_supabase_rls_boundary()",
-      "source_file": "tests/test_live_supabase_rls.py",
-      "source_location": "L37"
     },
     {
       "id": "tests_test_hierarchy_api_create_test_token",
@@ -1494,7 +1386,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "code",
       "norm_label": "create_test_token()",
       "source_file": "tests/test_hierarchy_api.py",
@@ -1506,7 +1398,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "code",
       "norm_label": "test_auth_me_unauthorized()",
       "source_file": "tests/test_hierarchy_api.py",
@@ -1518,7 +1410,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "code",
       "norm_label": "test_auth_me_with_token()",
       "source_file": "tests/test_hierarchy_api.py",
@@ -1530,11 +1422,107 @@
       "_callable": true,
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "code",
       "norm_label": "test_org_hierarchy_not_found()",
       "source_file": "tests/test_hierarchy_api.py",
       "source_location": "L54"
+    },
+    {
+      "id": "tests_test_intake_api_test_incidents_listing_nonexistent_org",
+      "label": "test_incidents_listing_nonexistent_org()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "test_incidents_listing_nonexistent_org()",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L41"
+    },
+    {
+      "id": "tests_test_intake_api_test_track_anonymous_report_not_found",
+      "label": "test_track_anonymous_report_not_found()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "test_track_anonymous_report_not_found()",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L14"
+    },
+    {
+      "id": "tests_test_intake_api_test_track_anonymous_report_rate_limit",
+      "label": "test_track_anonymous_report_rate_limit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "test_track_anonymous_report_rate_limit()",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L23"
+    },
+    {
+      "id": "civicbrain_domain_identity_jwt_get_current_user_claims",
+      "label": "get_current_user_claims()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "get_current_user_claims()",
+      "source_file": "civicbrain/domain/identity/jwt.py",
+      "source_location": "L68"
+    },
+    {
+      "id": "civicbrain_domain_identity_jwt_require_roles",
+      "label": "require_roles()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "require_roles()",
+      "source_file": "civicbrain/domain/identity/jwt.py",
+      "source_location": "L100"
+    },
+    {
+      "id": "civicbrain_domain_identity_jwt_require_roles_role_checker",
+      "label": "role_checker()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "role_checker()",
+      "source_file": "civicbrain/domain/identity/jwt.py",
+      "source_location": "L103"
+    },
+    {
+      "id": "civicbrain_infra_config_settings_assemble_async_db_url",
+      "label": ".assemble_async_db_url()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": ".assemble_async_db_url()",
+      "source_file": "civicbrain/infra/config.py",
+      "source_location": "L37"
+    },
+    {
+      "id": "civicbrain_infra_config_settings_cors_origins_list",
+      "label": ".cors_origins_list()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": ".cors_origins_list()",
+      "source_file": "civicbrain/infra/config.py",
+      "source_location": "L56"
     },
     {
       "id": "tests_test_live_supabase_phase2_rls_is_live_supabase_configured",
@@ -1542,11 +1530,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "code",
       "norm_label": "is_live_supabase_configured()",
       "source_file": "tests/test_live_supabase_phase2_rls.py",
       "source_location": "L17"
+    },
+    {
+      "id": "tests_test_live_supabase_phase2_rls_test_live_supabase_phase2_rls",
+      "label": "test_live_supabase_phase2_rls()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "test_live_supabase_phase2_rls()",
+      "source_file": "tests/test_live_supabase_phase2_rls.py",
+      "source_location": "L35"
     },
     {
       "id": "tests_test_live_supabase_rbac_rls_is_live_supabase_configured",
@@ -1554,11 +1554,35 @@
       "_callable": true,
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "code",
       "norm_label": "is_live_supabase_configured()",
       "source_file": "tests/test_live_supabase_rbac_rls.py",
       "source_location": "L21"
+    },
+    {
+      "id": "tests_test_live_supabase_rbac_rls_test_live_supabase_rbac_rls",
+      "label": "test_live_supabase_rbac_rls()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "test_live_supabase_rbac_rls()",
+      "source_file": "tests/test_live_supabase_rbac_rls.py",
+      "source_location": "L39"
+    },
+    {
+      "id": "tests_test_live_supabase_rbac_rls_test_live_supabase_rbac_rls_create_and_login_user",
+      "label": "create_and_login_user()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "create_and_login_user()",
+      "source_file": "tests/test_live_supabase_rbac_rls.py",
+      "source_location": "L173"
     },
     {
       "id": "tests_test_live_supabase_rls_is_live_supabase_configured",
@@ -1566,18 +1590,30 @@
       "_callable": true,
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "code",
       "norm_label": "is_live_supabase_configured()",
       "source_file": "tests/test_live_supabase_rls.py",
       "source_location": "L19"
     },
     {
+      "id": "tests_test_live_supabase_rls_test_live_supabase_rls_boundary",
+      "label": "test_live_supabase_rls_boundary()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "test_live_supabase_rls_boundary()",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L37"
+    },
+    {
       "id": "civicbrain_api_v1_health",
       "label": "v1/health.py",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "v1/health.py",
       "source_file": "civicbrain/api/v1/health.py",
@@ -1588,7 +1624,7 @@
       "label": "get",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "get",
       "source_file": "",
@@ -1599,21 +1635,10 @@
       "label": "v1/__init__.py",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "v1/__init__.py",
       "source_file": "civicbrain/api/v1/__init__.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "civicbrain_domain_identity_jwt",
-      "label": "jwt.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "code",
-      "norm_label": "jwt.py",
-      "source_file": "civicbrain/domain/identity/jwt.py",
       "source_location": "L1"
     },
     {
@@ -1621,7 +1646,7 @@
       "label": "main.py",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "main.py",
       "source_file": "civicbrain/main.py",
@@ -1632,29 +1657,18 @@
       "label": "get",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "get",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "civicbrain_schemas_health",
-      "label": "schemas/health.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "code",
-      "norm_label": "schemas/health.py",
-      "source_file": "civicbrain/schemas/health.py",
-      "source_location": "L1"
-    },
-    {
       "id": "civicbrain_schemas_health_py_basemodel",
       "label": "BaseModel",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "basemodel",
       "source_file": "",
@@ -1665,20 +1679,9 @@
       "label": "FastAPI",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "code",
       "norm_label": "fastapi",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "httpauthorizationcredentials",
-      "label": "HTTPAuthorizationCredentials",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "code",
-      "norm_label": "httpauthorizationcredentials",
       "source_file": "",
       "source_location": ""
     },
@@ -1687,7 +1690,7 @@
       "label": "Health and readiness diagnostic endpoints.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "health and readiness diagnostic endpoints.",
       "source_file": "civicbrain/api/v1/health.py",
@@ -1698,7 +1701,7 @@
       "label": "Liveness probe to confirm that the FastAPI process is running.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "liveness probe to confirm that the fastapi process is running.",
       "source_file": "civicbrain/api/v1/health.py",
@@ -1709,7 +1712,7 @@
       "label": "Readiness probe checking database connectivity.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "readiness probe checking database connectivity.",
       "source_file": "civicbrain/api/v1/health.py",
@@ -1720,51 +1723,18 @@
       "label": "API v1 router registry.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "api v1 router registry.",
       "source_file": "civicbrain/api/v1/__init__.py",
       "source_location": "L1"
     },
     {
-      "id": "civicbrain_domain_identity_jwt_rationale_1",
-      "label": "JWT claims extraction and RBAC security dependencies for Supabase Auth.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "rationale",
-      "norm_label": "jwt claims extraction and rbac security dependencies for supabase auth.",
-      "source_file": "civicbrain/domain/identity/jwt.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "civicbrain_domain_identity_jwt_rationale_101",
-      "label": "Role-check dependency factory.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "rationale",
-      "norm_label": "role-check dependency factory.",
-      "source_file": "civicbrain/domain/identity/jwt.py",
-      "source_location": "L101"
-    },
-    {
-      "id": "civicbrain_domain_identity_jwt_rationale_71",
-      "label": "Dependency verifying Supabase JWT and returning structured claims.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "rationale",
-      "norm_label": "dependency verifying supabase jwt and returning structured claims.",
-      "source_file": "civicbrain/domain/identity/jwt.py",
-      "source_location": "L71"
-    },
-    {
       "id": "civicbrain_infra_database_rationale_60",
       "label": "Verifies that the database is reachable and PostGIS is enabled. Returns:\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "verifies that the database is reachable and postgis is enabled. returns:...",
       "source_file": "civicbrain/infra/database.py",
@@ -1775,7 +1745,7 @@
       "label": "CivicBrain application entrypoint and ASGI factory.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "civicbrain application entrypoint and asgi factory.",
       "source_file": "civicbrain/main.py",
@@ -1786,7 +1756,7 @@
       "label": "Application lifecycle management.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "application lifecycle management.",
       "source_file": "civicbrain/main.py",
@@ -1797,29 +1767,18 @@
       "label": "Redirect or direct reference to API docs.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "redirect or direct reference to api docs.",
       "source_file": "civicbrain/main.py",
       "source_location": "L57"
     },
     {
-      "id": "civicbrain_schemas_health_rationale_1",
-      "label": "Schemas for health and readiness probes.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "jwt.py",
-      "file_type": "rationale",
-      "norm_label": "schemas for health and readiness probes.",
-      "source_file": "civicbrain/schemas/health.py",
-      "source_location": "L1"
-    },
-    {
       "id": "civicbrain_schemas_health_rationale_10",
       "label": "Liveness probe response model.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "liveness probe response model.",
       "source_file": "civicbrain/schemas/health.py",
@@ -1830,7 +1789,7 @@
       "label": "Readiness probe response model.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "file_type": "rationale",
       "norm_label": "readiness probe response model.",
       "source_file": "civicbrain/schemas/health.py",
@@ -2189,6 +2148,17 @@
       "source_location": "L347"
     },
     {
+      "id": "civicbrain_domain_identity_models_rationale_35",
+      "label": "Staff roles mapped to \u00a7A18 named workspaces.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hierarchy.py",
+      "file_type": "rationale",
+      "norm_label": "staff roles mapped to \u00a7a18 named workspaces.",
+      "source_file": "civicbrain/domain/identity/models.py",
+      "source_location": "L35"
+    },
+    {
       "id": "civicbrain_domain_identity_models_rationale_400",
       "label": "Citizen identity record verifying phone number without collecting Aadhaar (\u00a7A8).",
       "_origin": "ast",
@@ -2308,6 +2278,17 @@
       "norm_label": "current authenticated user profile and resolved rbac scopes.",
       "source_file": "civicbrain/schemas/identity.py",
       "source_location": "L166"
+    },
+    {
+      "id": "tests_test_identity_models_rationale_36",
+      "label": "Verify CurrentUserClaims parses custom Supabase app_metadata.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hierarchy.py",
+      "file_type": "rationale",
+      "norm_label": "verify currentuserclaims parses custom supabase app_metadata.",
+      "source_file": "tests/test_identity_models.py",
+      "source_location": "L36"
     },
     {
       "id": "agents_workflows_graphify",
@@ -2998,17 +2979,6 @@
       "source_location": ""
     },
     {
-      "id": "civicbrain_schemas_intake",
-      "label": "schemas/intake.py",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "code",
-      "norm_label": "schemas/intake.py",
-      "source_file": "civicbrain/schemas/intake.py",
-      "source_location": "L1"
-    },
-    {
       "id": "civicbrain_schemas_intake_py_basemodel",
       "label": "BaseModel",
       "_origin": "ast",
@@ -3097,28 +3067,6 @@
       "source_location": "L148"
     },
     {
-      "id": "civicbrain_domain_intake_models_rationale_28",
-      "label": "Citizen reporting channels.",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "rationale",
-      "norm_label": "citizen reporting channels.",
-      "source_file": "civicbrain/domain/intake/models.py",
-      "source_location": "L28"
-    },
-    {
-      "id": "civicbrain_schemas_intake_rationale_1",
-      "label": "Pydantic schemas for citizen intake, observation breakdown, and incident\u2026",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "rationale",
-      "norm_label": "pydantic schemas for citizen intake, observation breakdown, and incident...",
-      "source_file": "civicbrain/schemas/intake.py",
-      "source_location": "L1"
-    },
-    {
       "id": "civicbrain_schemas_intake_rationale_22",
       "label": "Observation item provided during report ingestion.",
       "_origin": "ast",
@@ -3139,39 +3087,6 @@
       "norm_label": "individual observation response for nagrik setu transparency.",
       "source_file": "civicbrain/schemas/intake.py",
       "source_location": "L33"
-    },
-    {
-      "id": "civicbrain_schemas_intake_rationale_46",
-      "label": "Citizen report filing payload.",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "rationale",
-      "norm_label": "citizen report filing payload.",
-      "source_file": "civicbrain/schemas/intake.py",
-      "source_location": "L46"
-    },
-    {
-      "id": "civicbrain_schemas_intake_rationale_62",
-      "label": "Created intake report with assigned tracking token.",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "rationale",
-      "norm_label": "created intake report with assigned tracking token.",
-      "source_file": "civicbrain/schemas/intake.py",
-      "source_location": "L62"
-    },
-    {
-      "id": "civicbrain_schemas_intake_rationale_75",
-      "label": "Sanitized anonymous lookup response.",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "incidents.py",
-      "file_type": "rationale",
-      "norm_label": "sanitized anonymous lookup response.",
-      "source_file": "civicbrain/schemas/intake.py",
-      "source_location": "L75"
     },
     {
       "id": "civicbrain_schemas_intake_rationale_89",
@@ -3284,6 +3199,28 @@
       "source_location": ""
     },
     {
+      "id": "civicbrain_schemas_health",
+      "label": "schemas/health.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "code",
+      "norm_label": "schemas/health.py",
+      "source_file": "civicbrain/schemas/health.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_schemas_intake",
+      "label": "schemas/intake.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "code",
+      "norm_label": "schemas/intake.py",
+      "source_file": "civicbrain/schemas/intake.py",
+      "source_location": "L1"
+    },
+    {
       "id": "tests_test_intake_models",
       "label": "test_intake_models.py",
       "_origin": "ast",
@@ -3317,7 +3254,7 @@
       "source_location": "L1"
     },
     {
-      "id": "civicbrain_api_v1_intake_rationale_71",
+      "id": "civicbrain_api_v1_intake_rationale_76",
       "label": "Citizen or channel ingestion endpoint creating multi-issue reports.\u2026",
       "_origin": "ast",
       "community": 3,
@@ -3325,7 +3262,7 @@
       "file_type": "rationale",
       "norm_label": "citizen or channel ingestion endpoint creating multi-issue reports....",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L71"
+      "source_location": "L76"
     },
     {
       "id": "civicbrain_domain_identity_models_rationale_142",
@@ -3403,6 +3340,17 @@
       "norm_label": "splink probabilistic record linkage audit between observation and candidate...",
       "source_file": "civicbrain/domain/intake/models.py",
       "source_location": "L276"
+    },
+    {
+      "id": "civicbrain_domain_intake_models_rationale_28",
+      "label": "Citizen reporting channels.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "rationale",
+      "norm_label": "citizen reporting channels.",
+      "source_file": "civicbrain/domain/intake/models.py",
+      "source_location": "L28"
     },
     {
       "id": "civicbrain_domain_intake_models_rationale_38",
@@ -3515,6 +3463,61 @@
       "source_location": "L97"
     },
     {
+      "id": "civicbrain_schemas_health_rationale_1",
+      "label": "Schemas for health and readiness probes.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "rationale",
+      "norm_label": "schemas for health and readiness probes.",
+      "source_file": "civicbrain/schemas/health.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_schemas_intake_rationale_1",
+      "label": "Pydantic schemas for citizen intake, observation breakdown, and incident\u2026",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "rationale",
+      "norm_label": "pydantic schemas for citizen intake, observation breakdown, and incident...",
+      "source_file": "civicbrain/schemas/intake.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_schemas_intake_rationale_46",
+      "label": "Citizen report filing payload.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "rationale",
+      "norm_label": "citizen report filing payload.",
+      "source_file": "civicbrain/schemas/intake.py",
+      "source_location": "L46"
+    },
+    {
+      "id": "civicbrain_schemas_intake_rationale_62",
+      "label": "Created intake report with assigned tracking token.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "rationale",
+      "norm_label": "created intake report with assigned tracking token.",
+      "source_file": "civicbrain/schemas/intake.py",
+      "source_location": "L62"
+    },
+    {
+      "id": "civicbrain_schemas_intake_rationale_75",
+      "label": "Sanitized anonymous lookup response.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "rationale",
+      "norm_label": "sanitized anonymous lookup response.",
+      "source_file": "civicbrain/schemas/intake.py",
+      "source_location": "L75"
+    },
+    {
       "id": "tests_test_intake_models_rationale_1",
       "label": "Unit tests for Phase 2 domain models, \u00a7A16 lifecycle, and least-advanced\u2026",
       "_origin": "ast",
@@ -3592,6 +3595,17 @@
       "source_location": "L35"
     },
     {
+      "id": "tests_test_splink_dedup_rationale_58",
+      "label": "Verify that co-located defect outside temporal window is marked as\u2026",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "file_type": "rationale",
+      "norm_label": "verify that co-located defect outside temporal window is marked as...",
+      "source_file": "tests/test_splink_dedup.py",
+      "source_location": "L58"
+    },
+    {
       "id": "civicbrain_schemas_identity",
       "label": "identity.py",
       "_origin": "ast",
@@ -3612,17 +3626,6 @@
       "norm_label": "test_identity_models.py",
       "source_file": "tests/test_identity_models.py",
       "source_location": "L1"
-    },
-    {
-      "id": "civicbrain_domain_identity_models_rationale_35",
-      "label": "Staff roles mapped to \u00a7A18 named workspaces.",
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "identity.py",
-      "file_type": "rationale",
-      "norm_label": "staff roles mapped to \u00a7a18 named workspaces.",
-      "source_file": "civicbrain/domain/identity/models.py",
-      "source_location": "L35"
     },
     {
       "id": "civicbrain_domain_identity_models_rationale_48",
@@ -3678,17 +3681,6 @@
       "norm_label": "verify citizen verification methods per \u00a7a8.",
       "source_file": "tests/test_identity_models.py",
       "source_location": "L30"
-    },
-    {
-      "id": "tests_test_identity_models_rationale_36",
-      "label": "Verify CurrentUserClaims parses custom Supabase app_metadata.",
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "identity.py",
-      "file_type": "rationale",
-      "norm_label": "verify currentuserclaims parses custom supabase app_metadata.",
-      "source_file": "tests/test_identity_models.py",
-      "source_location": "L36"
     },
     {
       "id": "tests_test_identity_models_rationale_65",
@@ -3774,193 +3766,6 @@
       "source_location": "L1"
     },
     {
-      "id": "basesettings",
-      "label": "BaseSettings",
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "basesettings",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "civicbrain_infra_config",
-      "label": "config.py",
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "config.py",
-      "source_file": "civicbrain/infra/config.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "field_validator",
-      "label": "field_validator",
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "field_validator",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "civicbrain_infra_config_rationale_1",
-      "label": "Application configuration via pydantic-settings.",
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "config.py",
-      "file_type": "rationale",
-      "norm_label": "application configuration via pydantic-settings.",
-      "source_file": "civicbrain/infra/config.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "civicbrain_infra_config_rationale_8",
-      "label": "CivicBrain system settings loaded from environment or .env.",
-      "_origin": "ast",
-      "community": 32,
-      "community_name": "config.py",
-      "file_type": "rationale",
-      "norm_label": "civicbrain system settings loaded from environment or .env.",
-      "source_file": "civicbrain/infra/config.py",
-      "source_location": "L8"
-    },
-    {
-      "id": "tests_test_health",
-      "label": "test_health.py",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "test_health.py",
-      "file_type": "code",
-      "norm_label": "test_health.py",
-      "source_file": "tests/test_health.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_health_py_asyncio",
-      "label": "asyncio",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "test_health.py",
-      "file_type": "code",
-      "norm_label": "asyncio",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_health_rationale_1",
-      "label": "Smoke and integration tests for health and readiness endpoints.",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "test_health.py",
-      "file_type": "rationale",
-      "norm_label": "smoke and integration tests for health and readiness endpoints.",
-      "source_file": "tests/test_health.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_health_rationale_12",
-      "label": "Verify that /v1/health returns HTTP 200 and expected liveness schema.",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "test_health.py",
-      "file_type": "rationale",
-      "norm_label": "verify that /v1/health returns http 200 and expected liveness schema.",
-      "source_file": "tests/test_health.py",
-      "source_location": "L12"
-    },
-    {
-      "id": "tests_test_health_rationale_25",
-      "label": "Verify that /v1/ready returns valid readiness response format.",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "test_health.py",
-      "file_type": "rationale",
-      "norm_label": "verify that /v1/ready returns valid readiness response format.",
-      "source_file": "tests/test_health.py",
-      "source_location": "L25"
-    },
-    {
-      "id": "tests_test_health_rationale_40",
-      "label": "Verify that root endpoint provides documentation links.",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "test_health.py",
-      "file_type": "rationale",
-      "norm_label": "verify that root endpoint provides documentation links.",
-      "source_file": "tests/test_health.py",
-      "source_location": "L40"
-    },
-    {
-      "id": "tests_test_intake_api",
-      "label": "test_intake_api.py",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "test_intake_api.py",
-      "file_type": "code",
-      "norm_label": "test_intake_api.py",
-      "source_file": "tests/test_intake_api.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_intake_api_py_asyncio",
-      "label": "asyncio",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "test_intake_api.py",
-      "file_type": "code",
-      "norm_label": "asyncio",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_intake_api_rationale_1",
-      "label": "Integration tests for citizen intake and operational incidents APIs.",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "test_intake_api.py",
-      "file_type": "rationale",
-      "norm_label": "integration tests for citizen intake and operational incidents apis.",
-      "source_file": "tests/test_intake_api.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_intake_api_rationale_13",
-      "label": "Verify tracking endpoint returns 404 for nonexistent token.",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "test_intake_api.py",
-      "file_type": "rationale",
-      "norm_label": "verify tracking endpoint returns 404 for nonexistent token.",
-      "source_file": "tests/test_intake_api.py",
-      "source_location": "L13"
-    },
-    {
-      "id": "tests_test_intake_api_rationale_21",
-      "label": "Verify IP rate limiting on anonymous tracking token endpoint.",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "test_intake_api.py",
-      "file_type": "rationale",
-      "norm_label": "verify ip rate limiting on anonymous tracking token endpoint.",
-      "source_file": "tests/test_intake_api.py",
-      "source_location": "L21"
-    },
-    {
-      "id": "tests_test_intake_api_rationale_35",
-      "label": "Verify /v1/incidents returns empty list for empty or non-existent org.",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "test_intake_api.py",
-      "file_type": "rationale",
-      "norm_label": "verify /v1/incidents returns empty list for empty or non-existent org.",
-      "source_file": "tests/test_intake_api.py",
-      "source_location": "L35"
-    },
-    {
       "id": "civicbrain_api_v1_intake_py_any",
       "label": "Any",
       "_origin": "ast",
@@ -3994,6 +3799,17 @@
       "source_location": ""
     },
     {
+      "id": "redis",
+      "label": "Redis",
+      "_origin": "ast",
+      "community": 35,
+      "community_name": "track_anonymous_report",
+      "file_type": "code",
+      "norm_label": "redis",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "request",
       "label": "Request",
       "_origin": "ast",
@@ -4005,7 +3821,7 @@
       "source_location": ""
     },
     {
-      "id": "civicbrain_api_v1_intake_rationale_196",
+      "id": "civicbrain_api_v1_intake_rationale_201",
       "label": "Anonymous tracking lookup backed by the get_anonymous_intake_report SECURITY\u2026",
       "_origin": "ast",
       "community": 35,
@@ -4013,18 +3829,29 @@
       "file_type": "rationale",
       "norm_label": "anonymous tracking lookup backed by the get_anonymous_intake_report security...",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L196"
+      "source_location": "L201"
     },
     {
-      "id": "civicbrain_api_v1_intake_rationale_46",
-      "label": "Enforces max 10 tracking requests per minute per IP address.",
+      "id": "civicbrain_api_v1_intake_rationale_45",
+      "label": "Enforces max 10 tracking requests per minute per IP address via Upstash Redis.",
       "_origin": "ast",
       "community": 35,
       "community_name": "track_anonymous_report",
       "file_type": "rationale",
-      "norm_label": "enforces max 10 tracking requests per minute per ip address.",
+      "norm_label": "enforces max 10 tracking requests per minute per ip address via upstash redis.",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L46"
+      "source_location": "L45"
+    },
+    {
+      "id": "civicbrain_infra_redis_rationale_16",
+      "label": "Returns singleton async Redis client connected to UPSTASH_REDIS_URL.",
+      "_origin": "ast",
+      "community": 35,
+      "community_name": "track_anonymous_report",
+      "file_type": "rationale",
+      "norm_label": "returns singleton async redis client connected to upstash_redis_url.",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L16"
     },
     {
       "id": "docs_phase_log_phase_2",
@@ -4060,7 +3887,7 @@
       "node_kind": "heading",
       "norm_label": "2. key architectural decisions",
       "source_file": "docs/phase-log/phase-2.md",
-      "source_location": "L59"
+      "source_location": "L60"
     },
     {
       "id": "docs_phase_log_phase_2_3_deviations_from_specification",
@@ -4072,7 +3899,7 @@
       "node_kind": "heading",
       "norm_label": "3. deviations from specification",
       "source_file": "docs/phase-log/phase-2.md",
-      "source_location": "L70"
+      "source_location": "L71"
     },
     {
       "id": "docs_phase_log_phase_2_4_verification_ci_status",
@@ -4084,7 +3911,7 @@
       "node_kind": "heading",
       "norm_label": "4. verification & ci status",
       "source_file": "docs/phase-log/phase-2.md",
-      "source_location": "L76"
+      "source_location": "L84"
     },
     {
       "id": "docs_phase_log_phase_2_phase_2_domain_core_incident_lifecycle_implementation_log",
@@ -4099,77 +3926,55 @@
       "source_location": "L1"
     },
     {
-      "id": "tests_test_live_supabase_rbac_rls_py_skipif",
-      "label": "skipif",
+      "id": "civicbrain_infra_redis",
+      "label": "redis.py",
       "_origin": "ast",
-      "community": 37,
-      "community_name": "test_live_supabase_rbac_rls",
+      "community": 4,
+      "community_name": "test_intake_api.py",
       "file_type": "code",
-      "norm_label": "skipif",
+      "norm_label": "redis.py",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_infra_redis_py_any",
+      "label": "Any",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "any",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "tests_test_live_supabase_rbac_rls_rationale_40",
-      "label": "Verify Phase 1 RBAC, tenant isolation, and RLS policies on live Supabase.",
+      "id": "tests_test_health",
+      "label": "test_health.py",
       "_origin": "ast",
-      "community": 37,
-      "community_name": "test_live_supabase_rbac_rls",
-      "file_type": "rationale",
-      "norm_label": "verify phase 1 rbac, tenant isolation, and rls policies on live supabase.",
-      "source_file": "tests/test_live_supabase_rbac_rls.py",
-      "source_location": "L40"
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "test_health.py",
+      "source_file": "tests/test_health.py",
+      "source_location": "L1"
     },
     {
-      "id": "tests_test_live_supabase_phase2_rls_py_skipif",
-      "label": "skipif",
+      "id": "tests_test_health_py_asyncio",
+      "label": "asyncio",
       "_origin": "ast",
-      "community": 38,
-      "community_name": "test_live_supabase_phase2_rls",
+      "community": 4,
+      "community_name": "test_intake_api.py",
       "file_type": "code",
-      "norm_label": "skipif",
+      "norm_label": "asyncio",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "tests_test_live_supabase_phase2_rls_rationale_36",
-      "label": "Verify Phase 2 intake, observations, anonymous tracking RPC and RLS policies.",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "test_live_supabase_phase2_rls",
-      "file_type": "rationale",
-      "norm_label": "verify phase 2 intake, observations, anonymous tracking rpc and rls policies.",
-      "source_file": "tests/test_live_supabase_phase2_rls.py",
-      "source_location": "L36"
-    },
-    {
-      "id": "tests_test_live_supabase_rls_py_skipif",
-      "label": "skipif",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "test_live_supabase_rls_boundary",
-      "file_type": "code",
-      "norm_label": "skipif",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_live_supabase_rls_rationale_38",
-      "label": "End-to-end verification of RLS and Auth against a live Supabase project.",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "test_live_supabase_rls_boundary",
-      "file_type": "rationale",
-      "norm_label": "end-to-end verification of rls and auth against a live supabase project.",
-      "source_file": "tests/test_live_supabase_rls.py",
-      "source_location": "L38"
     },
     {
       "id": "tests_test_hierarchy_api",
       "label": "test_hierarchy_api.py",
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "code",
       "norm_label": "test_hierarchy_api.py",
       "source_file": "tests/test_hierarchy_api.py",
@@ -4180,7 +3985,7 @@
       "label": "asyncio",
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "code",
       "norm_label": "asyncio",
       "source_file": "",
@@ -4191,18 +3996,106 @@
       "label": "UUID",
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "code",
       "norm_label": "uuid",
       "source_file": "",
       "source_location": ""
     },
     {
+      "id": "tests_test_intake_api",
+      "label": "test_intake_api.py",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "test_intake_api.py",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_intake_api_py_asyncio",
+      "label": "asyncio",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "code",
+      "norm_label": "asyncio",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "civicbrain_infra_redis_rationale_1",
+      "label": "Upstash Redis connection and rate limiting client.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "upstash redis connection and rate limiting client.",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_infra_redis_rationale_29",
+      "label": "Overrides redis client (used for testing or dependency injection).",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "overrides redis client (used for testing or dependency injection).",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L29"
+    },
+    {
+      "id": "tests_test_health_rationale_1",
+      "label": "Smoke and integration tests for health and readiness endpoints.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "smoke and integration tests for health and readiness endpoints.",
+      "source_file": "tests/test_health.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_health_rationale_12",
+      "label": "Verify that /v1/health returns HTTP 200 and expected liveness schema.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "verify that /v1/health returns http 200 and expected liveness schema.",
+      "source_file": "tests/test_health.py",
+      "source_location": "L12"
+    },
+    {
+      "id": "tests_test_health_rationale_25",
+      "label": "Verify that /v1/ready returns valid readiness response format.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "verify that /v1/ready returns valid readiness response format.",
+      "source_file": "tests/test_health.py",
+      "source_location": "L25"
+    },
+    {
+      "id": "tests_test_health_rationale_40",
+      "label": "Verify that root endpoint provides documentation links.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "verify that root endpoint provides documentation links.",
+      "source_file": "tests/test_health.py",
+      "source_location": "L40"
+    },
+    {
       "id": "tests_test_hierarchy_api_rationale_1",
       "label": "Integration tests for hierarchy, representative, and auth endpoints.",
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "rationale",
       "norm_label": "integration tests for hierarchy, representative, and auth endpoints.",
       "source_file": "tests/test_hierarchy_api.py",
@@ -4213,7 +4106,7 @@
       "label": "Generate unsigned/signed HS256 JWT for API dependency testing.",
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "rationale",
       "norm_label": "generate unsigned/signed hs256 jwt for api dependency testing.",
       "source_file": "tests/test_hierarchy_api.py",
@@ -4224,7 +4117,7 @@
       "label": "Verify /v1/auth/me returns 401 when no token is provided.",
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "rationale",
       "norm_label": "verify /v1/auth/me returns 401 when no token is provided.",
       "source_file": "tests/test_hierarchy_api.py",
@@ -4235,7 +4128,7 @@
       "label": "Verify /v1/auth/me decodes claims from authenticated token.",
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "rationale",
       "norm_label": "verify /v1/auth/me decodes claims from authenticated token.",
       "source_file": "tests/test_hierarchy_api.py",
@@ -4246,51 +4139,238 @@
       "label": "Verify /v1/orgs/{org_id}/hierarchy returns 404 for nonexistent organization.",
       "_origin": "ast",
       "community": 4,
-      "community_name": "test_hierarchy_api.py",
+      "community_name": "test_intake_api.py",
       "file_type": "rationale",
       "norm_label": "verify /v1/orgs/{org_id}/hierarchy returns 404 for nonexistent organization.",
       "source_file": "tests/test_hierarchy_api.py",
       "source_location": "L55"
     },
     {
+      "id": "tests_test_intake_api_rationale_1",
+      "label": "Integration tests for citizen intake and operational incidents APIs.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "integration tests for citizen intake and operational incidents apis.",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_intake_api_rationale_15",
+      "label": "Verify tracking endpoint returns 404 for nonexistent token.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "verify tracking endpoint returns 404 for nonexistent token.",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L15"
+    },
+    {
+      "id": "tests_test_intake_api_rationale_24",
+      "label": "Verify Redis-backed IP rate limiting on anonymous tracking token endpoint.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "verify redis-backed ip rate limiting on anonymous tracking token endpoint.",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L24"
+    },
+    {
+      "id": "tests_test_intake_api_rationale_42",
+      "label": "Verify /v1/incidents returns empty list for empty or non-existent org.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "test_intake_api.py",
+      "file_type": "rationale",
+      "norm_label": "verify /v1/incidents returns empty list for empty or non-existent org.",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L42"
+    },
+    {
+      "id": "basesettings",
+      "label": "BaseSettings",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "basesettings",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "civicbrain_domain_identity_jwt",
+      "label": "jwt.py",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "jwt.py",
+      "source_file": "civicbrain/domain/identity/jwt.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_infra_config",
+      "label": "config.py",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "config.py",
+      "source_file": "civicbrain/infra/config.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "field_validator",
+      "label": "field_validator",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "field_validator",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "httpauthorizationcredentials",
+      "label": "HTTPAuthorizationCredentials",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "httpauthorizationcredentials",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "tests_test_live_supabase_phase2_rls",
       "label": "test_live_supabase_phase2_rls.py",
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "code",
       "norm_label": "test_live_supabase_phase2_rls.py",
       "source_file": "tests/test_live_supabase_phase2_rls.py",
       "source_location": "L1"
     },
     {
+      "id": "tests_test_live_supabase_phase2_rls_py_skipif",
+      "label": "skipif",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "skipif",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "tests_test_live_supabase_rbac_rls",
       "label": "test_live_supabase_rbac_rls.py",
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "code",
       "norm_label": "test_live_supabase_rbac_rls.py",
       "source_file": "tests/test_live_supabase_rbac_rls.py",
       "source_location": "L1"
     },
     {
+      "id": "tests_test_live_supabase_rbac_rls_py_skipif",
+      "label": "skipif",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "skipif",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "tests_test_live_supabase_rls",
       "label": "test_live_supabase_rls.py",
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "code",
       "norm_label": "test_live_supabase_rls.py",
       "source_file": "tests/test_live_supabase_rls.py",
       "source_location": "L1"
     },
     {
+      "id": "tests_test_live_supabase_rls_py_skipif",
+      "label": "skipif",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "code",
+      "norm_label": "skipif",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "civicbrain_domain_identity_jwt_rationale_1",
+      "label": "JWT claims extraction and RBAC security dependencies for Supabase Auth.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "rationale",
+      "norm_label": "jwt claims extraction and rbac security dependencies for supabase auth.",
+      "source_file": "civicbrain/domain/identity/jwt.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_domain_identity_jwt_rationale_101",
+      "label": "Role-check dependency factory.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "rationale",
+      "norm_label": "role-check dependency factory.",
+      "source_file": "civicbrain/domain/identity/jwt.py",
+      "source_location": "L101"
+    },
+    {
+      "id": "civicbrain_domain_identity_jwt_rationale_71",
+      "label": "Dependency verifying Supabase JWT and returning structured claims.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "rationale",
+      "norm_label": "dependency verifying supabase jwt and returning structured claims.",
+      "source_file": "civicbrain/domain/identity/jwt.py",
+      "source_location": "L71"
+    },
+    {
+      "id": "civicbrain_infra_config_rationale_1",
+      "label": "Application configuration via pydantic-settings.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "rationale",
+      "norm_label": "application configuration via pydantic-settings.",
+      "source_file": "civicbrain/infra/config.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "civicbrain_infra_config_rationale_8",
+      "label": "CivicBrain system settings loaded from environment or .env.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "rationale",
+      "norm_label": "civicbrain system settings loaded from environment or .env.",
+      "source_file": "civicbrain/infra/config.py",
+      "source_location": "L8"
+    },
+    {
       "id": "tests_test_live_supabase_phase2_rls_rationale_1",
       "label": "Live Supabase Phase 2 RLS, Anonymous Tracking RPC & Scoped Grants Test Suite.\u2026",
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "rationale",
       "norm_label": "live supabase phase 2 rls, anonymous tracking rpc & scoped grants test suite....",
       "source_file": "tests/test_live_supabase_phase2_rls.py",
@@ -4301,18 +4381,29 @@
       "label": "Check if real Supabase credentials are provided in settings.",
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "rationale",
       "norm_label": "check if real supabase credentials are provided in settings.",
       "source_file": "tests/test_live_supabase_phase2_rls.py",
       "source_location": "L18"
     },
     {
+      "id": "tests_test_live_supabase_phase2_rls_rationale_36",
+      "label": "Verify Phase 2 intake, observations, anonymous tracking RPC and RLS policies.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "rationale",
+      "norm_label": "verify phase 2 intake, observations, anonymous tracking rpc and rls policies.",
+      "source_file": "tests/test_live_supabase_phase2_rls.py",
+      "source_location": "L36"
+    },
+    {
       "id": "tests_test_live_supabase_rbac_rls_rationale_1",
       "label": "Live Supabase RBAC & Multi-Tenant RLS Integration Test Suite. In strict\u2026",
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "rationale",
       "norm_label": "live supabase rbac & multi-tenant rls integration test suite. in strict...",
       "source_file": "tests/test_live_supabase_rbac_rls.py",
@@ -4323,18 +4414,29 @@
       "label": "Check if real Supabase credentials are provided in settings.",
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "rationale",
       "norm_label": "check if real supabase credentials are provided in settings.",
       "source_file": "tests/test_live_supabase_rbac_rls.py",
       "source_location": "L22"
     },
     {
+      "id": "tests_test_live_supabase_rbac_rls_rationale_40",
+      "label": "Verify Phase 1 RBAC, tenant isolation, and RLS policies on live Supabase.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "rationale",
+      "norm_label": "verify phase 1 rbac, tenant isolation, and rls policies on live supabase.",
+      "source_file": "tests/test_live_supabase_rbac_rls.py",
+      "source_location": "L40"
+    },
+    {
       "id": "tests_test_live_supabase_rls_rationale_1",
       "label": "Live Supabase RLS and Auth integration test. In strict accordance with Phase 0\u2026",
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "rationale",
       "norm_label": "live supabase rls and auth integration test. in strict accordance with phase 0...",
       "source_file": "tests/test_live_supabase_rls.py",
@@ -4345,11 +4447,22 @@
       "label": "Check if real Supabase credentials are provided in settings.",
       "_origin": "ast",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "file_type": "rationale",
       "norm_label": "check if real supabase credentials are provided in settings.",
       "source_file": "tests/test_live_supabase_rls.py",
       "source_location": "L20"
+    },
+    {
+      "id": "tests_test_live_supabase_rls_rationale_38",
+      "label": "End-to-end verification of RLS and Auth against a live Supabase project.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "jwt.py",
+      "file_type": "rationale",
+      "norm_label": "end-to-end verification of rls and auth against a live supabase project.",
+      "source_file": "tests/test_live_supabase_rls.py",
+      "source_location": "L38"
     },
     {
       "id": "agents_rules",
@@ -5020,7 +5133,7 @@
       "label": "civicbrain_api_v1",
       "_origin": "semantic",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "civicbrain_api_v1",
@@ -5032,22 +5145,10 @@
       "label": "contextlib",
       "_origin": "semantic",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "contextlib",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "datetime",
-      "label": "datetime",
-      "_origin": "semantic",
-      "community": 0,
-      "community_name": "jwt.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "datetime",
       "source_file": "",
       "type": "external"
     },
@@ -5056,7 +5157,7 @@
       "label": "fastapi_middleware_cors",
       "_origin": "semantic",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "fastapi_middleware_cors",
@@ -5068,34 +5169,10 @@
       "label": "fastapi_responses",
       "_origin": "semantic",
       "community": 0,
-      "community_name": "jwt.py",
+      "community_name": "v1/health.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "fastapi_responses",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "fastapi_security",
-      "label": "fastapi_security",
-      "_origin": "semantic",
-      "community": 0,
-      "community_name": "jwt.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "fastapi_security",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "typing",
-      "label": "typing",
-      "_origin": "semantic",
-      "community": 0,
-      "community_name": "jwt.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "typing",
       "source_file": "",
       "type": "external"
     },
@@ -5244,6 +5321,18 @@
       "type": "external"
     },
     {
+      "id": "datetime",
+      "label": "datetime",
+      "_origin": "semantic",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "datetime",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "logging",
       "label": "logging",
       "_origin": "semantic",
@@ -5256,11 +5345,23 @@
       "type": "external"
     },
     {
+      "id": "math",
+      "label": "math",
+      "_origin": "semantic",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "math",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "pydantic",
       "label": "pydantic",
       "_origin": "semantic",
-      "community": 32,
-      "community_name": "config.py",
+      "community": 3,
+      "community_name": "v1/intake.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "pydantic",
@@ -5268,14 +5369,38 @@
       "type": "external"
     },
     {
-      "id": "pydantic_settings",
-      "label": "pydantic_settings",
+      "id": "secrets",
+      "label": "secrets",
       "_origin": "semantic",
-      "community": 32,
-      "community_name": "config.py",
+      "community": 3,
+      "community_name": "v1/intake.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "pydantic_settings",
+      "norm_label": "secrets",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "typing",
+      "label": "typing",
+      "_origin": "semantic",
+      "community": 3,
+      "community_name": "v1/intake.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "typing",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "time",
+      "label": "time",
+      "_origin": "semantic",
+      "community": 32,
+      "community_name": "time",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "time",
       "source_file": "",
       "type": "external"
     },
@@ -5283,11 +5408,35 @@
       "id": "httpx",
       "label": "httpx",
       "_origin": "semantic",
-      "community": 33,
-      "community_name": "test_health.py",
+      "community": 4,
+      "community_name": "test_intake_api.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "httpx",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "fastapi_security",
+      "label": "fastapi_security",
+      "_origin": "semantic",
+      "community": 5,
+      "community_name": "jwt.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "fastapi_security",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "pydantic_settings",
+      "label": "pydantic_settings",
+      "_origin": "semantic",
+      "community": 5,
+      "community_name": "jwt.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "pydantic_settings",
       "source_file": "",
       "type": "external"
     },
@@ -5296,7 +5445,7 @@
       "label": "pytest",
       "_origin": "semantic",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "pytest",
@@ -5308,7 +5457,7 @@
       "label": "supabase",
       "_origin": "semantic",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "supabase",
@@ -5320,7 +5469,7 @@
       "label": "uuid",
       "_origin": "semantic",
       "community": 5,
-      "community_name": "uuid",
+      "community_name": "jwt.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "uuid",
@@ -5328,35 +5477,24 @@
       "type": "external"
     },
     {
-      "id": "math",
-      "label": "math",
-      "community": 3,
-      "community_name": "v1/intake.py",
+      "id": "fakeredis_aioredis",
+      "label": "fakeredis_aioredis",
+      "community": 4,
+      "community_name": "test_intake_api.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "math",
+      "norm_label": "fakeredis_aioredis",
       "source_file": "",
       "type": "external"
     },
     {
-      "id": "secrets",
-      "label": "secrets",
-      "community": 3,
-      "community_name": "v1/intake.py",
+      "id": "redis_asyncio",
+      "label": "redis_asyncio",
+      "community": 4,
+      "community_name": "test_intake_api.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "secrets",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "time",
-      "label": "time",
-      "community": 3,
-      "community_name": "v1/intake.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "time",
+      "norm_label": "redis_asyncio",
       "source_file": "",
       "type": "external"
     }
@@ -5447,6 +5585,18 @@
       "weight": 1.0
     },
     {
+      "source": "civicbrain_api_v1_intake_check_rate_limit",
+      "target": "civicbrain_infra_redis_get_redis_client",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "civicbrain/api/v1/intake.py",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
       "source": "civicbrain_api_v1_intake_submit_intake_report",
       "target": "civicbrain_domain_intake_services_route_and_deduplicate_observation",
       "relation": "calls",
@@ -5455,7 +5605,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L144",
+      "source_location": "L149",
       "weight": 1.0
     },
     {
@@ -5467,7 +5617,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L159",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -5479,7 +5629,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L87",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -5491,7 +5641,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L201",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
@@ -5719,7 +5869,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L39",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_intake_api_test_track_anonymous_report_not_found",
+      "target": "civicbrain_infra_redis_set_redis_client",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_intake_api_test_track_anonymous_report_rate_limit",
+      "target": "civicbrain_infra_redis_set_redis_client",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -5768,6 +5942,18 @@
       "context": "call",
       "source_file": "tests/test_splink_dedup.py",
       "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_splink_dedup_test_splink_cold_start_dedup_probable_match",
+      "target": "civicbrain_domain_intake_dedup_evaluate_splink_record_linkage",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/test_splink_dedup.py",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -5935,7 +6121,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L65",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -5947,7 +6133,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L188",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -6055,7 +6241,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L33",
+      "source_location": "L40",
       "weight": 1.0
     },
     {
@@ -6067,7 +6253,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -6079,7 +6265,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L19",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -6619,7 +6805,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L12",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -6631,7 +6817,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L13",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -6643,7 +6829,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L13",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -6655,7 +6841,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -6667,7 +6853,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -6679,7 +6865,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -6691,7 +6877,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -6703,7 +6889,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -6715,7 +6901,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -6727,7 +6913,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -6739,12 +6925,24 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
       "source": "civicbrain_api_v1_intake",
       "target": "civicbrain_infra_database_get_db",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "civicbrain/api/v1/intake.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_api_v1_intake",
+      "target": "civicbrain_infra_redis_get_redis_client",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6824,18 +7022,6 @@
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
       "source_location": "L4",
-      "weight": 1.0
-    },
-    {
-      "source": "civicbrain_api_v1_intake",
-      "target": "time",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -7295,6 +7481,30 @@
       "weight": 1.0
     },
     {
+      "source": "civicbrain_infra_redis",
+      "target": "logging",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_infra_redis",
+      "target": "redis_asyncio",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
       "source": "civicbrain_main",
       "target": "logging",
       "relation": "imports",
@@ -7567,7 +7777,19 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L37",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_intake_api",
+      "target": "fakeredis_aioredis",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -7579,7 +7801,19 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L5",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_intake_api",
+      "target": "civicbrain_infra_redis_set_redis_client",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -8148,18 +8382,6 @@
     },
     {
       "source": "civicbrain_api_v1_intake",
-      "target": "sqlalchemy_ext_asyncio",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L10",
-      "weight": 1.0
-    },
-    {
-      "source": "civicbrain_api_v1_intake",
       "target": "civicbrain_domain_identity_jwt",
       "relation": "imports_from",
       "_origin": "ast",
@@ -8167,7 +8389,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L12",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -8179,7 +8401,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L13",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -8191,7 +8413,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -8203,12 +8425,24 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
       "source": "civicbrain_api_v1_intake",
       "target": "civicbrain_infra_database",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "civicbrain/api/v1/intake.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_api_v1_intake",
+      "target": "civicbrain_infra_redis",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -8239,7 +8473,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L6",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -8251,12 +8485,24 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L8",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
       "source": "civicbrain_api_v1_intake",
       "target": "sqlalchemy",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "civicbrain/api/v1/intake.py",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_api_v1_intake",
+      "target": "sqlalchemy_ext_asyncio",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -8735,6 +8981,30 @@
       "weight": 1.0
     },
     {
+      "source": "civicbrain_infra_redis",
+      "target": "typing",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_infra_redis",
+      "target": "civicbrain_infra_config",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
       "source": "civicbrain_main",
       "target": "civicbrain_infra_config",
       "relation": "imports_from",
@@ -9048,18 +9318,6 @@
     },
     {
       "source": "tests_test_intake_api",
-      "target": "httpx",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "tests/test_intake_api.py",
-      "source_location": "L6",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_test_intake_api",
       "target": "civicbrain_main",
       "relation": "imports_from",
       "_origin": "ast",
@@ -9067,7 +9325,31 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L8",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_intake_api",
+      "target": "httpx",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_intake_api",
+      "target": "civicbrain_infra_redis",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_intake_api.py",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -9535,7 +9817,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L45",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -9547,7 +9829,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L66",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -9559,7 +9841,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L66",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -9571,7 +9853,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L189",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -9583,7 +9865,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L189",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -9779,6 +10061,18 @@
       "weight": 1.0
     },
     {
+      "source": "civicbrain_infra_redis_set_redis_client",
+      "target": "civicbrain_infra_redis_py_any",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
       "source": "civicbrain_main_lifespan",
       "target": "fastapi",
       "relation": "references",
@@ -9811,7 +10105,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L189",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -9824,6 +10118,18 @@
       "context": "return_type",
       "source_file": "civicbrain/domain/intake/services.py",
       "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_infra_redis_get_redis_client",
+      "target": "redis",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -10065,7 +10371,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L189",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -10076,7 +10382,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L45",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -10087,7 +10393,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L66",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -10506,6 +10812,28 @@
       "confidence_score": 1.0,
       "source_file": "civicbrain/infra/database.py",
       "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_infra_redis",
+      "target": "civicbrain_infra_redis_get_redis_client",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_infra_redis",
+      "target": "civicbrain_infra_redis_set_redis_client",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -11055,7 +11383,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/phase-log/phase-2.md",
-      "source_location": "L59",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -11066,7 +11394,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/phase-log/phase-2.md",
-      "source_location": "L70",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -11077,7 +11405,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/phase-log/phase-2.md",
-      "source_location": "L76",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -11781,7 +12109,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L12",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -11792,7 +12120,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L20",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -11803,7 +12131,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L34",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
@@ -11980,6 +12308,17 @@
       "confidence_score": 1.0,
       "source_file": "tests/test_splink_dedup.py",
       "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_splink_dedup",
+      "target": "tests_test_splink_dedup_test_splink_cold_start_dedup_probable_match",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_splink_dedup.py",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -13105,36 +13444,36 @@
       "weight": 1.0
     },
     {
-      "source": "civicbrain_api_v1_intake_rationale_196",
+      "source": "civicbrain_api_v1_intake_rationale_201",
       "target": "civicbrain_api_v1_intake_track_anonymous_report",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L196",
+      "source_location": "L201",
       "weight": 1.0
     },
     {
-      "source": "civicbrain_api_v1_intake_rationale_46",
+      "source": "civicbrain_api_v1_intake_rationale_45",
       "target": "civicbrain_api_v1_intake_check_rate_limit",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L46",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
-      "source": "civicbrain_api_v1_intake_rationale_71",
+      "source": "civicbrain_api_v1_intake_rationale_76",
       "target": "civicbrain_api_v1_intake_submit_intake_report",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L71",
+      "source_location": "L76",
       "weight": 1.0
     },
     {
@@ -13732,6 +14071,39 @@
       "weight": 1.0
     },
     {
+      "source": "civicbrain_infra_redis_rationale_1",
+      "target": "civicbrain_infra_redis",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_infra_redis_rationale_16",
+      "target": "civicbrain_infra_redis_get_redis_client",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "civicbrain_infra_redis_rationale_29",
+      "target": "civicbrain_infra_redis_set_redis_client",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "civicbrain/infra/redis.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
       "source": "civicbrain_init_rationale_1",
       "target": "civicbrain_init",
       "relation": "rationale_for",
@@ -14117,36 +14489,36 @@
       "weight": 1.0
     },
     {
-      "source": "tests_test_intake_api_rationale_13",
+      "source": "tests_test_intake_api_rationale_15",
       "target": "tests_test_intake_api_test_track_anonymous_report_not_found",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L13",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
-      "source": "tests_test_intake_api_rationale_21",
+      "source": "tests_test_intake_api_rationale_24",
       "target": "tests_test_intake_api_test_track_anonymous_report_rate_limit",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L21",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
-      "source": "tests_test_intake_api_rationale_35",
+      "source": "tests_test_intake_api_rationale_42",
       "target": "tests_test_intake_api_test_incidents_listing_nonexistent_org",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_intake_api.py",
-      "source_location": "L35",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -14378,6 +14750,17 @@
       "confidence_score": 1.0,
       "source_file": "tests/test_splink_dedup.py",
       "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_splink_dedup_rationale_58",
+      "target": "tests_test_splink_dedup_test_splink_cold_start_dedup_probable_match",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_splink_dedup.py",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -14736,6 +15119,18 @@
       "weight": 1.0
     },
     {
+      "source": "docs_phase_log_phase_2_3_deviations_from_specification",
+      "target": "civicbrain_domain_intake_models_dedupdecision",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "context": "DedupDecision",
+      "source_file": "docs/phase-log/phase-2.md",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
       "source": "docs_phase_log_phase_0_1_what_was_built",
       "target": "civicbrain_domain_identity_models_organization",
       "relation": "references",
@@ -14936,7 +15331,7 @@
       "confidence_score": 0.95,
       "context": "parameter_type",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L67",
+      "source_location": "L72",
       "weight": 0.8
     },
     {
@@ -15056,7 +15451,7 @@
       "confidence_score": 0.95,
       "context": "return_type",
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L70",
+      "source_location": "L75",
       "weight": 0.8
     },
     {
@@ -15196,13 +15591,24 @@
     },
     {
       "source": "civicbrain_api_v1_intake_submit_intake_report",
+      "target": "civicbrain_domain_intake_models_intakereport",
+      "relation": "uses",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "civicbrain/api/v1/intake.py",
+      "source_location": "L102",
+      "weight": 0.8
+    },
+    {
+      "source": "civicbrain_api_v1_intake_submit_intake_report",
       "target": "civicbrain_domain_intake_models_intakestatus",
       "relation": "uses",
       "_origin": "ast",
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L106",
+      "source_location": "L111",
       "weight": 0.8
     },
     {
@@ -15213,7 +15619,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L112",
+      "source_location": "L117",
       "weight": 0.8
     },
     {
@@ -15224,7 +15630,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L113",
+      "source_location": "L118",
       "weight": 0.8
     },
     {
@@ -15235,7 +15641,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L118",
+      "source_location": "L123",
       "weight": 0.8
     },
     {
@@ -15246,7 +15652,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L137",
+      "source_location": "L142",
       "weight": 0.8
     },
     {
@@ -15257,7 +15663,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L173",
+      "source_location": "L178",
       "weight": 0.8
     },
     {
@@ -15268,18 +15674,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L81",
-      "weight": 0.8
-    },
-    {
-      "source": "civicbrain_api_v1_intake_submit_intake_report",
-      "target": "civicbrain_domain_intake_models_intakereport",
-      "relation": "uses",
-      "_origin": "ast",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "civicbrain/api/v1/intake.py",
-      "source_location": "L97",
+      "source_location": "L86",
       "weight": 0.8
     },
     {
@@ -15655,8 +16050,19 @@
       "source_file": "tests/test_splink_dedup.py",
       "source_location": "L29",
       "weight": 0.8
+    },
+    {
+      "source": "tests_test_splink_dedup_test_splink_cold_start_dedup_probable_match",
+      "target": "civicbrain_domain_intake_models_dedupdecision",
+      "relation": "uses",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "tests/test_splink_dedup.py",
+      "source_location": "L66",
+      "weight": 0.8
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4a2fdc4fac26896eb919f11180b8cceaa8ab34f1"
+  "built_at_commit": "38eeb2580ad30f70cc51ad8250f91524aed514f2"
 }

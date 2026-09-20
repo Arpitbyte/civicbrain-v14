@@ -150,7 +150,7 @@ def evaluate_splink_record_linkage(
     if posterior_prob >= COLD_START_PARAMS["p_match_high"]:
         decision = DedupDecision.EXACT_MATCH
     elif posterior_prob >= COLD_START_PARAMS["p_match_low"]:
-        decision = DedupDecision.MANUAL_REVIEW
+        decision = DedupDecision.PROBABLE_MATCH
     else:
         decision = DedupDecision.DISTINCT
 

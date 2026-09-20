@@ -2,7 +2,6 @@
 
 import logging
 import secrets
-import time
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
@@ -24,6 +23,7 @@ from civicbrain.domain.intake.services import (
     route_and_deduplicate_observation,
 )
 from civicbrain.infra.database import get_db
+from civicbrain.infra.redis import get_redis_client
 from civicbrain.schemas.intake import (
     AnonymousTrackingResponse,
     IntakeReportCreate,
@@ -35,31 +35,36 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/intake", tags=["Intake"])
 
-# In-memory IP rate limiter for anonymous tracking token lookups
+# Upstash Redis IP rate limiter for anonymous tracking token lookups
 # Allows max 10 requests per minute per client IP
-IP_REQUEST_LOG: dict[str, list[float]] = {}
-RATE_LIMIT_WINDOW_SECONDS = 60.0
+RATE_LIMIT_WINDOW_SECONDS = 60
 RATE_LIMIT_MAX_REQUESTS = 10
 
 
-def check_rate_limit(request: Request) -> None:
-    """Enforces max 10 tracking requests per minute per IP address."""
+async def check_rate_limit(request: Request) -> None:
+    """Enforces max 10 tracking requests per minute per IP address via Upstash Redis."""
     client_ip = request.client.host if request.client else "unknown_client"
-    now = time.time()
+    key = f"rate_limit:track:{client_ip}"
 
-    timestamps = IP_REQUEST_LOG.get(client_ip, [])
-    # Filter timestamps within current window
-    valid_timestamps = [t for t in timestamps if now - t <= RATE_LIMIT_WINDOW_SECONDS]
+    redis_client = get_redis_client()
+    try:
+        current = await redis_client.incr(key)
+        if current == 1:
+            await redis_client.expire(key, RATE_LIMIT_WINDOW_SECONDS)
 
-    if len(valid_timestamps) >= RATE_LIMIT_MAX_REQUESTS:
-        IP_REQUEST_LOG[client_ip] = valid_timestamps
+        if current > RATE_LIMIT_MAX_REQUESTS:
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail="Rate limit exceeded: maximum 10 tracking lookups per minute. Please try again later.",
+            )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.error(f"Redis rate limiter error for IP {client_ip}: {exc}")
         raise HTTPException(
-            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-            detail="Rate limit exceeded: maximum 10 tracking lookups per minute. Please try again later.",
-        )
-
-    valid_timestamps.append(now)
-    IP_REQUEST_LOG[client_ip] = valid_timestamps
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Rate limit verification service unavailable.",
+        ) from exc
 
 
 @router.post("/reports", response_model=IntakeReportResponse, status_code=status.HTTP_201_CREATED)
@@ -197,8 +202,7 @@ async def track_anonymous_report(
 
     Enforces IP-based rate limiting (10 req/min) to prevent token brute-forcing.
     """
-    if request:
-        check_rate_limit(request)
+    await check_rate_limit(request)
 
     rpc_stmt = text("SELECT get_anonymous_intake_report(:token)")
     result = await db.execute(rpc_stmt, {"token": token})

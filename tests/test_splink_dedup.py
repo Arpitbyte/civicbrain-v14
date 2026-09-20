@@ -52,3 +52,16 @@ def test_splink_cold_start_dedup_distinct():
     )
     assert decision2 == DedupDecision.DISTINCT
     assert prob2 < 0.50
+
+
+def test_splink_cold_start_dedup_probable_match():
+    """Verify that co-located defect outside temporal window is marked as probable_match (0.50 <= prob < 0.85)."""
+    # 5 meters distance, outside 72h window, matching category, low text similarity
+    weight, prob, decision = evaluate_splink_record_linkage(
+        distance_meters=5.0,
+        diff_seconds=400000.0,
+        category_match=True,
+        text_similarity=0.3,
+    )
+    assert decision == DedupDecision.PROBABLE_MATCH
+    assert 0.50 <= prob < 0.85
