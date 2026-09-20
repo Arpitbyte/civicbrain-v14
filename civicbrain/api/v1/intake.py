@@ -2,9 +2,20 @@
 
 import logging
 import secrets
+import uuid
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi import (
+    APIRouter,
+    Depends,
+    File,
+    Form,
+    HTTPException,
+    Query,
+    Request,
+    UploadFile,
+    status,
+)
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -12,6 +23,7 @@ from civicbrain.domain.identity.jwt import SupabaseClaims, get_current_user_clai
 from civicbrain.domain.identity.models import Department, Organization
 from civicbrain.domain.intake.models import (
     IncidentStatus,
+    IntakeChannel,
     IntakeReport,
     IntakeStatus,
     Observation,
@@ -19,6 +31,7 @@ from civicbrain.domain.intake.models import (
 )
 from civicbrain.domain.intake.services import (
     calculate_intake_status_from_children,
+    process_photo_intake,
     resolve_ward_for_point,
     route_and_deduplicate_observation,
 )
@@ -182,10 +195,95 @@ async def submit_intake_report(
                 severity_score=o.severity_score,
                 confidence=o.confidence,
                 source_media_url=o.source_media_url,
+                image_url=o.image_url,
+                bbox=o.bbox,
+                detection_source=o.detection_source,
+                needs_manual_triage=o.needs_manual_triage,
                 incident_id=o.incident_id,
                 created_at=o.created_at,
             )
             for o in created_observations
+        ],
+    )
+
+
+@router.post(
+    "/reports/photo",
+    response_model=IntakeReportResponse,
+    status_code=status.HTTP_201_CREATED,
+    summary="Submit multi-issue photo intake",
+)
+async def submit_photo_intake(
+    organization_id: uuid.UUID = Form(...),
+    latitude: float = Form(..., ge=-90.0, le=90.0),
+    longitude: float = Form(..., ge=-180.0, le=180.0),
+    channel: IntakeChannel = Form(default=IntakeChannel.PWA),
+    image: UploadFile = File(...),
+    citizen_categories: str | None = Form(
+        default=None, description="Comma-separated category codes e.g. POTHOLE,GARBAGE"
+    ),
+    description: str | None = Form(default=None),
+    address_text: str | None = Form(default=None),
+    db: AsyncSession = Depends(get_db),
+    claims: SupabaseClaims | None = Depends(get_current_user_claims),
+) -> IntakeReportResponse:
+    """Submit photo report.
+
+    1. Executes spatial containment in ward boundary via PostGIS.
+    2. Runs Computer Vision protocol (Honest cold-start: zero fabricated confidence scores).
+    3. Splits photo into atomic departmental observations.
+    4. Routes via Living Taxonomy and evaluates Splink deduplication.
+    5. Computes parent intake report status via least-advanced child invariant.
+    """
+    image_bytes = await image.read()
+    filename = image.filename or "upload.jpg"
+
+    cats_list: list[str] | None = None
+    if citizen_categories:
+        cats_list = [c.strip() for c in citizen_categories.split(",") if c.strip()]
+
+    citizen_id = claims.user_id if claims else None
+
+    report, observations = await process_photo_intake(
+        session=db,
+        organization_id=organization_id,
+        image_bytes=image_bytes,
+        filename=filename,
+        latitude=latitude,
+        longitude=longitude,
+        channel=channel,
+        citizen_id=citizen_id,
+        citizen_categories=cats_list,
+        description=description,
+        address_text=address_text,
+    )
+    await db.commit()
+    await db.refresh(report)
+
+    return IntakeReportResponse(
+        id=report.id,
+        organization_id=report.organization_id,
+        channel=report.channel,
+        status=report.status,
+        ward_id=report.ward_id,
+        tracking_token=report.tracking_token,
+        created_at=report.created_at,
+        observations=[
+            ObservationResponse(
+                id=o.id,
+                category_code=o.category_code,
+                status=o.status,
+                severity_score=o.severity_score,
+                confidence=o.confidence,
+                source_media_url=o.source_media_url,
+                image_url=o.image_url,
+                bbox=o.bbox,
+                detection_source=o.detection_source,
+                needs_manual_triage=o.needs_manual_triage,
+                incident_id=o.incident_id,
+                created_at=o.created_at,
+            )
+            for o in observations
         ],
     )
 

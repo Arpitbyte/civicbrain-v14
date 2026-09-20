@@ -105,7 +105,12 @@ class IntakeReport(Base):
         index=True,
     )
     channel: Mapped[IntakeChannel] = mapped_column(
-        Enum(IntakeChannel, name="intake_channel_enum", native_enum=True),
+        Enum(
+            IntakeChannel,
+            name="intake_channel_enum",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         default=IntakeChannel.PWA,
         nullable=False,
     )
@@ -120,7 +125,12 @@ class IntakeReport(Base):
         index=True,
     )
     status: Mapped[IntakeStatus] = mapped_column(
-        Enum(IntakeStatus, name="intake_status_enum", native_enum=True),
+        Enum(
+            IntakeStatus,
+            name="intake_status_enum",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         default=IntakeStatus.SUBMITTED,
         nullable=False,
         index=True,
@@ -175,7 +185,12 @@ class Incident(Base):
     category_code: Mapped[str] = mapped_column(String(50), nullable=False, index=True)
     geom: Mapped[Any] = mapped_column(Geometry("POINT", srid=4326), nullable=False)
     status: Mapped[IncidentStatus] = mapped_column(
-        Enum(IncidentStatus, name="incident_status_enum", native_enum=True),
+        Enum(
+            IncidentStatus,
+            name="incident_status_enum",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         default=IncidentStatus.REPORTED,
         nullable=False,
         index=True,
@@ -248,13 +263,24 @@ class Observation(Base):
         nullable=False,
         index=True,
     )
-    category_code: Mapped[str] = mapped_column(String(50), nullable=False)
+    category_code: Mapped[str] = mapped_column(String(64), nullable=False)
     source_media_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    image_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     bounding_box: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
-    confidence: Mapped[float] = mapped_column(Double, default=1.0, nullable=False)
+    bbox: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
+    confidence: Mapped[float | None] = mapped_column(Double, nullable=True)
     severity_score: Mapped[int] = mapped_column(SmallInteger, default=1, nullable=False)
+    detection_source: Mapped[str] = mapped_column(
+        String(64), default="citizen_declared", nullable=False
+    )
+    needs_manual_triage: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     status: Mapped[ObservationStatus] = mapped_column(
-        Enum(ObservationStatus, name="observation_status_enum", native_enum=True),
+        Enum(
+            ObservationStatus,
+            name="observation_status_enum",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         default=ObservationStatus.DETECTED,
         nullable=False,
     )
@@ -310,7 +336,12 @@ class IncidentDedupLink(Base):
     match_weight: Mapped[float] = mapped_column(Double, nullable=False)
     match_probability: Mapped[float] = mapped_column(Double, nullable=False)
     decision: Mapped[DedupDecision] = mapped_column(
-        Enum(DedupDecision, name="dedup_decision_enum", native_enum=True),
+        Enum(
+            DedupDecision,
+            name="dedup_decision_enum",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         nullable=False,
     )
     model_version: Mapped[str] = mapped_column(

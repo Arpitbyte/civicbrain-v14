@@ -64,7 +64,12 @@ class Organization(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     code: Mapped[str] = mapped_column(String(50), unique=True, nullable=False, index=True)
     ulb_type: Mapped[ULBType] = mapped_column(
-        Enum(ULBType, name="ulb_type_enum", native_enum=True),
+        Enum(
+            ULBType,
+            name="ulb_type_enum",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         nullable=False,
         default=ULBType.MUNICIPAL_CORPORATION,
     )
@@ -309,7 +314,12 @@ class UserRoleAssignment(Base):
         index=True,
     )
     role: Mapped[StaffRole] = mapped_column(
-        Enum(StaffRole, name="staff_role_enum", native_enum=True),
+        Enum(
+            StaffRole,
+            name="staff_role_enum",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         nullable=False,
     )
     department_id: Mapped[uuid.UUID | None] = mapped_column(

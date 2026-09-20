@@ -36,9 +36,13 @@ class ObservationResponse(BaseSchema):
     category_code: str
     status: ObservationStatus
     severity_score: int
-    confidence: float
-    source_media_url: str | None
-    incident_id: uuid.UUID | None
+    confidence: float | None = None
+    source_media_url: str | None = None
+    image_url: str | None = None
+    bbox: dict[str, Any] | None = None
+    detection_source: str = "citizen_declared"
+    needs_manual_triage: bool = False
+    incident_id: uuid.UUID | None = None
     created_at: datetime
 
 
