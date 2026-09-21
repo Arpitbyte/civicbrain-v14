@@ -31,5 +31,6 @@ api_v1_router.include_router(
 api_v1_router.include_router(
     causal_router, prefix="/causal", tags=["Causal Root-Cause Linking & Centrality"]
 )
-api_v1_router.include_router(analytics_router, prefix="", tags=["Analytics & Service-Time Prediction"])
-
+api_v1_router.include_router(
+    analytics_router, prefix="", tags=["Analytics & Service-Time Prediction"]
+)

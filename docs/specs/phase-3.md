@@ -106,6 +106,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON public.taxonomy_category TO service_role
       criteria: str = Field(min_length=10)
       baseline_score: float = Field(ge=1.0, le=5.0)
 
+
   class SeverityRubric(BaseModel):
       levels: list[RubricLevel] = Field(min_length=5, max_length=5)
       buhlmann_k: float = Field(default=10.0, ge=1.0)
@@ -120,7 +121,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON public.taxonomy_category TO service_role
       confidence: float | None = None  # None if no model evaluated
       bbox: dict[str, float] | None = None  # {"x": float, "y": float, "w": float, "h": float}
       severity_hint: int | None = None
-      detection_source: str  # "model_yolo_world", "citizen_declared", "dispatcher_manual", "test_fixture"
+      detection_source: (
+          str  # "model_yolo_world", "citizen_declared", "dispatcher_manual", "test_fixture"
+      )
       needs_manual_triage: bool = False
   ```
 - **`VisionDetector` Protocol:**
@@ -128,8 +131,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON public.taxonomy_category TO service_role
   class VisionDetector(Protocol):
       async def detect(
           self, image_bytes: bytes, filename: str, citizen_categories: list[str] | None = None
-      ) -> list[DetectedDefect]:
-          ...
+      ) -> list[DetectedDefect]: ...
   ```
 - **Execution Modes:**
   1. **`HonestColdStartDetector` (Default for Web Process):**

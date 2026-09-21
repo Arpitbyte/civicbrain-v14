@@ -73,13 +73,15 @@ class TextAnalysisResult(BaseModel):
     normalized_text: str
     suggested_category: str | None
     physical_severity_hint: int | None  # 1 to 5, or None if undetermined
-    citizen_urgency_score: float        # 0.0 to 1.0 (decoupled from physical severity)
+    citizen_urgency_score: float  # 0.0 to 1.0 (decoupled from physical severity)
     extracted_keywords: list[str]
     requires_human_triage: bool
 
+
 class NLPProcessor(Protocol):
-    def process_text(self, text: str, citizen_category: str | None = None) -> TextAnalysisResult:
-        ...
+    def process_text(
+        self, text: str, citizen_category: str | None = None
+    ) -> TextAnalysisResult: ...
 ```
 
 ### 4.2 Decoupled Scoring Rules

@@ -105,7 +105,6 @@ async def get_incident_eta_prediction(
 async def configure_category_prior(
     payload: CategoryPriorCreate,
     claims: CurrentUserClaims = Depends(require_roles([StaffRole.ADMIN])),
-
     db: AsyncSession = Depends(get_db),
 ) -> CategoryPriorResponse:
     """Configures category baseline service-time priors."""

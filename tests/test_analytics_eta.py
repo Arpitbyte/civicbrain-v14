@@ -9,7 +9,6 @@ from fastapi import HTTPException
 
 from civicbrain.domain.analytics.models import (
     CategoryServiceTimePrior,
-    WardReportCardSnapshot,
 )
 from civicbrain.domain.analytics.services import (
     compute_csi,
@@ -17,14 +16,10 @@ from civicbrain.domain.analytics.services import (
     generate_corporator_digest,
     predict_incident_eta,
 )
-from civicbrain.domain.dispatch.models import WorkOrder, WorkOrderStatus
 from civicbrain.domain.identity.jwt import CurrentUserClaims
 from civicbrain.domain.identity.models import (
     Department,
     ElectedRepresentative,
-    StaffRole,
-    UserRoleAssignment,
-    Ward,
 )
 from civicbrain.domain.intake.models import Incident, IncidentStatus
 

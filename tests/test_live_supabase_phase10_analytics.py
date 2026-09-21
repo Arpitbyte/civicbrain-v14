@@ -9,11 +9,9 @@ In strict accordance with:
 """
 
 import uuid
-from datetime import UTC, date, datetime, timedelta
 
 import pytest
 from fastapi import HTTPException
-from postgrest.exceptions import APIError
 from supabase import Client, create_client
 
 from civicbrain.domain.analytics.services import (
@@ -22,7 +20,6 @@ from civicbrain.domain.analytics.services import (
     predict_incident_eta,
 )
 from civicbrain.domain.identity.jwt import CurrentUserClaims
-from civicbrain.domain.identity.models import StaffRole
 from civicbrain.infra.config import settings
 from civicbrain.infra.database import async_session_maker
 
@@ -169,7 +166,6 @@ async def test_live_supabase_phase10_analytics_and_corporator_digest():
                 "term_end": "2029-01-01",
             }
         ).execute()
-
 
         # 3. Seed Category Service-Time Prior (base=24.0h, p25=12.0h, p50=24.0h, p90=48.0h)
         cat_prior_res = (

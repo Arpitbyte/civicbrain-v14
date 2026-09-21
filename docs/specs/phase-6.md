@@ -263,7 +263,7 @@ GRANT INSERT, UPDATE ON TABLE public.ward_resolution_stat TO authenticated;
        if final_priority >= priority_threshold and confidence < confidence_threshold:
            requires_human_review = True
            review_reason = "high_priority_low_confidence"
-           target_status = IncidentStatus.TRIAGED # holds back from automated dispatch
+           target_status = IncidentStatus.TRIAGED  # holds back from automated dispatch
        else:
            requires_human_review = False
            review_reason = None

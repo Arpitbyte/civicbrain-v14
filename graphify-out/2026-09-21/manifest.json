@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "civicbrain/api/v1/__init__.py": {
-    "mtime": 1789920727.9173515,
-    "seen": 1789920739.1213272,
-    "ast_hash": "941819daf2f3497250cb41d530da60e9",
+    "mtime": 1789947433.719422,
+    "seen": 1789947512.342394,
+    "ast_hash": "48bd4df42ef8cdf58854c972589e56ca",
     "semantic_hash": ""
   },
   "civicbrain/api/v1/health.py": {
@@ -306,9 +306,9 @@
     "semantic_hash": ""
   },
   "civicbrain/domain/intake/models.py": {
-    "mtime": 1789920540.2481067,
-    "seen": 1789920739.1213603,
-    "ast_hash": "2f655438b62f18a8796044a8447d3e4d",
+    "mtime": 1789947402.975867,
+    "seen": 1789947512.3424604,
+    "ast_hash": "2434776c1f19d383c8e69f5d68c49f7a",
     "semantic_hash": ""
   },
   "civicbrain/domain/intake/services.py": {
@@ -516,9 +516,129 @@
     "semantic_hash": ""
   },
   "docs/specs/phase-6.md": {
-    "mtime": 1789920631.0293243,
-    "seen": 1789920739.1214569,
-    "ast_hash": "658aff31b0c5f2b7be737b07cc5d3614",
+    "mtime": 1789921334.4565942,
+    "seen": 1789947512.342753,
+    "ast_hash": "fef5d7b922bd00d0463d6ec0e1bdd861",
+    "semantic_hash": ""
+  },
+  "civicbrain/api/v1/causal.py": {
+    "mtime": 1789947462.967729,
+    "seen": 1789947512.3424013,
+    "ast_hash": "07b8025394cb18870fc9a690eaf71209",
+    "semantic_hash": ""
+  },
+  "civicbrain/api/v1/prioritization.py": {
+    "mtime": 1789921600.4219337,
+    "seen": 1789947512.342424,
+    "ast_hash": "1a26721621d73133293d128f6e64b447",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/causal/__init__.py": {
+    "mtime": 1789947416.064927,
+    "seen": 1789947512.342434,
+    "ast_hash": "3008af6a859ec24585111d4b23be8550",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/causal/graph.py": {
+    "mtime": 1789947462.967729,
+    "seen": 1789947512.3424366,
+    "ast_hash": "4abc6eee8557e9903116744eacf32577",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/causal/models.py": {
+    "mtime": 1789947408.8039267,
+    "seen": 1789947512.3424392,
+    "ast_hash": "188f7f9be19cb518793a75a3caa137a8",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/prioritization/__init__.py": {
+    "mtime": 1789921390.7472024,
+    "seen": 1789947512.342475,
+    "ast_hash": "d2af2cc6407a39ab3478ee7ee985df7d",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/prioritization/ahp.py": {
+    "mtime": 1789921770.261943,
+    "seen": 1789947512.3424768,
+    "ast_hash": "b92e4c98dec2fa607701a8ae95e100d1",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/prioritization/equity.py": {
+    "mtime": 1789921600.4219337,
+    "seen": 1789947512.3424785,
+    "ast_hash": "59889d94581cd267716cfbf90914a6ba",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/prioritization/gate.py": {
+    "mtime": 1789921386.7169995,
+    "seen": 1789947512.3424804,
+    "ast_hash": "4171e56b141c060bc1da20132e7c747a",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/prioritization/models.py": {
+    "mtime": 1789921600.4219337,
+    "seen": 1789947512.342482,
+    "ast_hash": "9a5335c769d2747ce1da33e933ee6ebd",
+    "semantic_hash": ""
+  },
+  "civicbrain/schemas/causal.py": {
+    "mtime": 1789947419.930515,
+    "seen": 1789947512.3425024,
+    "ast_hash": "4645deae0f45d16fea2e63b7f4748311",
+    "semantic_hash": ""
+  },
+  "civicbrain/schemas/prioritization.py": {
+    "mtime": 1789921586.4474032,
+    "seen": 1789947512.3425171,
+    "ast_hash": "ca2e8c0b5cfd5772d7f68b4d09e3b9bd",
+    "semantic_hash": ""
+  },
+  "migrations/0007_phase6_ahp_credibility.sql": {
+    "mtime": 1789921342.6747031,
+    "seen": 1789947512.3425426,
+    "ast_hash": "73aad522e933732c83da655dc774fe64",
+    "semantic_hash": ""
+  },
+  "migrations/0008_phase7_causal_graph.sql": {
+    "mtime": 1789947388.1811664,
+    "seen": 1789947512.3425446,
+    "ast_hash": "75e3a46ace299d79a1ce60faa4e6b972",
+    "semantic_hash": ""
+  },
+  "tests/test_ahp_credibility.py": {
+    "mtime": 1789921600.4219337,
+    "seen": 1789947512.3425496,
+    "ast_hash": "473356179707914fd4647b0f1cbcec44",
+    "semantic_hash": ""
+  },
+  "tests/test_causal_graph.py": {
+    "mtime": 1789947462.967729,
+    "seen": 1789947512.3425512,
+    "ast_hash": "5ee7946456e8a594cdc037de9e4e2476",
+    "semantic_hash": ""
+  },
+  "tests/test_live_supabase_phase6_ahp.py": {
+    "mtime": 1789921467.5249283,
+    "seen": 1789947512.3426118,
+    "ast_hash": "198cf6e8216209712036c67dd64dca6e",
+    "semantic_hash": ""
+  },
+  "tests/test_live_supabase_phase7_causal.py": {
+    "mtime": 1789947449.14001,
+    "seen": 1789947512.3426166,
+    "ast_hash": "211a128b82f8aa43ec135fcee827b52d",
+    "semantic_hash": ""
+  },
+  "docs/phase-log/phase-6.md": {
+    "mtime": 1789921617.4574075,
+    "seen": 1789947512.342732,
+    "ast_hash": "d2c6c6cdaa89c37fc66255b23eca810b",
+    "semantic_hash": ""
+  },
+  "docs/specs/phase-7.md": {
+    "mtime": 1789947381.7063203,
+    "seen": 1789947512.3427577,
+    "ast_hash": "5dfe3977fe95bee248e58679b6bec48f",
     "semantic_hash": ""
   }
 }

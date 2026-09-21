@@ -253,7 +253,6 @@ async def generate_corporator_digest(
         StaffRole.ZONAL_SUPERVISOR,
     }
 
-
     if user_claims.role == StaffRole.CORPORATOR:
         # Check elected_representative mapping
         rep_query = select(ElectedRepresentative).where(
@@ -388,12 +387,10 @@ async def predict_incident_eta(
     if prior:
         t_base = prior.base_resolution_hours
         p25_base = prior.p25_hours
-        p50_base = prior.p50_hours
         p90_base = prior.p90_hours
     else:
         t_base = 48.0
         p25_base = 24.0
-        p50_base = 48.0
         p90_base = 96.0
 
     # 3. Severity Multiplier: M_sev(s) = 0.6 + (s * 0.2)
