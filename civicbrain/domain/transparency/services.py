@@ -380,7 +380,6 @@ async def compute_nagar_pragati(
             )
         dept_rankings.sort(key=lambda x: float(str(x["resolution_rate"])), reverse=True)
 
-
     # Ward Equity Distribution
     eq_res = await db.execute(
         select(WardEquityCredibility).where(
