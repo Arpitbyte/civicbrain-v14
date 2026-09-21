@@ -14,6 +14,7 @@ from civicbrain.api.v1.intake import router as intake_router
 from civicbrain.api.v1.nlp import router as nlp_router
 from civicbrain.api.v1.prioritization import router as prioritization_router
 from civicbrain.api.v1.taxonomy import router as taxonomy_router
+from civicbrain.api.v1.transparency import router as transparency_router
 
 api_v1_router = APIRouter()
 api_v1_router.include_router(health_router, prefix="", tags=["Health & Diagnostics"])
@@ -33,4 +34,7 @@ api_v1_router.include_router(
 )
 api_v1_router.include_router(
     analytics_router, prefix="", tags=["Analytics & Service-Time Prediction"]
+)
+api_v1_router.include_router(
+    transparency_router, prefix="", tags=["Citizen Transparency & Jan Sunwai Ledger"]
 )
