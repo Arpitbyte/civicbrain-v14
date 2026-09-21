@@ -1,16 +1,24 @@
-"""FastAPI Dispatch and Field Operations Endpoints (§A14, §A16)."""
+"""FastAPI Dispatch and Field Operations Endpoints (§A14, §A15, §A16)."""
 
 import logging
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from civicbrain.domain.dispatch.models import WorkOrder, WorkOrderStatus
+from civicbrain.domain.dispatch.models import (
+    ConflictReviewStatus,
+    WorkOrder,
+    WorkOrderStatus,
+)
 from civicbrain.domain.dispatch.services import (
+    adjudicate_dispatch_conflict,
     create_work_order,
     evaluate_auto_confirm_cron,
+    list_conflicts_for_worker,
+    list_dispatch_conflicts,
+    process_field_sync,
     resolve_work_order,
     start_work_order,
 )
@@ -27,6 +35,12 @@ from civicbrain.infra.config import settings
 from civicbrain.infra.database import get_db
 from civicbrain.schemas.dispatch import (
     AutoConfirmResponse,
+    ConflictAdjudicationRequest,
+    ConflictAdjudicationResponse,
+    DispatchConflictReviewResponse,
+    FieldSyncPushRequest,
+    FieldSyncResponse,
+    MutationResult,
     WorkOrderCreate,
     WorkOrderResolveRequest,
     WorkOrderResponse,
@@ -164,5 +178,80 @@ async def trigger_auto_confirm_cron(
 ) -> AutoConfirmResponse:
     """Evaluates resolved incidents past 72h auto-confirm deadline and transitions them to CONFIRMED."""
     res = await evaluate_auto_confirm_cron(db)
+    await db.commit()
+    return res
+
+
+# --- Phase 9: Karmi Sahayak Offline Sync Endpoints (§A15) ---
+
+
+@router.post("/sync", response_model=FieldSyncResponse)
+async def execute_field_sync(
+    payload: FieldSyncPushRequest,
+    db: AsyncSession = Depends(get_db),
+    claims: CurrentUserClaims = Depends(get_current_user_claims),
+) -> FieldSyncResponse:
+    """Two-way delta synchronization for Karmi Sahayak with conflict arbitration (§A15)."""
+    res = await process_field_sync(db, claims.user_id, payload)
+    await db.commit()
+    return res
+
+
+@router.get("/sync/conflicts", response_model=list[MutationResult])
+async def get_worker_sync_conflicts(
+    db: AsyncSession = Depends(get_db),
+    claims: CurrentUserClaims = Depends(get_current_user_claims),
+) -> list[MutationResult]:
+    """Retrieves sync mutations flagged with CONFLICT for the calling worker's device."""
+    conflicts = await list_conflicts_for_worker(db, claims.user_id)
+    return [
+        MutationResult(
+            client_mutation_id=c.client_mutation_id,
+            status=c.status,
+            conflict_reason=c.conflict_reason,
+        )
+        for c in conflicts
+    ]
+
+
+@router.get("/conflicts", response_model=list[DispatchConflictReviewResponse])
+async def list_supervisor_conflicts(
+    organization_id: uuid.UUID = Query(...),
+    review_status: ConflictReviewStatus | None = Query(default=ConflictReviewStatus.PENDING),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=50, ge=1, le=100),
+    db: AsyncSession = Depends(get_db),
+    claims: CurrentUserClaims = Depends(
+        require_roles([StaffRole.ADMIN, StaffRole.DISPATCHER, StaffRole.ZONAL_SUPERVISOR])
+    ),
+) -> list[DispatchConflictReviewResponse]:
+    """Retrieves reviewable concurrent dispatch conflicts in the supervisor queue."""
+    conflicts = await list_dispatch_conflicts(
+        db=db,
+        organization_id=organization_id,
+        review_status=review_status,
+        page=page,
+        page_size=page_size,
+    )
+    return [DispatchConflictReviewResponse.model_validate(c) for c in conflicts]
+
+
+@router.post("/conflicts/{conflict_id}/adjudicate", response_model=ConflictAdjudicationResponse)
+async def adjudicate_conflict(
+    conflict_id: uuid.UUID,
+    payload: ConflictAdjudicationRequest,
+    db: AsyncSession = Depends(get_db),
+    claims: CurrentUserClaims = Depends(
+        require_roles([StaffRole.ADMIN, StaffRole.DISPATCHER, StaffRole.ZONAL_SUPERVISOR])
+    ),
+) -> ConflictAdjudicationResponse:
+    """Supervisory adjudication of concurrent dispatch conflict."""
+    res = await adjudicate_dispatch_conflict(
+        db=db,
+        conflict_id=conflict_id,
+        reviewer_id=claims.user_id,
+        decision=payload.decision,
+        notes=payload.notes,
+    )
     await db.commit()
     return res
