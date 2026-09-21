@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter
 
+from civicbrain.api.v1.analytics import router as analytics_router
 from civicbrain.api.v1.auth import router as auth_router
 from civicbrain.api.v1.causal import router as causal_router
 from civicbrain.api.v1.dispatch import router as dispatch_router
@@ -30,3 +31,5 @@ api_v1_router.include_router(
 api_v1_router.include_router(
     causal_router, prefix="/causal", tags=["Causal Root-Cause Linking & Centrality"]
 )
+api_v1_router.include_router(analytics_router, prefix="", tags=["Analytics & Service-Time Prediction"])
+

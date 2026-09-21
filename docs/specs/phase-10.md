@@ -38,11 +38,14 @@ Phase 10 establishes the operational analytics, municipal transparency, and pred
 1. **Deterministic ETA Estimation (Bootstrap Principle §A3):**
    - ETA prediction MUST NOT rely on black-box external AI services. It must execute deterministically in sub-millisecond time using empirical parametric formulas and historical percentile distributions.
 2. **Strict Jurisdictional Scoping for Corporators (Standing Invariant 4):**
-   - Corporators can only generate and view digests for their own elected ward(s). Tenant isolation and role boundaries are strictly enforced via RLS and PostgreSQL table grants.
+   - Corporators must specify `ward_id: UUID` and can only generate and view digests for their own elected ward(s). Tenant isolation and jurisdictional boundaries are strictly verified against `elected_representative` / `user_role_assignment` (returning HTTP 403 Forbidden on mismatch). Admins can inspect any ward.
 3. **Transparent Citizen Satisfaction Accounting:**
    - CSI explicitly distinguishes confirmed resolutions from citizen disputes (`appealed`), ensuring ground truth accountability cannot be masked by unverified contractor completions.
 4. **Append-Only Snapshotting:**
    - Historical report card snapshots are immutable once generated.
+5. **Differential Privacy & Small-Count Justification:**
+   - `ward_report_card_snapshot` aggregates macroscopic totals over a full calendar week/month across entire municipal wards (30,000–80,000+ residents) with zero individual coordinates, citizen IDs, or microdata timestamps; unconditional public `SELECT` poses zero small-count singling-out risk, leaving Differential Privacy ($\epsilon, \delta$-Laplace noise) for Phase 11's public point-level Jan Sunwai ledger.
+
 
 ---
 
@@ -180,8 +183,12 @@ Given an incident $i$ with category $c$, severity $s \in [1, 5]$, ward $w$, and 
 ### 5.2 Corporator Executive Digest (`/v1/analytics/corporator/digest`)
 
 - `GET /v1/analytics/corporator/digest`:
-  - **Auth:** Authenticated Corporator (`StaffRole.CORPORATOR`) or Admin.
-  - **Scope:** Enforced strictly to the calling Corporator's assigned `ward_id` (from JWT claims).
+  - **Auth:** Authenticated Corporator (`StaffRole.CORPORATOR`) or Admin (`StaffRole.SUPER_ADMIN`, `StaffRole.MUNICIPAL_COMMISSIONER`, etc.).
+  - **Query Parameters:** `ward_id: UUID` (required).
+  - **Jurisdictional Validation:** 
+    - If caller is a Corporator, verifies `ward_id` matches their assignment in `elected_representative` or `user_role_assignment`.
+    - If unauthorized for that ward, returns HTTP 403 Forbidden (`detail="Corporator does not represent the requested ward"`).
+    - Admins can query any ward.
   - **Response (`CorporatorDigestResponse`):**
     - Executive summary: total active cases, newly reported this week, resolved this week.
     - SLA breach alerts: list of incidents exceeding SLA (> 72 hours).
@@ -204,7 +211,8 @@ Given an incident $i$ with category $c$, severity $s \in [1, 5]$, ward $w$, and 
      - Verify higher severity yields proportionally longer expected ETA.
      - Verify higher department backlog increases load factor and extends completion timestamp.
      - Verify fallback to empirical priors when ward has zero historical records.
-   - Corporator digest jurisdictional boundary enforcement: corporator for Ward 101 attempting to request Ward 102 receives 403 Forbidden.
+   - Corporator digest jurisdictional boundary enforcement: corporator assigned to Ward 101 attempting to request `?ward_id=<Ward 102>` receives 403 Forbidden. Corporator requesting their own Ward 101 receives 200 OK.
+
 
 2. **Live Supabase Integration (`tests/test_live_supabase_phase10_analytics.py`):**
    - Seed real organization, ward, corporator auth user, category priors, and incident history.
