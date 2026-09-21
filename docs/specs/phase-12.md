@@ -55,11 +55,43 @@ Phase 12 constitutes the comprehensive system hardening, compliance verification
   - Verifies local deterministic algorithms are active across all 6 analytical pipelines.
 
 ### 3.2 Exhaustive Live RLS & Privilege Matrix Audit (`tests/test_live_supabase_phase12_hardening.py`)
-- Executes live PostgREST queries against Supabase (`pg_tables`, `pg_policies`, `information_schema.table_privileges`):
-  1. Verifies that 100% of user tables have `rowsecurity = true`.
-  2. Verifies that 0 tables have `GRANT ALL TO PUBLIC` or `GRANT ALL TO anon`.
-  3. Verifies that `anon` cannot write (`INSERT`, `UPDATE`, `DELETE`) to ANY table in the system.
-  4. Tests cross-tenant isolation on live seeded data across two distinct organizations (Org Alpha vs Org Beta) across all sensitive tables (`incident`, `work_order`, `user_account`, `causal_link`).
+
+Every application table created across migrations 0001–0012 has Row Level Security enabled. Below is the full 24-table matrix queried directly from `pg_tables` and `pg_policies` on the live database:
+
+| # | Table Name | Policies on Live DB | Permitted Roles | Allowed Operations | Security Boundary & Condition |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | `ahp_matrix_config` | `ahp_config_admin_manage`<br>`ahp_config_select_org`<br>`service_role_ahp_config_all` | `authenticated`<br>`authenticated`<br>`service_role` | `ALL`<br>`SELECT`<br>`ALL` | Org Admin manage<br>Org member read<br>Service role bypass |
+| 2 | `category_service_time_prior` | `category_priors_admin_write`<br>`category_priors_read`<br>`service_role_priors_all` | `authenticated`<br>`anon`, `authenticated`<br>`service_role` | `ALL`<br>`SELECT`<br>`ALL` | Org Admin manage<br>Public read category priors<br>Service role bypass |
+| 3 | `citizen_profile` | `citizen_insert_own_profile`<br>`citizen_read_own_profile`<br>`citizen_update_own_profile`<br>`service_role_citizen_profile_all` | `authenticated`<br>`authenticated`<br>`authenticated`<br>`service_role` | `INSERT`<br>`SELECT`<br>`UPDATE`<br>`ALL` | Own profile only (`auth.uid() = id`)<br>Own profile only<br>Own profile only<br>Service role bypass |
+| 4 | `department` | `admin_manage_departments`<br>`public_read_departments`<br>`service_role_department_all` | `authenticated`<br>`anon`, `authenticated`<br>`service_role` | `ALL`<br>`SELECT`<br>`ALL` | Org Admin manage<br>Public read departments<br>Service role bypass |
+| 5 | `dispatch_conflict_review` | `conflict_review_select_policy`<br>`conflict_review_update_policy`<br>`service_role_conflict_review_all` | `authenticated`<br>`authenticated`<br>`service_role` | `SELECT`<br>`UPDATE`<br>`ALL` | Worker / Org Admin / Dispatcher / Supervisor<br>Org Admin / Dispatcher / Supervisor<br>Service role bypass |
+| 6 | `elected_representative` | `public_read_elected_reps`<br>`service_role_elected_rep_all` | `anon`, `authenticated`<br>`service_role` | `SELECT`<br>`ALL` | Public read ward corporators<br>Service role bypass |
+| 7 | `incident` | `admin_manage_incidents`<br>`corporator_select_incidents`<br>`dept_staff_select_incidents`<br>`dept_staff_update_incidents`<br>`dispatcher_select_incidents`<br>`field_worker_select_incidents`<br>`public_read_incidents`<br>`service_role_incident_all`<br>`zonal_supervisor_select_incidents` | `authenticated`<br>`authenticated`<br>`authenticated`<br>`authenticated`<br>`authenticated`<br>`authenticated`<br>`anon`<br>`service_role`<br>`authenticated` | `ALL`<br>`SELECT`<br>`SELECT`<br>`UPDATE`<br>`SELECT`<br>`SELECT`<br>`SELECT`<br>`ALL`<br>`SELECT` | Org Admin manage<br>Corporator ward incidents<br>Dept staff incidents<br>Dept staff status update<br>Dispatcher org incidents<br>Assigned worker / dept incidents<br>Public read active incidents<br>Service role bypass<br>Zonal supervisor zone incidents |
+| 8 | `incident_causal_link` | `causal_link_manage_staff`<br>`causal_link_select_org`<br>`service_role_causal_link_all` | `authenticated`<br>`authenticated`<br>`service_role` | `ALL`<br>`SELECT`<br>`ALL` | Admin / Dispatcher / Supervisor manage<br>Org member read<br>Service role bypass |
+| 9 | `incident_dedup_link` | `service_role_dedup_link_all`<br>`staff_view_dedup_links` | `service_role`<br>`authenticated` | `ALL`<br>`SELECT` | Service role bypass<br>Org Admin read |
+| 10 | `intake_report` | `citizen_insert_intake_report`<br>`citizen_select_own_intake_report`<br>`service_role_intake_report_all` | `anon`, `authenticated`<br>`authenticated`<br>`service_role` | `INSERT`<br>`SELECT`<br>`ALL` | Public intake submission<br>Citizen own report / Org Admin read<br>Service role bypass |
+| 11 | `jan_sunwai_ledger_entry` | `public_read_jan_sunwai_ledger`<br>`service_role_ledger_all` | `anon`, `authenticated`<br>`service_role` | `SELECT`<br>`ALL` | Public read DP-perturbed ledger<br>Service role bypass |
+| 12 | `nagar_pragati_city_snapshot` | `public_read_nagar_pragati`<br>`service_role_pragati_all` | `anon`, `authenticated`<br>`service_role` | `SELECT`<br>`ALL` | Public read city progress metrics<br>Service role bypass |
+| 13 | `observation` | `citizen_select_own_observations`<br>`service_role_observation_all` | `authenticated`<br>`service_role` | `SELECT`<br>`ALL` | Citizen own intake / Org Admin read<br>Service role bypass |
+| 14 | `organization` | `authenticated_read_organizations`<br>`service_role_full_access` | `authenticated`<br>`service_role` | `SELECT`<br>`ALL` | Authenticated read organizations<br>Service role bypass |
+| 15 | `sync_mutation_log` | `service_role_sync_log_all`<br>`sync_log_insert_policy`<br>`sync_log_select_policy` | `service_role`<br>`authenticated`<br>`authenticated` | `ALL`<br>`INSERT`<br>`SELECT` | Service role bypass<br>Worker own mutation / Org Admin<br>Worker / Org Admin / Dispatcher / Supervisor |
+| 16 | `taxonomy_category` | `service_role_taxonomy_category_all`<br>`taxonomy_category_insert_staff`<br>`taxonomy_category_read_authenticated`<br>`taxonomy_category_read_public`<br>`taxonomy_category_update_admin` | `service_role`<br>`authenticated`<br>`authenticated`<br>`anon`<br>`authenticated` | `ALL`<br>`INSERT`<br>`SELECT`<br>`SELECT`<br>`UPDATE` | Service role bypass<br>Staff propose category<br>Staff read active/proposed<br>Public read approved categories<br>Org Admin manage |
+| 17 | `user_account` | `service_role_user_account_all`<br>`user_account_read_policy`<br>`user_account_update_policy` | `service_role`<br>`authenticated`<br>`authenticated` | `ALL`<br>`SELECT`<br>`UPDATE` | Service role bypass<br>Self / Org Admin read<br>Self / Org Admin update |
+| 18 | `user_role_assignment` | `admin_manage_role_assignments`<br>`role_assignment_read_policy`<br>`service_role_role_assignment_all` | `authenticated`<br>`authenticated`<br>`service_role` | `ALL`<br>`SELECT`<br>`ALL` | Org Admin manage staff roles<br>Self / Org Admin read<br>Service role bypass |
+| 19 | `ward` | `admin_manage_wards`<br>`public_read_wards`<br>`service_role_ward_all` | `authenticated`<br>`anon`, `authenticated`<br>`service_role` | `ALL`<br>`SELECT`<br>`ALL` | Org Admin manage wards<br>Public read wards<br>Service role bypass |
+| 20 | `ward_equity_credibility` | `service_role_ward_equity_all`<br>`ward_equity_admin_manage`<br>`ward_equity_select_org` | `service_role`<br>`authenticated`<br>`authenticated` | `ALL`<br>`ALL`<br>`SELECT` | Service role bypass<br>Org Admin manage equity multipliers<br>Org member read |
+| 21 | `ward_report_card_snapshot` | `service_role_snapshots_all`<br>`ward_report_card_public_read`<br>`ward_report_card_staff_write` | `service_role`<br>`anon`, `authenticated`<br>`authenticated` | `ALL`<br>`SELECT`<br>`ALL` | Service role bypass<br>Public read weekly ward scorecards<br>Org Admin manage |
+| 22 | `ward_resolution_stat` | `service_role_ward_res_all`<br>`ward_res_admin_manage`<br>`ward_res_select_org` | `service_role`<br>`authenticated`<br>`authenticated` | `ALL`<br>`ALL`<br>`SELECT` | Service role bypass<br>Org Admin manage stats<br>Org member read |
+| 23 | `work_order` | `service_role_work_order_all`<br>`work_order_insert_staff`<br>`work_order_select_org`<br>`work_order_update_worker` | `service_role`<br>`authenticated`<br>`authenticated`<br>`authenticated` | `ALL`<br>`INSERT`<br>`SELECT`<br>`UPDATE` | Service role bypass<br>Admin / Dispatcher create work order<br>Org member read<br>Assigned worker / Dispatcher / Admin update |
+| 24 | `zone` | `admin_manage_zones`<br>`public_read_zones`<br>`service_role_zone_all` | `authenticated`<br>`anon`, `authenticated`<br>`service_role` | `ALL`<br>`SELECT`<br>`ALL` | Org Admin manage zones<br>Public read zones<br>Service role bypass |
+
+*(Note: PostGIS system table `spatial_ref_sys` is present in `pg_tables` but is a PostGIS internal dictionary table not managed by application migrations.)*
+
+- Audit execution verifies:
+  1. 100% of application tables (24/24) have `rowsecurity = true`.
+  2. 0 tables have blanket `GRANT ALL TO PUBLIC` or `GRANT ALL TO anon`.
+  3. `anon` write access (`INSERT`, `UPDATE`, `DELETE`) is rejected on all 24 tables except the deliberate public intake endpoint on `intake_report` (`citizen_insert_intake_report`).
+  4. Cross-tenant isolation verification across Org Alpha vs Org Beta with real seeded test data.
 
 ### 3.3 PII Leakage & DPDP Redaction Verification
 - Inspects all API schemas and endpoint responses for unhashed phone numbers, emails, and names.

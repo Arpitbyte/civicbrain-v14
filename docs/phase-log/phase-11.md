@@ -11,7 +11,11 @@
 - **Jan Sunwai Public Grievance Ledger Table (§A23):**
   - Migration `migrations/0012_phase11_transparency_ledger.sql` introducing `jan_sunwai_ledger_entry` and `nagar_pragati_city_snapshot`.
   - Composite uniqueness: `uq_ledger_incident_seq UNIQUE (incident_id, sequence_num)` and `uq_ledger_incident_status UNIQUE (incident_id, lifecycle_status)`.
-  - Scoped table grants: `anon, authenticated` receive `SELECT` only; write access is reserved exclusively for the `service_role`. Zero blanket `GRANT ALL` or wide write grants.
+  - Scoped table grants: Verified directly from live migration content. Zero literal `GRANT ALL` exists.
+    - `jan_sunwai_ledger_entry`: `GRANT SELECT` to `anon, authenticated`; `GRANT SELECT, INSERT, UPDATE, DELETE` to `service_role`.
+    - `nagar_pragati_city_snapshot`: `GRANT SELECT` to `anon, authenticated`; `GRANT SELECT, INSERT, UPDATE` to `authenticated`; `GRANT SELECT, INSERT, UPDATE, DELETE` to `service_role`. (RLS policy restricts public/authenticated to `SELECT` only).
+  - Exact Table Name on Live Database: `nagar_pragati_city_snapshot`.
+  - Genesis Hash Invariant: `prev_hash` genesis value is strictly `"0" * 64` (64 zeros) across schema comments, models, services, and tests (any prior conversational summary shorthand referencing "GENESIS" is clarified: the codebase and live DB strictly adhere to `"0" * 64`).
 
 - **Differential Privacy Engine with Anti-Composition Guarantee (§A23, Correction 1 & 2):**
   - **Single-Draw Perturbation Rule:** Spatial perturbation (`dp_geom`) and temporal jitter offset ($\Delta t$) are drawn **once** per incident at sequence 0 (`REPORTED`). All subsequent lifecycle checkpoints (`ASSIGNED`, `RESOLVED`, `CONFIRMED`) reuse the exact same `dp_geom` and temporal offset $\Delta t$. This eliminates the composition flaw where averaging multiple lifecycle entries would erode noise variance and compromise complainant privacy.
