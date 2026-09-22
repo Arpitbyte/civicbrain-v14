@@ -188,13 +188,13 @@ def run_cli_scan() -> None:
     print("      CIVICBRAIN v14 — DETERMINISTIC COMPLIANCE AUDIT REPORT   ")
     print("================================================================")
     print(f"Total Python Modules Scanned: {report.scanned_files_count}")
-    print(f"Banned External LLM Packages Found: {report.banned_imports_count}")
-    print(f"Hardcoded Token/Secret Leaks Found: {report.token_leaks_count}")
+    print(f"AST Import Check (Banned LLM Libraries): {report.banned_imports_count} violations")
+    print(f"Regex Token Check (API Secrets/Keys): {report.token_leaks_count} violations")
     print(
-        f"Verified Core Deterministic Pipelines ({len(report.verified_deterministic_pipelines)}/{len(CORE_DETERMINISTIC_PIPELINES)}):"
+        f"Verified Pipeline Modules on Disk ({len(report.verified_deterministic_pipelines)}/{len(CORE_DETERMINISTIC_PIPELINES)}):"
     )
     for p in report.verified_deterministic_pipelines:
-        print(f"  [x] {p}")
+        print(f"  [x] {p} -> {CORE_DETERMINISTIC_PIPELINES[p]}")
     print("----------------------------------------------------------------")
     print(f"Total Violations: {len(report.violations)}")
     if report.violations:
