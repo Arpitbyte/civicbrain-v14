@@ -50,23 +50,25 @@
     - JWT Bearer tokens (`[JWT_REDACTED]`)
 
 - **Live Database Index Audit & Performance Indexes Migration (`migrations/0014_performance_indexes.sql`):**
-  - Queried `pg_constraint` against `pg_indexes` on the live Supabase PostgreSQL database.
-  - Created indexes for all unindexed foreign keys and query predicate columns:
-    - `idx_ward_organization_id` on `ward(organization_id)`
-    - `idx_observation_incident_id` on `observation(incident_id)`
-    - `idx_observation_organization_id` on `observation(organization_id)`
-    - `idx_work_order_created_by` on `work_order(created_by)`
-    - `idx_work_order_incident_id` on `work_order(incident_id)`
-    - `idx_work_order_assigned_worker_id` on `work_order(assigned_worker_id)`
-    - `idx_work_order_evidence_work_order_id` on `work_order_evidence(work_order_id)`
-    - `idx_audit_log_user_id` on `audit_log(user_id)`
-    - `idx_dispatch_conflict_review_work_order_id` on `dispatch_conflict_review(work_order_id)`
-    - `idx_dispatch_conflict_review_worker_id` on `dispatch_conflict_review(worker_id)`
-    - `idx_elected_rep_organization_id` on `elected_representative(organization_id)`
-    - `idx_jan_sunwai_ledger_incident_id` on `jan_sunwai_ledger_entry(incident_id)`
-    - `idx_nagar_pragati_snapshot_ward_id` on `nagar_pragati_ward_snapshot(ward_id)`
-    - `idx_nagar_pragati_snapshot_period` on `nagar_pragati_ward_snapshot(period_start, period_end)`
-  - **Result:** 100% (59/59) of foreign key columns across all 14 migrations now have supporting B-tree indexes.
+  - Queried `information_schema.table_constraints` against `pg_indexes` on the live Supabase PostgreSQL database across the confirmed 24 application tables.
+  - Added indexes in `migrations/0014_performance_indexes.sql` for all previously unindexed foreign key and high-frequency filter columns:
+    - `idx_user_role_dept_id` on `user_role_assignment(department_id)`
+    - `idx_user_role_ward_id` on `user_role_assignment(ward_id)`
+    - `idx_user_role_zone_id` on `user_role_assignment(zone_id)`
+    - `idx_incident_worker_id` on `incident(assigned_worker_id)`
+    - `idx_taxonomy_category_dept_id` on `taxonomy_category(department_id)`
+    - `idx_ward_equity_ward_id` on `ward_equity_credibility(ward_id)`
+    - `idx_ward_res_stat_org_id` on `ward_resolution_stat(organization_id)`
+    - `idx_causal_established_by` on `incident_causal_link(established_by)`
+    - `idx_work_order_dept_id` on `work_order(department_id)`
+    - `idx_work_order_worker_status` on `work_order(assigned_worker_id, status)`
+    - `idx_sync_log_org_id` on `sync_mutation_log(organization_id)`
+    - `idx_conflict_review_incident_id` on `dispatch_conflict_review(incident_id)`
+    - `idx_conflict_review_reviewed_by` on `dispatch_conflict_review(reviewed_by)`
+    - `idx_conflict_review_worker_id` on `dispatch_conflict_review(worker_id)`
+    - `idx_js_ledger_dept_id` on `jan_sunwai_ledger_entry(department_id)`
+    - `idx_js_ledger_cat_code` on `jan_sunwai_ledger_entry(category_code)`
+  - **Result:** 100% (57/57) of foreign key columns across the confirmed 24 application tables on the live database now have supporting B-tree indexes. Zero unindexed foreign keys remain.
 
 - **Upstash Redis Caching for Hot Public Reads (`civicbrain/infra/cache.py`):**
   - Caches rarely-changing public reads with automatic invalidation on updates:
