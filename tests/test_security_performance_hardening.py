@@ -116,34 +116,48 @@ async def test_photo_upload_size_limit_413():
 async def test_generalized_rate_limiter_intake_reports():
     """5. Verify generalized IP rate limiter protects POST /v1/intake/reports."""
     set_redis_client(fakeredis.aioredis.FakeRedis())
+    from unittest.mock import AsyncMock, MagicMock
+
+    from civicbrain.infra.database import get_db
     from tests.test_hierarchy_api import create_test_token
 
     org_id = uuid.uuid4()
     token = create_test_token(uuid.uuid4(), "admin", org_id)
 
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
-        statuses = []
-        payload = {
-            "organization_id": str(org_id),
-            "latitude": 12.9716,
-            "longitude": 77.5946,
-            "channel": "pwa",
-            "observations": [],
-        }
-        # Limit is 20 requests per minute
-        for _ in range(22):
-            res = await client.post(
-                "/v1/intake/reports",
-                json=payload,
-                headers={"Authorization": f"Bearer {token}"},
-            )
-            statuses.append(res.status_code)
+    async def mock_get_db():
+        mock_session = AsyncMock()
+        mock_result = MagicMock()
+        mock_result.scalar_one_or_none.return_value = None
+        mock_session.execute.return_value = mock_result
+        yield mock_session
 
-        # First 20 pass through (returning 404 since dummy org doesn't exist)
-        assert statuses[:20] == [404] * 20
-        # 21st and 22nd rejected with 429
-        assert statuses[20] == 429
-        assert statuses[21] == 429
+    app.dependency_overrides[get_db] = mock_get_db
+    try:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+            statuses = []
+            payload = {
+                "organization_id": str(org_id),
+                "latitude": 12.9716,
+                "longitude": 77.5946,
+                "channel": "pwa",
+                "observations": [],
+            }
+            # Limit is 20 requests per minute
+            for _ in range(22):
+                res = await client.post(
+                    "/v1/intake/reports",
+                    json=payload,
+                    headers={"Authorization": f"Bearer {token}"},
+                )
+                statuses.append(res.status_code)
+
+            # First 20 pass through (returning 404 since dummy org doesn't exist)
+            assert statuses[:20] == [404] * 20
+            # 21st and 22nd rejected with 429
+            assert statuses[20] == 429
+            assert statuses[21] == 429
+    finally:
+        app.dependency_overrides.pop(get_db, None)
 
 
 def test_log_level_pii_scrubbing():
