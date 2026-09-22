@@ -12,7 +12,7 @@ In strict accordance with:
 """
 
 import uuid
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime
 
 import pytest
 from postgrest.exceptions import APIError
@@ -45,9 +45,7 @@ def test_live_supabase_phase12_exhaustive_rls_matrix():
     service_client: Client = create_client(
         settings.SUPABASE_URL, settings.SUPABASE_SERVICE_ROLE_KEY
     )
-    anon_client: Client = create_client(
-        settings.SUPABASE_URL, settings.SUPABASE_ANON_KEY
-    )
+    anon_client: Client = create_client(settings.SUPABASE_URL, settings.SUPABASE_ANON_KEY)
 
     created_user_ids: list[str] = []
     created_org_ids: list[str] = []
@@ -128,7 +126,11 @@ def test_live_supabase_phase12_exhaustive_rls_matrix():
         service_client.table("user_role_assignment").insert(
             [
                 {"user_id": admin_alpha_id, "organization_id": org_alpha_id, "role": "admin"},
-                {"user_id": worker_alpha_id, "organization_id": org_alpha_id, "role": "field_worker"},
+                {
+                    "user_id": worker_alpha_id,
+                    "organization_id": org_alpha_id,
+                    "role": "field_worker",
+                },
                 {
                     "user_id": supervisor_alpha_id,
                     "organization_id": org_alpha_id,
@@ -208,10 +210,20 @@ def test_live_supabase_phase12_exhaustive_rls_matrix():
         # =========================================================================
         corp_id, corp_client = make_authed_user("corp")
         service_client.table("user_account").insert(
-            {"id": corp_id, "organization_id": org_alpha_id, "phone": f"+9198766{run_id[:5]}", "full_name": f"Corporator {run_id}"}
+            {
+                "id": corp_id,
+                "organization_id": org_alpha_id,
+                "phone": f"+9198766{run_id[:5]}",
+                "full_name": f"Corporator {run_id}",
+            }
         ).execute()
         service_client.table("user_role_assignment").insert(
-            {"user_id": corp_id, "organization_id": org_alpha_id, "role": "corporator", "ward_id": ward_id}
+            {
+                "user_id": corp_id,
+                "organization_id": org_alpha_id,
+                "role": "corporator",
+                "ward_id": ward_id,
+            }
         ).execute()
 
         # POSITIVE: Admin Alpha inserts and updates corporator
@@ -273,35 +285,50 @@ def test_live_supabase_phase12_exhaustive_rls_matrix():
         # POSITIVE: Citizen inserts and updates own profile
         cp_res = (
             citizen_client.table("citizen_profile")
-            .insert({"id": citizen_id, "primary_language": "kn"})
+            .insert(
+                {"id": citizen_id, "phone": f"+9198744{run_id[:5]}", "preferred_language": "kn"}
+            )
             .execute()
         )
         assert len(cp_res.data) == 1
 
         cp_up = (
             citizen_client.table("citizen_profile")
-            .update({"primary_language": "hi"})
+            .update({"preferred_language": "hi"})
             .eq("id", citizen_id)
             .execute()
         )
         assert len(cp_up.data) == 1
-        assert cp_up.data[0]["primary_language"] == "hi"
+        assert cp_up.data[0]["preferred_language"] == "hi"
 
-        # POSITIVE: Anonymous user can insert intake_report (public grievance intake)
+        # POSITIVE: Citizen user can insert intake_report (authenticated grievance intake)
         intake_res = (
-            anon_client.table("intake_report")
+            citizen_client.table("intake_report")
             .insert(
                 {
                     "organization_id": org_alpha_id,
-                    "channel": "web",
-                    "raw_text": "Broken water main flooding street",
-                    "language": "en",
+                    "citizen_id": citizen_id,
+                    "channel": "pwa",
+                    "description": "Broken water main flooding street",
+                    "geom": "SRID=4326;POINT(77.5600 12.9600)",
                 }
             )
             .execute()
         )
         assert len(intake_res.data) == 1
         intake_id = intake_res.data[0]["id"]
+
+        # POSITIVE: Citizen can read own filed intake_report
+        my_intake = citizen_client.table("intake_report").select("*").eq("id", intake_id).execute()
+        assert len(my_intake.data) == 1
+
+        # NEGATIVE: Worker Alpha cannot read citizen's intake_report (RLS filters it out)
+        worker_view = (
+            worker_alpha_client.table("intake_report").select("*").eq("id", intake_id).execute()
+        )
+        assert len(worker_view.data) == 0, (
+            "Worker must not be able to read citizen's private intake report"
+        )
 
         # =========================================================================
         # 5. Positive & Negative Paths: incident & work_order
@@ -335,7 +362,7 @@ def test_live_supabase_phase12_exhaustive_rls_matrix():
                     "incident_id": incident_id,
                     "department_id": dept_id,
                     "assigned_worker_id": worker_alpha_id,
-                    "status": "assigned",
+                    "status": "dispatched",
                     "version": 1,
                 }
             )
@@ -355,9 +382,9 @@ def test_live_supabase_phase12_exhaustive_rls_matrix():
         assert wo_up.data[0]["status"] == "in_progress"
 
         # Dispatcher cancels work order (simulating offline race)
-        admin_alpha_client.table("work_order").update(
-            {"status": "cancelled", "version": 2}
-        ).eq("id", work_order_id).execute()
+        admin_alpha_client.table("work_order").update({"status": "cancelled", "version": 2}).eq(
+            "id", work_order_id
+        ).execute()
 
         # =========================================================================
         # 6. Real Conflict-Creation Path: Field Worker JWT on dispatch_conflict_review
@@ -451,16 +478,33 @@ def test_live_supabase_phase12_exhaustive_rls_matrix():
         beta_inc_view = (
             admin_beta_client.table("incident").select("*").eq("id", incident_id).execute()
         )
-        assert len(beta_inc_view.data) == 0, "Cross-tenant leak: Admin Beta must not see Org Alpha incidents"
+        assert len(beta_inc_view.data) == 0, (
+            "Cross-tenant leak: Admin Beta must not see Org Alpha incidents"
+        )
 
-        with pytest.raises(APIError) as exc_cross_update:
-            admin_beta_client.table("incident").update({"severity": 5}).eq(
-                "id", incident_id
+        # NEGATIVE: Admin Beta cannot UPDATE Org Alpha's incident (0 rows updated)
+        beta_cross_up = (
+            admin_beta_client.table("incident")
+            .update({"severity": 5})
+            .eq("id", incident_id)
+            .execute()
+        )
+        assert len(beta_cross_up.data) == 0, "Cross-tenant update must update 0 rows"
+
+        # NEGATIVE: Admin Beta cannot INSERT into Org Alpha (raises 42501 WITH CHECK violation)
+        with pytest.raises(APIError) as exc_cross_ins:
+            admin_beta_client.table("incident").insert(
+                {
+                    "organization_id": org_alpha_id,
+                    "department_id": dept_id,
+                    "ward_id": ward_id,
+                    "category_code": "WATER_LEAK",
+                    "geom": "SRID=4326;POINT(77.5600 12.9600)",
+                    "severity": 3,
+                }
             ).execute()
-        assert (
-            "42501" in str(exc_cross_update.value)
-            or "row-level security" in str(exc_cross_update.value)
-            or len(admin_beta_client.table("incident").select("*").eq("id", incident_id).execute().data) == 0
+        assert "42501" in str(exc_cross_ins.value) or "row-level security" in str(
+            exc_cross_ins.value
         )
 
         # =========================================================================
@@ -470,7 +514,9 @@ def test_live_supabase_phase12_exhaustive_rls_matrix():
         ledger_res = anon_client.table("jan_sunwai_ledger_entry").select("id").limit(1).execute()
         assert ledger_res.data is not None
 
-        pragati_res = anon_client.table("nagar_pragati_city_snapshot").select("id").limit(1).execute()
+        pragati_res = (
+            anon_client.table("nagar_pragati_city_snapshot").select("id").limit(1).execute()
+        )
         assert pragati_res.data is not None
 
         # NEGATIVE: Anonymous write is strictly rejected by scoped grants and RLS

@@ -11,12 +11,9 @@ Part B Prompt 8 Hardening Pillar 1:
 from __future__ import annotations
 
 import ast
-import os
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
-
 
 BANNED_MODULES = {
     "openai",
@@ -82,7 +79,11 @@ class DeterministicComplianceScanner:
         report.scanned_files_count = len(py_files)
 
         for py_path in py_files:
-            rel_path = str(py_path.relative_to(self.root_dir.parent if self.root_dir.parent.name else self.root_dir))
+            rel_path = str(
+                py_path.relative_to(
+                    self.root_dir.parent if self.root_dir.parent.name else self.root_dir
+                )
+            )
             try:
                 content = py_path.read_text(encoding="utf-8")
             except Exception as exc:
@@ -160,7 +161,11 @@ class DeterministicComplianceScanner:
             parts = module_path.split(".")
             expected_file = Path(*parts).with_suffix(".py")
             expected_dir = Path(*parts)
-            if expected_file.exists() or expected_dir.exists() or (expected_dir / "__init__.py").exists():
+            if (
+                expected_file.exists()
+                or expected_dir.exists()
+                or (expected_dir / "__init__.py").exists()
+            ):
                 report.verified_deterministic_pipelines.append(pipe_name)
             else:
                 report.violations.append(
