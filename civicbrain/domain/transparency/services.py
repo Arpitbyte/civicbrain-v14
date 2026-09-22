@@ -3,8 +3,8 @@
 import hashlib
 import logging
 import math
-import random
 import re
+import secrets
 import struct
 import uuid
 from datetime import UTC, date, datetime, timedelta
@@ -74,8 +74,9 @@ def generate_laplace_dp_perturbation(
       Bounded to [-120 min, +120 min], guaranteed minimal displacement >= 5 min.
     """
     # 1. Spatial Laplace noise (Inverse CDF)
-    u_x = random.uniform(-0.4999, 0.4999)
-    u_y = random.uniform(-0.4999, 0.4999)
+    sys_rand = secrets.SystemRandom()
+    u_x = sys_rand.uniform(-0.4999, 0.4999)
+    u_y = sys_rand.uniform(-0.4999, 0.4999)
     delta_x = -125.0 * (1.0 if u_x >= 0 else -1.0) * math.log(1.0 - 2.0 * abs(u_x))
     delta_y = -125.0 * (1.0 if u_y >= 0 else -1.0) * math.log(1.0 - 2.0 * abs(u_y))
 
@@ -93,7 +94,7 @@ def generate_laplace_dp_perturbation(
     dp_lat = round(lat + d_lat, 6)
 
     # 2. Temporal Laplace noise
-    u_t = random.uniform(-0.4999, 0.4999)
+    u_t = sys_rand.uniform(-0.4999, 0.4999)
     delta_t_min = -75.0 * (1.0 if u_t >= 0 else -1.0) * math.log(1.0 - 2.0 * abs(u_t))
     delta_t_min = max(-120.0, min(120.0, delta_t_min))
     if abs(delta_t_min) < 5.0:

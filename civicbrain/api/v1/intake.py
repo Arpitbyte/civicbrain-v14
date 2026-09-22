@@ -40,7 +40,7 @@ from civicbrain.domain.intake.services import (
     route_and_deduplicate_observation,
 )
 from civicbrain.infra.database import get_db
-from civicbrain.infra.redis import get_redis_client
+from civicbrain.infra.rate_limit import RateLimiter
 from civicbrain.schemas.dispatch import (
     ConfirmResponse,
     DisputeRequest,
@@ -57,39 +57,23 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/intake", tags=["Intake"])
 
-# Upstash Redis IP rate limiter for anonymous tracking token lookups
-# Allows max 10 requests per minute per client IP
-RATE_LIMIT_WINDOW_SECONDS = 60
-RATE_LIMIT_MAX_REQUESTS = 10
+# Generalized Upstash Redis IP rate limiters
+check_rate_limit = RateLimiter(max_requests=10, window_seconds=60, prefix="track")
+report_rate_limiter = RateLimiter(max_requests=20, window_seconds=60, prefix="intake_report")
+photo_rate_limiter = RateLimiter(max_requests=10, window_seconds=60, prefix="photo_upload")
+feedback_rate_limiter = RateLimiter(max_requests=10, window_seconds=60, prefix="citizen_feedback")
+
+# Memory ceiling for photo uploads (Render free-tier protection)
+MAX_PHOTO_UPLOAD_BYTES = 10 * 1024 * 1024  # 10 MB ceiling
+PHOTO_CHUNK_SIZE = 1024 * 1024  # 1 MB streaming chunk
 
 
-async def check_rate_limit(request: Request) -> None:
-    """Enforces max 10 tracking requests per minute per IP address via Upstash Redis."""
-    client_ip = request.client.host if request.client else "unknown_client"
-    key = f"rate_limit:track:{client_ip}"
-
-    redis_client = get_redis_client()
-    try:
-        current = await redis_client.incr(key)
-        if current == 1:
-            await redis_client.expire(key, RATE_LIMIT_WINDOW_SECONDS)
-
-        if current > RATE_LIMIT_MAX_REQUESTS:
-            raise HTTPException(
-                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-                detail="Rate limit exceeded: maximum 10 tracking lookups per minute. Please try again later.",
-            )
-    except HTTPException:
-        raise
-    except Exception as exc:
-        logger.error(f"Redis rate limiter error for IP {client_ip}: {exc}")
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Rate limit verification service unavailable.",
-        ) from exc
-
-
-@router.post("/reports", response_model=IntakeReportResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/reports",
+    response_model=IntakeReportResponse,
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(report_rate_limiter)],
+)
 async def submit_intake_report(
     payload: IntakeReportCreate,
     db: AsyncSession = Depends(get_db),
@@ -221,8 +205,10 @@ async def submit_intake_report(
     response_model=IntakeReportResponse,
     status_code=status.HTTP_201_CREATED,
     summary="Submit multi-issue photo intake",
+    dependencies=[Depends(photo_rate_limiter)],
 )
 async def submit_photo_intake(
+    request: Request,
     organization_id: uuid.UUID = Form(...),
     latitude: float = Form(..., ge=-90.0, le=90.0),
     longitude: float = Form(..., ge=-180.0, le=180.0),
@@ -236,15 +222,43 @@ async def submit_photo_intake(
     db: AsyncSession = Depends(get_db),
     claims: SupabaseClaims | None = Depends(get_current_user_claims),
 ) -> IntakeReportResponse:
-    """Submit photo report.
+    """Submit photo report with 10MB payload size limit and streaming RAM protection.
 
-    1. Executes spatial containment in ward boundary via PostGIS.
-    2. Runs Computer Vision protocol (Honest cold-start: zero fabricated confidence scores).
-    3. Splits photo into atomic departmental observations.
-    4. Routes via Living Taxonomy and evaluates Splink deduplication.
-    5. Computes parent intake report status via least-advanced child invariant.
+    1. Enforces MAX_PHOTO_UPLOAD_BYTES (10MB) before and during streaming read.
+    2. Executes spatial containment in ward boundary via PostGIS.
+    3. Runs Computer Vision protocol (Honest cold-start: zero fabricated confidence scores).
+    4. Splits photo into atomic departmental observations.
+    5. Routes via Living Taxonomy and evaluates Splink deduplication.
+    6. Computes parent intake report status via least-advanced child invariant.
     """
-    image_bytes = await image.read()
+    # Defensive check on Content-Length header if provided
+    content_length = request.headers.get("content-length")
+    if content_length:
+        try:
+            if int(content_length) > MAX_PHOTO_UPLOAD_BYTES:
+                raise HTTPException(
+                    status_code=status.HTTP_413_CONTENT_TOO_LARGE,
+                    detail="Uploaded photo exceeds maximum allowed size of 10MB.",
+                )
+        except ValueError:
+            pass
+
+    # Chunked read enforcing strict RAM ceiling
+    image_bytes_parts: list[bytes] = []
+    total_bytes = 0
+    while True:
+        chunk = await image.read(PHOTO_CHUNK_SIZE)
+        if not chunk:
+            break
+        total_bytes += len(chunk)
+        if total_bytes > MAX_PHOTO_UPLOAD_BYTES:
+            raise HTTPException(
+                status_code=status.HTTP_413_CONTENT_TOO_LARGE,
+                detail="Uploaded photo exceeds maximum allowed size of 10MB.",
+            )
+        image_bytes_parts.append(chunk)
+
+    image_bytes = b"".join(image_bytes_parts)
     filename = image.filename or "upload.jpg"
 
     cats_list: list[str] | None = None
@@ -324,7 +338,11 @@ async def track_anonymous_report(
     return report_data
 
 
-@router.post("/reports/{tracking_token}/confirm", response_model=ConfirmResponse)
+@router.post(
+    "/reports/{tracking_token}/confirm",
+    response_model=ConfirmResponse,
+    dependencies=[Depends(feedback_rate_limiter)],
+)
 async def confirm_report_resolution(
     tracking_token: str,
     db: AsyncSession = Depends(get_db),
@@ -335,7 +353,11 @@ async def confirm_report_resolution(
     return res
 
 
-@router.post("/reports/{tracking_token}/dispute", response_model=DisputeResponse)
+@router.post(
+    "/reports/{tracking_token}/dispute",
+    response_model=DisputeResponse,
+    dependencies=[Depends(feedback_rate_limiter)],
+)
 async def dispute_report_resolution(
     tracking_token: str,
     payload: DisputeRequest,

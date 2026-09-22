@@ -50,7 +50,14 @@ async def get_ward_report_card(
     _claims: CurrentUserClaims | None = Depends(get_optional_user_claims),
 ) -> WardReportCardResponse:
     """Publicly accessible municipal scorecard aggregated at the ward level (§A21)."""
-    return await compute_ward_report_card(
+    from civicbrain.infra.cache import cache_get, cache_set
+
+    cache_key = f"cache:report_card:{ward_id}:{period_type}:{from_date}:{to_date}"
+    cached = await cache_get(cache_key)
+    if cached is not None:
+        return WardReportCardResponse.model_validate(cached)
+
+    result = await compute_ward_report_card(
         db=db,
         ward_id=ward_id,
         from_date=from_date,
@@ -58,6 +65,8 @@ async def get_ward_report_card(
         period_type=period_type,
         persist=persist,
     )
+    await cache_set(cache_key, result.model_dump(), ttl_seconds=180)
+    return result
 
 
 @router.get(

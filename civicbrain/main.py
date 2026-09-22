@@ -3,18 +3,25 @@
 import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
+from civicbrain.api.middleware import SecurityHeadersMiddleware
 from civicbrain.api.v1 import api_v1_router
 from civicbrain.infra.config import settings
+from civicbrain.infra.logging import PIIScrubbingFilter
 
-# Configure logging
+# Configure logging with automated PII scrubbing filter
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
 logger = logging.getLogger("civicbrain")
+pii_filter = PIIScrubbingFilter()
+logger.addFilter(pii_filter)
+for handler in logging.root.handlers:
+    handler.addFilter(pii_filter)
 
 
 @asynccontextmanager
@@ -39,14 +46,37 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Configure CORS
+# 1. Global Security Headers Middleware
+app.add_middleware(SecurityHeadersMiddleware)
+
+# 2. Configure CORS with explicit allowlist
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(Exception)
+async def global_unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    """Catches unhandled exceptions, logging internally without leaking stack traces or SQL."""
+    logger.error(
+        "Unhandled server exception on %s %s: %s",
+        request.method,
+        request.url.path,
+        exc,
+        exc_info=True,
+    )
+    return JSONResponse(
+        status_code=500,
+        content={
+            "detail": "An internal server error occurred. Please contact municipal operations support.",
+            "error_code": "INTERNAL_SERVER_ERROR",
+        },
+    )
+
 
 # Mount API v1 router
 app.include_router(api_v1_router, prefix=settings.API_V1_STR)

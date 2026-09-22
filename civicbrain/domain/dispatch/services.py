@@ -308,10 +308,10 @@ async def citizen_dispute_report(
 
     report.status = IntakeStatus.IN_PROGRESS
     logger.warning(
-        "Citizen dispute filed for report %s on incidents %s. Reason: %s",
+        "Citizen dispute filed for report %s on incidents %s. Reason length: %d chars",
         report.id,
         appealed_ids,
-        reason,
+        len(reason),
     )
     await db.flush()
 

@@ -21,6 +21,7 @@ from civicbrain.domain.intake.taxonomy import (
     TaxonomyCategory,
     create_default_rubric,
 )
+from civicbrain.infra.cache import cache_delete, cache_get, cache_set
 from civicbrain.infra.database import get_db
 from civicbrain.schemas.taxonomy import (
     TaxonomyCategoryApprove,
@@ -71,10 +72,21 @@ async def list_categories(
         )
     elif category_status:
         stmt = stmt.where(TaxonomyCategory.status == category_status)
+    # Check cache for public approved categories
+    cache_key = f"cache:taxonomy:{organization_id}:approved"
+    if not is_admin and not category_status:
+        cached = await cache_get(cache_key)
+        if cached is not None:
+            return [TaxonomyCategoryResponse.model_validate(c) for c in cached]
 
     res = await db.execute(stmt)
-    categories = list(res.scalars().all())
-    return [TaxonomyCategoryResponse.model_validate(c) for c in categories]
+    cats = list(res.scalars().all())
+    result_models = [TaxonomyCategoryResponse.model_validate(c) for c in cats]
+
+    if not is_admin and not category_status:
+        await cache_set(cache_key, [m.model_dump() for m in result_models], ttl_seconds=120)
+
+    return result_models
 
 
 @router.post(
@@ -183,5 +195,6 @@ async def approve_category(
 
     await db.commit()
     await db.refresh(category)
+    await cache_delete(f"cache:taxonomy:{category.organization_id}:approved")
 
     return TaxonomyCategoryResponse.model_validate(category)

@@ -41,6 +41,14 @@ jobs:
         run: |
           mypy civicbrain
 
+      - name: Run Bandit Security Scanner
+        run: |
+          bandit -r civicbrain -ll
+
+      - name: Run Pip-Audit Dependency Vulnerability Scanner
+        run: |
+          pip-audit .
+
       - name: Run Test Suite
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

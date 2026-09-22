@@ -15,6 +15,7 @@ from civicbrain.domain.prioritization.ahp import (
 from civicbrain.domain.prioritization.equity import BuhlmannEquityCompensator
 from civicbrain.domain.prioritization.gate import evaluate_confidence_gate
 from civicbrain.domain.prioritization.models import AHPMatrixConfig, WardEquityCredibility
+from civicbrain.infra.cache import cache_delete, cache_get, cache_set
 from civicbrain.infra.database import get_db
 from civicbrain.schemas.prioritization import (
     AHPMatrixConfigRequest,
@@ -85,6 +86,8 @@ async def set_ahp_matrix(
     await db.commit()
     await db.refresh(config)
 
+    await cache_delete(f"cache:ahp_matrix:{claims.org_id}:active")
+
     return AHPMatrixConfigResponse(
         id=config.id,
         organization_id=config.organization_id,
@@ -112,6 +115,11 @@ async def get_active_ahp_matrix(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Missing organization scope in token"
         )
 
+    cache_key = f"cache:ahp_matrix:{claims.org_id}:active"
+    cached = await cache_get(cache_key)
+    if cached is not None:
+        return AHPMatrixConfigResponse.model_validate(cached)
+
     stmt = select(AHPMatrixConfig).where(
         AHPMatrixConfig.organization_id == claims.org_id,
         AHPMatrixConfig.is_active.is_(True),
@@ -123,7 +131,7 @@ async def get_active_ahp_matrix(
         # Fallback to calibrated default matrix if not yet explicitly seeded
         solver = AHPMatrix()
         result = solver.solve()
-        return AHPMatrixConfigResponse(
+        resp = AHPMatrixConfigResponse(
             id=uuid.uuid4(),
             organization_id=claims.org_id,
             matrix=AHPMatrix.DEFAULT_MATRIX,
@@ -133,8 +141,10 @@ async def get_active_ahp_matrix(
             consistency_ratio=result.consistency_ratio,
             is_active=True,
         )
+        await cache_set(cache_key, resp.model_dump(), ttl_seconds=180)
+        return resp
 
-    return AHPMatrixConfigResponse(
+    resp = AHPMatrixConfigResponse(
         id=config.id,
         organization_id=config.organization_id,
         matrix=config.matrix,
@@ -144,6 +154,8 @@ async def get_active_ahp_matrix(
         consistency_ratio=config.consistency_ratio,
         is_active=config.is_active,
     )
+    await cache_set(cache_key, resp.model_dump(), ttl_seconds=180)
+    return resp
 
 
 @router.get(

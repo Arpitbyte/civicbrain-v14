@@ -53,7 +53,17 @@ class Settings(BaseSettings):
     CRON_SECRET: str = "default-dev-cron-secret"
 
     # CORS
-    CORS_ORIGINS: str = "http://localhost:3000,http://localhost:8000"
+    CORS_ORIGINS: str = "http://localhost:3000,http://localhost:8000,https://civicbrain.gov.in"
+
+    @field_validator("CORS_ORIGINS", mode="after")
+    @classmethod
+    def validate_cors_origins(cls, v: str) -> str:
+        origins = [origin.strip() for origin in v.split(",") if origin.strip()]
+        if "*" in origins:
+            raise ValueError(
+                "Wildcard '*' origin is forbidden in CORS_ORIGINS for production security."
+            )
+        return v
 
     @property
     def cors_origins_list(self) -> list[str]:
