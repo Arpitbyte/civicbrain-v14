@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "civicbrain/api/v1/__init__.py": {
-    "mtime": 1789967410.2098832,
-    "seen": 1789967602.3077958,
-    "ast_hash": "4bc7be93e4fb71466d9e87007f00bb20",
+    "mtime": 1789968222.480945,
+    "seen": 1790034964.8402426,
+    "ast_hash": "864c98b7e4862d213a78a8afaa5df76d",
     "semantic_hash": ""
   },
   "civicbrain/api/v1/health.py": {
@@ -822,15 +822,87 @@
     "semantic_hash": ""
   },
   "civicbrain/domain/transparency/models.py": {
-    "mtime": 1789968059.9379673,
-    "seen": 1789968070.5618188,
-    "ast_hash": "e72640a3918225fa02456e0b2ac18943",
+    "mtime": 1789968222.4819472,
+    "seen": 1790034964.840324,
+    "ast_hash": "9a3126f2d4e9fce7b753773bc7484695",
     "semantic_hash": ""
   },
   "civicbrain/schemas/transparency.py": {
     "mtime": 1789968066.0443833,
     "seen": 1789968070.561862,
     "ast_hash": "7908f9b72022a3066779f28332925106",
+    "semantic_hash": ""
+  },
+  "civicbrain/api/v1/transparency.py": {
+    "mtime": 1789968222.4819472,
+    "seen": 1790034964.8402677,
+    "ast_hash": "5d4c95bcb79d15e1e6b48f16eab09d34",
+    "semantic_hash": ""
+  },
+  "civicbrain/audit/__init__.py": {
+    "mtime": 1790034805.6167834,
+    "seen": 1790034964.8402696,
+    "ast_hash": "70141aa6309d5810bc44aa64fa3af1a8",
+    "semantic_hash": ""
+  },
+  "civicbrain/audit/compliance_scanner.py": {
+    "mtime": 1790034823.9113717,
+    "seen": 1790034964.8402708,
+    "ast_hash": "e745a13c964bc1598d3df19e9dae6ae1",
+    "semantic_hash": ""
+  },
+  "civicbrain/domain/transparency/services.py": {
+    "mtime": 1790033114.8344133,
+    "seen": 1790034964.840325,
+    "ast_hash": "f599a6d9250494a69ebde3091913866c",
+    "semantic_hash": ""
+  },
+  "migrations/0013_phase12_hardening_policies.sql": {
+    "mtime": 1790034899.6865182,
+    "seen": 1790034964.8403783,
+    "ast_hash": "20087945962934cd1348e8ff79932400",
+    "semantic_hash": ""
+  },
+  "tests/test_audit_deterministic_compliance.py": {
+    "mtime": 1790034826.7806292,
+    "seen": 1790034964.8403847,
+    "ast_hash": "1064713d799e0641090e6272844b7766",
+    "semantic_hash": ""
+  },
+  "tests/test_live_supabase_phase11_transparency.py": {
+    "mtime": 1789968222.422239,
+    "seen": 1790034964.840401,
+    "ast_hash": "dc84c84519c66acc9306b98a7ab3f84c",
+    "semantic_hash": ""
+  },
+  "tests/test_live_supabase_phase12_rls_matrix.py": {
+    "mtime": 1790034957.2922866,
+    "seen": 1790034964.8404024,
+    "ast_hash": "f5c2b1a120f0cd7653e5b101829cec63",
+    "semantic_hash": ""
+  },
+  "tests/test_phase12_pii_scrubbing.py": {
+    "mtime": 1790034831.9858685,
+    "seen": 1790034964.840423,
+    "ast_hash": "8d22b9d11489b156c11b4b14fa43d60f",
+    "semantic_hash": ""
+  },
+  "tests/test_transparency_ledger.py": {
+    "mtime": 1789968166.3060906,
+    "seen": 1790034964.8404293,
+    "ast_hash": "325e31d9356ce825bbc4c6a31a1da4fd",
+    "semantic_hash": ""
+  },
+  "docs/phase-log/phase-11.md": {
+    "mtime": 1790034558.696929,
+    "seen": 1790034964.8404527,
+    "ast_hash": "4afc9959b4c790d3b5fb07613b7af5ae",
+    "semantic_hash": ""
+  },
+  "docs/specs/phase-12.md": {
+    "mtime": 1790034569.130836,
+    "seen": 1790034964.84047,
+    "ast_hash": "6d02b393581c615b6b52da835165af14",
     "semantic_hash": ""
   }
 }
