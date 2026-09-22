@@ -846,9 +846,9 @@
     "semantic_hash": ""
   },
   "civicbrain/audit/compliance_scanner.py": {
-    "mtime": 1790035279.82821,
-    "seen": 1790035835.3150113,
-    "ast_hash": "aac871f72588acd8c58a771890c309a6",
+    "mtime": 1790035898.6962256,
+    "seen": 1790035915.7298002,
+    "ast_hash": "cbf59c59db2d8257d8d1c13d958358a7",
     "semantic_hash": ""
   },
   "civicbrain/domain/transparency/services.py": {
@@ -903,12 +903,6 @@
     "mtime": 1790034569.130836,
     "seen": 1790034964.84047,
     "ast_hash": "6d02b393581c615b6b52da835165af14",
-    "semantic_hash": ""
-  },
-  "scripts/check_enum_live.py": {
-    "mtime": 1790035780.715461,
-    "seen": 1790035835.315199,
-    "ast_hash": "0ceb7cad88e44f033a5773c1ac32480c",
     "semantic_hash": ""
   },
   "docs/phase-log/phase-12.md": {
