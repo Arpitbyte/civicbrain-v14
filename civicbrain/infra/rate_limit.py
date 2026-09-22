@@ -43,10 +43,11 @@ class RateLimiter:
         except HTTPException:
             raise
         except Exception as exc:
-            logger.error(
-                "Redis rate limiter error on prefix '%s' for IP %s: %s", self.prefix, client_ip, exc
+            logger.warning(
+                "Redis rate limiter error on prefix '%s' for IP %s: %s. Failing open.",
+                self.prefix,
+                client_ip,
+                exc,
             )
-            raise HTTPException(
-                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                detail="Rate limit verification service unavailable.",
-            ) from exc
+            # Fail-open: do not block critical civic requests if Redis cache is temporarily unreachable
+            return

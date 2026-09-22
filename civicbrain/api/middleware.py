@@ -1,6 +1,6 @@
 """Security and hardening ASGI middleware."""
 
-from starlette.types import ASGIApp, Receive, Scope, Send
+from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 
 class SecurityHeadersMiddleware:
@@ -22,7 +22,7 @@ class SecurityHeadersMiddleware:
             await self.app(scope, receive, send)
             return
 
-        async def send_with_security_headers(message: dict) -> None:
+        async def send_with_security_headers(message: Message) -> None:
             if message["type"] == "http.response.start":
                 headers = list(message.get("headers", []))
                 headers.extend(
