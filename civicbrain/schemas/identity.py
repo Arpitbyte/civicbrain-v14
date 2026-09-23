@@ -199,3 +199,24 @@ class HierarchyTreeResponse(BaseModel):
     organization_name: str
     ulb_type: ULBType
     zones: list[ZoneHierarchyNode] = Field(default_factory=list)
+
+
+class BulkImportRowResult(BaseModel):
+    row_number: int
+    full_name: str
+    phone: str
+    email: str | None = None
+    role: str
+    status: str  # "created", "would_create", "skipped"
+    reason: str | None = None
+    setup_link_dispatched: bool = False
+
+
+class BulkImportResponse(BaseModel):
+    file_name: str
+    file_hash: str
+    dry_run: bool
+    total_rows: int
+    created_count: int
+    skipped_count: int
+    results: list[BulkImportRowResult]

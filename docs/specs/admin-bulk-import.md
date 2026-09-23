@@ -34,7 +34,7 @@ This specification defines the architecture, data structures, security controls,
 - For each valid row:
   - Generates a cryptographically secure setup token (`secrets.token_urlsafe(32)`).
   - Persists token with a 72-hour expiration in Redis / cache (`setup_token:{token} -> {user_id, org_id}`).
-  - Dispatches an account setup notification link (`https://civicbrain.gov.in/setup-password?token=...`) via `civicbrain.domain.notifications.service` (SMS / WhatsApp / Email adapters).
+  - Dispatches an account setup notification link (`{settings.FRONTEND_BASE_URL}?token=...`) via `civicbrain.domain.notifications.service` (SMS / WhatsApp / Email adapters). `FRONTEND_BASE_URL` is configured in `civicbrain/infra/config.py` defaulting to `http://localhost:5173/setup-password`.
   - The admin receives an audit of dispatched invitations (`setup_link_dispatched: true`), but **never sees, handles, or receives any password**.
   - PII logging filter in `civicbrain/infra/logging.py` is strengthened with regex patterns redacting any token or password keys if mistakenly passed to log handlers.
 
@@ -119,19 +119,13 @@ CREATE POLICY "import_log_admin_select"
     ON public.staff_bulk_import_log
     FOR SELECT
     TO authenticated
-    USING (
-        organization_id = (auth.jwt() -> 'app_metadata' ->> 'org_id')::uuid
-        AND (auth.jwt() -> 'app_metadata' ->> 'role')::text = 'admin'
-    );
+    USING (is_org_admin(organization_id));
 
 CREATE POLICY "import_log_admin_insert"
     ON public.staff_bulk_import_log
     FOR INSERT
     TO authenticated
-    WITH CHECK (
-        organization_id = (auth.jwt() -> 'app_metadata' ->> 'org_id')::uuid
-        AND (auth.jwt() -> 'app_metadata' ->> 'role')::text = 'admin'
-    );
+    WITH CHECK (is_org_admin(organization_id));
 ```
 
 ---

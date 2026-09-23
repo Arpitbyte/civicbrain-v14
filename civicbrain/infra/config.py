@@ -52,6 +52,9 @@ class Settings(BaseSettings):
     # Scheduled Cron Secret
     CRON_SECRET: str = "default-dev-cron-secret"
 
+    # Frontend Base URL for Password Setup / Onboarding Links
+    FRONTEND_BASE_URL: str = "http://localhost:5173/setup-password"
+
     # CORS
     CORS_ORIGINS: str = "http://localhost:3000,http://localhost:8000,https://civicbrain.gov.in"
 

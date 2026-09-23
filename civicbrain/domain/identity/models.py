@@ -435,3 +435,38 @@ class CitizenProfile(Base):
         onupdate=func.now(),
         nullable=False,
     )
+
+
+class StaffBulkImportLog(Base):
+    """Audit record for administrative staff bulk-import events."""
+
+    __tablename__ = "staff_bulk_import_log"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    organization_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("organization.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    admin_user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("user_account.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True,
+    )
+    file_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    file_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    total_rows: Mapped[int] = mapped_column(nullable=False)
+    created_count: Mapped[int] = mapped_column(nullable=False)
+    skipped_count: Mapped[int] = mapped_column(nullable=False)
+    is_dry_run: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )

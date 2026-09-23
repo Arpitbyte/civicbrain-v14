@@ -12,6 +12,12 @@ BEARER_TOKEN_PATTERN = re.compile(
     re.IGNORECASE,
 )
 API_KEY_PATTERN = re.compile(r"\b(?:sk-[a-zA-Z0-9]{20,}|AIza[0-9A-Za-z-_]{35})\b")
+PASSWORD_KEY_PATTERN = re.compile(
+    r"""(?i)(["']?(?:password|temp_password|temporary_password|secret)["']?\s*[:=]\s*["'])([^"'\s]+)(["'])"""
+)
+SETUP_TOKEN_PATTERN = re.compile(
+    r"""(?i)(["']?(?:setup_token|invitation_token)["']?\s*[:=]\s*["'])([^"'\s]+)(["'])"""
+)
 
 
 def scrub_log_message(message: str) -> str:
@@ -20,6 +26,8 @@ def scrub_log_message(message: str) -> str:
         message = str(message)
     message = BEARER_TOKEN_PATTERN.sub(r"\1[REDACTED_TOKEN]", message)
     message = API_KEY_PATTERN.sub("[REDACTED_KEY]", message)
+    message = PASSWORD_KEY_PATTERN.sub(r"\1[REDACTED_PASSWORD]\3", message)
+    message = SETUP_TOKEN_PATTERN.sub(r"\1[REDACTED_TOKEN]\3", message)
     message = AADHAAR_PATTERN.sub("[REDACTED_AADHAAR]", message)
     message = PHONE_PATTERN.sub("[REDACTED_PHONE]", message)
     message = EMAIL_PATTERN.sub("[REDACTED_EMAIL]", message)
