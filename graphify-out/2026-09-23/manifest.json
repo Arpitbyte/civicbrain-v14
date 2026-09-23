@@ -66,9 +66,9 @@
     "semantic_hash": ""
   },
   "civicbrain/domain/identity/models.py": {
-    "mtime": 1790139595.6471846,
-    "seen": 1790140913.7020597,
-    "ast_hash": "38f3ec9cc707bd7add378d917139380a",
+    "mtime": 1789918658.3313005,
+    "seen": 1789918982.504441,
+    "ast_hash": "26678c71267b00bf1eb5d35891c05dc2",
     "semantic_hash": ""
   },
   "civicbrain/domain/intake/__init__.py": {
@@ -96,9 +96,9 @@
     "semantic_hash": ""
   },
   "civicbrain/infra/config.py": {
-    "mtime": 1790139585.6736467,
-    "seen": 1790140913.702178,
-    "ast_hash": "674e9deac3f6dec42010668cf16c110a",
+    "mtime": 1790036945.6066232,
+    "seen": 1790037611.0331182,
+    "ast_hash": "58bf32d2180db950c707ef2fd1bf350c",
     "semantic_hash": ""
   },
   "civicbrain/infra/database.py": {
@@ -156,9 +156,9 @@
     "semantic_hash": ""
   },
   ".agents/RULES.md": {
-    "mtime": 1790084235.9363441,
-    "seen": 1790140913.7025356,
-    "ast_hash": "e9aa6af497b163a06e95fa481c9c8fee",
+    "mtime": 1790035921.8309793,
+    "seen": 1790035929.0032449,
+    "ast_hash": "09a3d889c727b91d59f4770b640a6844",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
@@ -222,9 +222,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790082902.4986334,
-    "seen": 1790140913.7025812,
-    "ast_hash": "4bdee426d11a53bc9ee5cae05f9524b1",
+    "mtime": 1789812636.5632756,
+    "seen": 1789812663.6804934,
+    "ast_hash": "ebf0ea942b38ff2ce99f40d433c3c7c2",
     "semantic_hash": ""
   },
   "civicbrain/api/v1/auth.py": {
@@ -234,9 +234,9 @@
     "semantic_hash": ""
   },
   "civicbrain/api/v1/hierarchy.py": {
-    "mtime": 1790139702.1812885,
-    "seen": 1790140913.7019386,
-    "ast_hash": "be1e008e987304495042f92c475ed574",
+    "mtime": 1789882609.3406813,
+    "seen": 1789882699.4492188,
+    "ast_hash": "a475e9a9b1e19f35ecd0b3bbbf1946dc",
     "semantic_hash": ""
   },
   "civicbrain/domain/identity/jwt.py": {
@@ -252,9 +252,9 @@
     "semantic_hash": ""
   },
   "civicbrain/schemas/identity.py": {
-    "mtime": 1790139633.5679376,
-    "seen": 1790140913.702246,
-    "ast_hash": "370d930b213cde57cfcaa3cad288dcae",
+    "mtime": 1789882369.235806,
+    "seen": 1789882699.449258,
+    "ast_hash": "6e1888bf30d50779661be24ca93b4333",
     "semantic_hash": ""
   },
   "migrations/0002_phase1_identity_rbac.sql": {
@@ -414,9 +414,9 @@
     "semantic_hash": ""
   },
   "docs/specs/phase-3.md": {
-    "mtime": 1790082804.161515,
-    "seen": 1790140913.7027214,
-    "ast_hash": "a34067867a99c2e84a88b88b1e5bae1e",
+    "mtime": 1789967410.2109969,
+    "seen": 1789967602.3080037,
+    "ast_hash": "05c34f15326b02dc8bd7931ecc8ddfe6",
     "semantic_hash": ""
   },
   "docs/phase-log/phase-3.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "docs/specs/phase-4.md": {
-    "mtime": 1790082812.3103619,
-    "seen": 1790140913.7027256,
-    "ast_hash": "dfbb52572368cf12afd1707ad6f11478",
+    "mtime": 1789919011.710386,
+    "seen": 1789919296.9545999,
+    "ast_hash": "0b688bd1247ac30f01b291f15a4fdcb6",
     "semantic_hash": ""
   },
   "civicbrain/api/v1/gis.py": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "docs/specs/phase-5.md": {
-    "mtime": 1790082819.7704654,
-    "seen": 1790140913.7027304,
-    "ast_hash": "3e1f176832eea578aa7f414cf551b492",
+    "mtime": 1789967410.2109969,
+    "seen": 1789967602.3080068,
+    "ast_hash": "41c1f203a259d3a75006a99cacd8a1d9",
     "semantic_hash": ""
   },
   "civicbrain/api/v1/nlp.py": {
@@ -780,21 +780,21 @@
     "semantic_hash": ""
   },
   "docs/specs/phase-10.md": {
-    "mtime": 1790082844.7543616,
-    "seen": 1790140913.7027042,
-    "ast_hash": "2a7aab2744b2de1d6c51ab0a140a7f72",
+    "mtime": 1789966991.5578637,
+    "seen": 1789967238.7195988,
+    "ast_hash": "5c0d93441e1b78ed4191e97cd0dbfbe1",
     "semantic_hash": ""
   },
   "docs/specs/phase-8.md": {
-    "mtime": 1790082828.3521159,
-    "seen": 1790140913.7027466,
-    "ast_hash": "93c5247580ee04355cc5ff564a7d12de",
+    "mtime": 1789948251.8222973,
+    "seen": 1789967238.7196128,
+    "ast_hash": "b875bce4637fee0ff35ac90f8205873c",
     "semantic_hash": ""
   },
   "docs/specs/phase-9.md": {
-    "mtime": 1790082835.1862545,
-    "seen": 1790140913.7027507,
-    "ast_hash": "61834fe4ce8032f0316111f8483d6f76",
+    "mtime": 1789949057.2695506,
+    "seen": 1789967238.7196147,
+    "ast_hash": "740f27d92e4568a28aeb62c9c4652a8c",
     "semantic_hash": ""
   },
   "docs/phase-log/phase-10.md": {
@@ -804,9 +804,9 @@
     "semantic_hash": ""
   },
   "docs/specs/phase-11.md": {
-    "mtime": 1790082852.3813004,
-    "seen": 1790140913.7027085,
-    "ast_hash": "46753148e75c0aea64b3d7c47784da05",
+    "mtime": 1789967971.0066,
+    "seen": 1789968056.0128174,
+    "ast_hash": "ca0a4792792517e9b815597145ee5a61",
     "semantic_hash": ""
   },
   "migrations/0012_phase11_transparency_ledger.sql": {
@@ -900,21 +900,21 @@
     "semantic_hash": ""
   },
   "docs/specs/phase-12.md": {
-    "mtime": 1790082860.5901432,
-    "seen": 1790140913.7027125,
-    "ast_hash": "66e4c4fe2c737de8c2bb86953de6eccc",
+    "mtime": 1790034569.130836,
+    "seen": 1790034964.84047,
+    "ast_hash": "6d02b393581c615b6b52da835165af14",
     "semantic_hash": ""
   },
   "docs/phase-log/phase-12.md": {
-    "mtime": 1790082892.279737,
-    "seen": 1790140913.7026484,
-    "ast_hash": "71dee171b2c3884531f1d5f8a69c005c",
+    "mtime": 1790035294.2528918,
+    "seen": 1790035835.315287,
+    "ast_hash": "3ab4505aab1c0c83a9e7e8ebc52da164",
     "semantic_hash": ""
   },
   "civicbrain/api/middleware.py": {
-    "mtime": 1790037849.8300376,
-    "seen": 1790140913.7018933,
-    "ast_hash": "a5846321f87d2d19ec06ce70cba404fb",
+    "mtime": 1790036945.6066232,
+    "seen": 1790037611.0329673,
+    "ast_hash": "712671b386d87f323028037ea39df8ee",
     "semantic_hash": ""
   },
   "civicbrain/infra/cache.py": {
@@ -924,15 +924,15 @@
     "semantic_hash": ""
   },
   "civicbrain/infra/logging.py": {
-    "mtime": 1790139612.299387,
-    "seen": 1790140913.7021878,
-    "ast_hash": "46593863f632b1a29ae2ca55055a346d",
+    "mtime": 1790036890.280509,
+    "seen": 1790037611.0331213,
+    "ast_hash": "38ca66e4bf73b35b68a0ae00c9293635",
     "semantic_hash": ""
   },
   "civicbrain/infra/rate_limit.py": {
-    "mtime": 1790037660.1497643,
-    "seen": 1790140913.7021935,
-    "ast_hash": "4155c8f9ee9fe5c2db720050f5a15f16",
+    "mtime": 1790036945.6066232,
+    "seen": 1790037611.0331233,
+    "ast_hash": "010849378f6c0c3169ad981fc7265668",
     "semantic_hash": ""
   },
   "migrations/0014_performance_indexes.sql": {
@@ -942,63 +942,9 @@
     "semantic_hash": ""
   },
   "tests/test_security_performance_hardening.py": {
-    "mtime": 1790043116.8127408,
-    "seen": 1790140913.7025106,
-    "ast_hash": "43677977d417464a32ded2601e7ffc48",
-    "semantic_hash": ""
-  },
-  "civicbrain/domain/notifications/service.py": {
-    "mtime": 1790139618.3167655,
-    "seen": 1790140913.7021134,
-    "ast_hash": "3ed887875201d2a0de4ac086215cf04c",
-    "semantic_hash": ""
-  },
-  "civicbrain/infra/security.py": {
-    "mtime": 1790139600.941841,
-    "seen": 1790140913.702203,
-    "ast_hash": "6e0c4c8665159d2411f1ea75be3ca794",
-    "semantic_hash": ""
-  },
-  "civicbrain/infra/supabase.py": {
-    "mtime": 1790139622.6538856,
-    "seen": 1790140913.702208,
-    "ast_hash": "eeb30499fa1089279b2b1fd8a1f46a17",
-    "semantic_hash": ""
-  },
-  "migrations/0015_staff_bulk_import_audit.sql": {
-    "mtime": 1790139542.903613,
-    "seen": 1790140913.7023509,
-    "ast_hash": "91cedd1a034ad7367b37f0b414e5c068",
-    "semantic_hash": ""
-  },
-  "tests/test_admin_bulk_import.py": {
-    "mtime": 1790140223.8376405,
-    "seen": 1790140913.7023604,
-    "ast_hash": "d514f7550b3001296a7f194265c2649b",
-    "semantic_hash": ""
-  },
-  "docs/PROJECT_REFERENCE_FOR_FRONTEND.md": {
-    "mtime": 1790140898.0188067,
-    "seen": 1790140913.7026157,
-    "ast_hash": "6b4a33c0617a0dd72b7a92df82120b15",
-    "semantic_hash": ""
-  },
-  "docs/phase-log/phase-13.md": {
-    "mtime": 1790084243.982193,
-    "seen": 1790140913.7026525,
-    "ast_hash": "5b3a8e970c84b44a6d11455ba1a4169b",
-    "semantic_hash": ""
-  },
-  "docs/specs/admin-bulk-import.md": {
-    "mtime": 1790139535.4133096,
-    "seen": 1790140913.7026994,
-    "ast_hash": "941fd93eb8d930e8b62818b2fbedff88",
-    "semantic_hash": ""
-  },
-  "docs/specs/phase-13.md": {
-    "mtime": 1790082871.3854182,
-    "seen": 1790140913.7027166,
-    "ast_hash": "0aeeed4637b2b159f06d97cd69265058",
+    "mtime": 1790036855.4630492,
+    "seen": 1790037611.0332403,
+    "ast_hash": "3dff317303098459e7301d5a1b85f323",
     "semantic_hash": ""
   }
 }
