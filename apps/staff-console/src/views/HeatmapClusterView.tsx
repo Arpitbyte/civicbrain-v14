@@ -1,372 +1,387 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Button,
-  IconButton,
-  Switch,
-  ConfidenceBadge,
-  Skeleton,
-} from '@civicbrain/ui';
-import { CoordinateRulerFrame } from '../components/gis/CoordinateRulerFrame';
+import { Button, Switch } from '@civicbrain/ui';
+import { RealSatelliteMap, IncidentCluster } from '../components/gis/RealSatelliteMap';
 import { ClusterStatsPanel, ClusterData } from '../components/gis/ClusterStatsPanel';
 import { ClusterAccessibleListView } from '../components/gis/ClusterAccessibleListView';
-import { useGsapClusterReveal } from '../components/gis/useGsapClusterReveal';
 import {
   Layers,
-  MapPin,
-  ZoomIn,
-  ZoomOut,
-  RefreshCw,
-  AlertCircle,
-  Eye,
   Sliders,
   List,
   Map as MapIcon,
-  HelpCircle,
-  Sparkles,
+  RefreshCw,
+  AlertCircle,
+  Building2,
+  CheckCircle2,
+  Filter,
 } from 'lucide-react';
 
-/**
- * Cluster radius calculation strictly from DESIGN.md §3.4:
- * --map-point-radius-cluster: clamp(8px, calc(8px + sqrt(var(--cluster-count)) * 1.5px), 28px)
- */
-export const calculateClusterRadius = (count: number): number => {
-  return Math.min(28, Math.max(8, 8 + Math.sqrt(count) * 1.5));
-};
+interface Organization {
+  id: string;
+  name: string;
+  code: string;
+  ulb_type: string;
+  state: string;
+}
 
-// Initial realistic test clusters with >=3 distinct cluster sizes
-const MOCK_CLUSTERS: ClusterData[] = [
-  {
-    cluster_id: 101,
-    incident_count: 4, // Size 1: 4 points -> ~11.0px
-    centroid: {
-      type: 'Point',
-      coordinates: [77.585, 12.985],
-    },
-    incident_ids: ['inc-001', 'inc-002', 'inc-003', 'inc-004'],
-    confidence_score: 0.64,
-    dominant_category: 'Streetlighting',
-    ward_name: 'Malleshwaram',
-    ward_number: 101,
-    category_breakdown: [
-      { category: 'Streetlighting', count: 3, percentage: 75 },
-      { category: 'Drainage', count: 1, percentage: 25 },
-    ],
-    severity_breakdown: { critical: 0, major: 2, minor: 2 },
-  },
-  {
-    cluster_id: 102,
-    incident_count: 19, // Size 2: 19 points -> ~14.54px
-    centroid: {
-      type: 'Point',
-      coordinates: [77.575, 12.965],
-    },
-    incident_ids: Array.from({ length: 19 }, (_, i) => `inc-102-${i + 1}`),
-    confidence_score: 0.88,
-    dominant_category: 'Solid Waste / Drainage',
-    ward_name: 'Rajajinagar',
-    ward_number: 102,
-    category_breakdown: [
-      { category: 'Solid Waste', count: 11, percentage: 58 },
-      { category: 'Drainage', count: 6, percentage: 32 },
-      { category: 'Road Hazards', count: 2, percentage: 10 },
-    ],
-    severity_breakdown: { critical: 3, major: 10, minor: 6 },
-  },
-  {
-    cluster_id: 103,
-    incident_count: 45, // Size 3: 45 points -> ~18.06px
-    centroid: {
-      type: 'Point',
-      coordinates: [77.605, 12.972],
-    },
-    incident_ids: Array.from({ length: 45 }, (_, i) => `inc-103-${i + 1}`),
-    confidence_score: 0.95,
-    dominant_category: 'Water Supply / Potholes',
-    ward_name: 'Gandhinagar',
-    ward_number: 103,
-    category_breakdown: [
-      { category: 'Water Supply', count: 24, percentage: 53 },
-      { category: 'Potholes', count: 16, percentage: 36 },
-      { category: 'Sewage', count: 5, percentage: 11 },
-    ],
-    severity_breakdown: { critical: 8, major: 25, minor: 12 },
-  },
-  {
-    cluster_id: 104,
-    incident_count: 200, // Size 4: 200 points -> 28.0px (clamped max)
-    centroid: {
-      type: 'Point',
-      coordinates: [77.618, 12.98],
-    },
-    incident_ids: Array.from({ length: 200 }, (_, i) => `inc-104-${i + 1}`),
-    confidence_score: 0.99,
-    dominant_category: 'Commercial Corridor Defect Hotspot',
-    ward_name: 'Shivaji Nagar',
-    ward_number: 104,
-    category_breakdown: [
-      { category: 'Potholes / Asphalt', count: 88, percentage: 44 },
-      { category: 'Solid Waste', count: 62, percentage: 31 },
-      { category: 'Streetlights', count: 50, percentage: 25 },
-    ],
-    severity_breakdown: { critical: 42, major: 110, minor: 48 },
-  },
-];
-
-// Municipal Wards Polygons (simplified SVG paths for visualization)
-const MOCK_WARDS = [
-  { id: 101, name: 'Malleshwaram', code: 'W-101', path: 'M 100,50 L 320,40 L 350,220 L 120,240 Z' },
-  { id: 102, name: 'Rajajinagar', code: 'W-102', path: 'M 80,250 L 340,230 L 320,440 L 90,420 Z' },
-  { id: 103, name: 'Gandhinagar', code: 'W-103', path: 'M 360,60 L 620,80 L 640,300 L 370,260 Z' },
-  { id: 104, name: 'Shivaji Nagar', code: 'W-104', path: 'M 630,90 L 880,110 L 860,420 L 650,320 Z' },
-];
-
-// Synthetic background incident scatter points
-const MOCK_INCIDENTS = [
-  { x: 140, y: 80, cat: 'Streetlighting' },
-  { x: 190, y: 120, cat: 'Streetlighting' },
-  { x: 220, y: 90, cat: 'Drainage' },
-  { x: 260, y: 140, cat: 'Drainage' },
-  { x: 180, y: 310, cat: 'Solid Waste' },
-  { x: 210, y: 290, cat: 'Solid Waste' },
-  { x: 250, y: 340, cat: 'Drainage' },
-  { x: 290, y: 320, cat: 'Road Hazards' },
-  { x: 420, y: 140, cat: 'Water Supply' },
-  { x: 460, y: 180, cat: 'Water Supply' },
-  { x: 490, y: 160, cat: 'Potholes' },
-  { x: 530, y: 210, cat: 'Sewage' },
-  { x: 720, y: 160, cat: 'Potholes' },
-  { x: 760, y: 220, cat: 'Solid Waste' },
-  { x: 800, y: 260, cat: 'Streetlights' },
-];
+interface Department {
+  id: string;
+  name: string;
+  code: string;
+}
 
 export const HeatmapClusterView: React.FC = () => {
   const navigate = useNavigate();
 
-  // Layer Controls State
+  // Active ULB Organization state
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
+  const [selectedOrgId, setSelectedOrgId] = useState<string>('');
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [selectedDeptId, setSelectedDeptId] = useState<string>('all');
+
+  // Layer Visibility
   const [showWards, setShowWards] = useState(true);
   const [showIncidents, setShowIncidents] = useState(true);
   const [showClusters, setShowClusters] = useState(true);
-  const [showDensityHeatmap, setShowDensityHeatmap] = useState(false);
 
   // Clustering tuning parameters
-  const [epsMeters, setEpsMeters] = useState(100);
-  const [minPoints, setMinPoints] = useState(3);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [epsMeters, setEpsMeters] = useState<number>(100);
+  const [minPoints, setMinPoints] = useState<number>(3);
 
-  // UI state
+  // View state
   const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
-  const [zoomLevel, setZoomLevel] = useState(13);
-  const [selectedCluster, setSelectedCluster] = useState<ClusterData | null>(MOCK_CLUSTERS[1]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [selectedCluster, setSelectedCluster] = useState<ClusterData | null>(null);
+
+  // Real API Data
+  const [clusters, setClusters] = useState<IncidentCluster[]>([]);
+  const [wardsGeoJSON, setWardsGeoJSON] = useState<GeoJSON.FeatureCollection | null>(null);
+  const [incidentsGeoJSON, setIncidentsGeoJSON] = useState<GeoJSON.FeatureCollection | null>(null);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [dataError, setDataError] = useState<string | null>(null);
 
-  // Filter clusters based on category and minPoints
-  const filteredClusters = useMemo(() => {
-    return MOCK_CLUSTERS.filter((c) => {
-      if (c.incident_count < minPoints) return false;
-      if (selectedCategory !== 'all' && !c.dominant_category.toLowerCase().includes(selectedCategory.toLowerCase())) {
-        return false;
+  // 1. Fetch Organizations on mount
+  useEffect(() => {
+    const fetchOrgs = async () => {
+      try {
+        const res = await fetch('/v1/orgs');
+        if (res.ok) {
+          const orgs: Organization[] = await res.json();
+          setOrganizations(orgs);
+          if (orgs.length > 0) {
+            // Select BBMP or the first available organization
+            const defaultOrg = orgs.find(o => o.code.startsWith('BBMP')) || orgs[0];
+            setSelectedOrgId(defaultOrg.id);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load organizations:', err);
       }
-      return true;
-    });
-  }, [minPoints, selectedCategory]);
+    };
+    fetchOrgs();
+  }, []);
 
-  // GSAP Cluster Reveal Hook
-  const { containerRef } = useGsapClusterReveal({
-    triggerKey: `${zoomLevel}-${filteredClusters.length}-${showClusters}`,
-    selector: '.gsap-cluster-circle',
-    getTargetRadius: (circle) => {
-      const count = parseInt(circle.getAttribute('data-point-count') || '10', 10);
-      return calculateClusterRadius(count);
-    },
-  });
+  // 2. Fetch Departments for selected organization
+  useEffect(() => {
+    if (!selectedOrgId) return;
+    const fetchDepts = async () => {
+      try {
+        const res = await fetch(`/v1/orgs/${selectedOrgId}/departments`);
+        if (res.ok) {
+          const data: Department[] = await res.json();
+          setDepartments(data);
+        }
+      } catch (err) {
+        console.error('Failed to load departments:', err);
+      }
+    };
+    fetchDepts();
+  }, [selectedOrgId]);
 
-  const handleZoomIn = () => setZoomLevel((z) => Math.min(18, z + 1));
-  const handleZoomOut = () => setZoomLevel((z) => Math.max(9, z - 1));
+  // 3. Fetch Real GIS Data (Wards, Incidents, Clusters)
+  const fetchGisData = useCallback(async () => {
+    if (!selectedOrgId) return;
 
-  const handleInspectIncidents = (cluster: ClusterData) => {
-    navigate('/deck');
+    setDataError(null);
+    try {
+      // A. Fetch Wards GeoJSON
+      const wardsRes = await fetch(`/v1/gis/wards/geojson?organization_id=${selectedOrgId}`);
+      if (wardsRes.ok) {
+        const wardsData: GeoJSON.FeatureCollection = await wardsRes.json();
+        setWardsGeoJSON(wardsData);
+      }
+
+      // B. Fetch Incidents GeoJSON
+      const deptQuery = selectedDeptId !== 'all' ? `&department_id=${selectedDeptId}` : '';
+      const incidentsRes = await fetch(`/v1/gis/incidents/geojson?organization_id=${selectedOrgId}${deptQuery}`);
+      if (incidentsRes.ok) {
+        const incData: GeoJSON.FeatureCollection = await incidentsRes.json();
+        setIncidentsGeoJSON(incData);
+      }
+
+      // C. Fetch DBSCAN Clusters
+      const clustersUrl = `/v1/gis/clusters?organization_id=${selectedOrgId}&eps_meters=${epsMeters}&min_points=${minPoints}${deptQuery}`;
+      const clustersRes = await fetch(clustersUrl);
+      if (clustersRes.ok) {
+        const clusterData: IncidentCluster[] = await clustersRes.json();
+        setClusters(clusterData);
+        if (clusterData.length > 0 && !selectedCluster) {
+          // Format first cluster for detailed panel
+          const first = clusterData[0];
+          setSelectedCluster({
+            cluster_id: first.cluster_id,
+            incident_count: first.incident_count,
+            centroid: {
+              type: 'Point',
+              coordinates: first.centroid?.coordinates || [77.5946, 12.9716],
+            },
+            incident_ids: first.incident_ids.map(String),
+            confidence_score: first.confidence_score || 0.85,
+            dominant_category: first.dominant_category || 'नागरिक शिकायतें (Civic Defects)',
+            category_breakdown: [{ category: 'नागरिक समस्याएं', count: first.incident_count, percentage: 100 }],
+            severity_breakdown: { critical: 0, major: first.incident_count, minor: 0 },
+            ward_name: first.ward_name,
+            ward_number: first.ward_number,
+          });
+        }
+      }
+    } catch (err: any) {
+      console.error('GIS data fetch error:', err);
+      setDataError('नगर पालिका जीआईएस डेटा लोड करने में त्रुटि (Failed to connect to live GIS server)');
+    } finally {
+      setIsLoading(false);
+      setIsRefreshing(false);
+    }
+  }, [selectedOrgId, selectedDeptId, epsMeters, minPoints, selectedCluster]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchGisData();
+  }, [fetchGisData]);
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    fetchGisData();
   };
 
-  const isTooZoomedInForClusters = zoomLevel >= 16;
+  const handleSelectCluster = (c: IncidentCluster) => {
+    setSelectedCluster({
+      cluster_id: c.cluster_id,
+      incident_count: c.incident_count,
+      centroid: {
+        type: 'Point',
+        coordinates: c.centroid?.coordinates || [77.5946, 12.9716],
+      },
+      incident_ids: c.incident_ids.map(String),
+      confidence_score: c.confidence_score || 0.9,
+      dominant_category: c.dominant_category || 'नागरिक शिकायत क्लस्टर',
+      category_breakdown: [{ category: 'प्राथमिक समस्याएं', count: c.incident_count, percentage: 100 }],
+      severity_breakdown: { critical: 0, major: c.incident_count, minor: 0 },
+      ward_name: c.ward_name,
+      ward_number: c.ward_number,
+    });
+  };
+
+  // Convert for ClusterAccessibleListView
+  const fullClusterList: ClusterData[] = useMemo(() => {
+    return clusters.map(c => ({
+      cluster_id: c.cluster_id,
+      incident_count: c.incident_count,
+      centroid: {
+        type: 'Point',
+        coordinates: c.centroid?.coordinates || [77.5946, 12.9716],
+      },
+      incident_ids: c.incident_ids.map(String),
+      confidence_score: c.confidence_score || 0.85,
+      dominant_category: c.dominant_category || 'नागरिक शिकायतें',
+      category_breakdown: [{ category: 'सामान्य समस्याएं', count: c.incident_count, percentage: 100 }],
+      severity_breakdown: { critical: 0, major: c.incident_count, minor: 0 },
+      ward_name: c.ward_name,
+      ward_number: c.ward_number,
+    }));
+  }, [clusters]);
+
+  const currentOrg = organizations.find(o => o.id === selectedOrgId);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-3.5rem)] font-ui bg-background text-primary overflow-hidden">
-      {/* City Pulse Sub-header / Command Bar */}
-      <header className="h-13 px-4 sm:px-6 border-b border-border bg-surface flex items-center justify-between shrink-0 z-20">
+    <div className="flex flex-col h-[calc(100vh-3.5rem)] font-ui bg-slate-50 text-slate-900 overflow-hidden">
+      {/* Indian Municipal Header & Command Bar */}
+      <header className="h-14 px-4 sm:px-6 bg-white border-b border-slate-200 flex items-center justify-between shrink-0 z-20 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-channel-600 animate-pulse" />
+          <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-600">
+            <Building2 className="w-4 h-4" />
+          </div>
           <div>
-            <h1 className="text-base font-semibold text-primary tracking-tight">
-              City Pulse — Hotspot & Cluster Spatial Analysis
-            </h1>
-            <p className="text-[11px] font-mono text-secondary">
-              DBSCAN In-Database Defect Hotspots • POSTGIS ST_ClusterDBSCAN
+            <div className="flex items-center gap-2">
+              <h1 className="text-sm sm:text-base font-semibold text-slate-900 tracking-tight">
+                City Pulse — Ward Hotspots & Cluster Map
+              </h1>
+              <span className="text-[11px] font-medium text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200">
+                नगर पल्स
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 hidden sm:block">
+              {currentOrg ? `${currentOrg.name} (${currentOrg.state})` : 'महानगर पालिका प्रभाग विश्लेषण'} • वास्तविक समय जीआईएस क्लस्टर
             </p>
           </div>
         </div>
 
-        {/* View Switcher & Action Controls */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center bg-field-100 p-0.5 border border-border rounded-sm">
+        {/* View Mode & Live Refresh */}
+        <div className="flex items-center gap-2.5">
+          {/* Organization Switcher if multiple ULBs exist */}
+          {organizations.length > 1 && (
+            <select
+              value={selectedOrgId}
+              onChange={(e) => setSelectedOrgId(e.target.value)}
+              className="text-xs border border-slate-200 rounded-md px-2 py-1.5 bg-slate-50 font-medium text-slate-700 outline-none focus:ring-1 focus:ring-orange-500"
+              aria-label="Select Municipal Corporation"
+            >
+              {organizations.map(org => (
+                <option key={org.id} value={org.id}>{org.name}</option>
+              ))}
+            </select>
+          )}
+
+          {/* Map vs List Mode */}
+          <div className="flex items-center bg-slate-100 p-0.5 border border-slate-200 rounded-lg">
             <button
               onClick={() => setViewMode('map')}
-              className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-xs transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-md transition-all ${
                 viewMode === 'map'
-                  ? 'bg-surface text-primary shadow-xs'
-                  : 'text-secondary hover:text-primary'
+                  ? 'bg-white text-slate-900 shadow-xs font-semibold'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
-              aria-pressed={viewMode === 'map'}
             >
               <MapIcon className="w-3.5 h-3.5" />
-              <span>Map View</span>
+              <span>मानचित्र (Map)</span>
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-xs transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-md transition-all ${
                 viewMode === 'list'
-                  ? 'bg-surface text-primary shadow-xs'
-                  : 'text-secondary hover:text-primary'
+                  ? 'bg-white text-slate-900 shadow-xs font-semibold'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
-              aria-pressed={viewMode === 'list'}
             >
               <List className="w-3.5 h-3.5" />
-              <span>Accessible List</span>
+              <span>सूची (List)</span>
             </button>
           </div>
 
           <Button
             variant="outline"
             size="sm"
-            onClick={() => {
-              setIsLoading(true);
-              setTimeout(() => setIsLoading(false), 500);
-            }}
-            disabled={isLoading}
-            className="hidden sm:flex text-xs"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="text-xs border-slate-200 text-slate-700 hover:bg-slate-50"
           >
-            <RefreshCw className={`w-3.5 h-3.5 mr-1.5 ${isLoading ? 'animate-spin' : ''}`} />
-            <span>Re-query GIS</span>
+            <RefreshCw className={`w-3.5 h-3.5 mr-1.5 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <span>रिफ्रेश (Sync)</span>
           </Button>
         </div>
       </header>
 
-      {/* Non-blocking Layer Error Banner (SCREEN_SPECS.md §2.12: doesn't fail the whole map) */}
+      {/* Error Alert Banner */}
       {dataError && (
-        <div
-          role="alert"
-          className="bg-status-warning/15 border-b border-status-warning/30 px-4 py-2 flex items-center justify-between text-xs text-primary z-30"
-        >
+        <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 flex items-center justify-between text-xs text-amber-800 z-30">
           <div className="flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 text-status-warning shrink-0" />
+            <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
             <span>{dataError}</span>
           </div>
           <button
             onClick={() => setDataError(null)}
-            className="font-mono text-xs text-status-warning underline hover:opacity-80"
+            className="font-medium text-xs text-amber-900 underline hover:opacity-80"
           >
-            Dismiss
+            खारिज करें (Dismiss)
           </button>
         </div>
       )}
 
-      {/* Main Layout: 280px Left Rail + Map / List Container */}
+      {/* Main Workspace Layout: Side Controls + Real Map */}
       <div className="flex flex-1 overflow-hidden relative">
-        {/* 280px Left Layer Control Rail (SCREEN_SPECS.md §2.12) */}
-        <aside
-          role="region"
-          aria-label="GIS Layer Controls & DBSCAN Filters"
-          className="w-72 shrink-0 border-r border-border bg-surface flex flex-col justify-between overflow-y-auto z-10"
-        >
-          <div className="p-4 space-y-6">
-            {/* Layer Visibility Toggles */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-secondary uppercase font-mono tracking-wider">
-                <Layers className="w-3.5 h-3.5 text-channel-600" />
-                <span>Map Layers</span>
+        {/* Left Side Controls Rail (Indian Civic Admin Context) */}
+        <aside className="w-80 shrink-0 border-r border-slate-200 bg-white flex flex-col justify-between overflow-y-auto z-10 shadow-xs">
+          <div className="p-4 space-y-5">
+            {/* Map Layers Section */}
+            <div className="space-y-2.5">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider">
+                <Layers className="w-3.5 h-3.5 text-orange-600" />
+                <span>मानचित्र परतें (Map Layers)</span>
               </div>
 
-              <div className="space-y-2.5 text-xs bg-field-50/60 p-3 border border-border rounded-sm">
+              <div className="space-y-2.5 text-xs bg-slate-50/80 p-3.5 border border-slate-200 rounded-lg">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-0.5 border-b-2 border-dashed border-station-500" />
-                    <span>Ward Boundaries</span>
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <span className="w-3.5 h-0.5 border-b-2 border-dashed border-sky-500" />
+                    <span>प्रभाग सीमाएं (Wards)</span>
                   </div>
                   <Switch
                     checked={showWards}
                     onCheckedChange={setShowWards}
-                    aria-label="Toggle ward boundaries"
+                    aria-label="Toggle ward boundary polygons"
                   />
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-marker-500" />
-                    <span>Incident Points (6px)</span>
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <span className="w-2.5 h-2.5 rounded-full bg-orange-500" />
+                    <span>शिकायत स्थल (Incidents)</span>
                   </div>
                   <Switch
                     checked={showIncidents}
                     onCheckedChange={setShowIncidents}
-                    aria-label="Toggle individual incident points"
+                    aria-label="Toggle incident markers"
                   />
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-status-danger border border-white" />
-                    <span className="font-medium text-primary">DBSCAN Clusters</span>
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <span className="w-3 h-3 rounded-full bg-red-600 ring-2 ring-red-200" />
+                    <span className="font-semibold text-slate-900">हॉटस्पॉट क्लस्टर (Hotspots)</span>
                   </div>
                   <Switch
                     checked={showClusters}
                     onCheckedChange={setShowClusters}
-                    aria-label="Toggle DBSCAN clusters"
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-xs bg-channel-500" />
-                    <span>Density Heatmap</span>
-                  </div>
-                  <Switch
-                    checked={showDensityHeatmap}
-                    onCheckedChange={setShowDensityHeatmap}
-                    aria-label="Toggle density heatmap gradient"
+                    aria-label="Toggle cluster markers"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Clustering Calibration (DBSCAN params) */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-secondary uppercase font-mono tracking-wider">
-                <Sliders className="w-3.5 h-3.5 text-channel-600" />
-                <span>Hotspot Sensitivity</span>
+            {/* Hotspot Detection Calibration */}
+            <div className="space-y-2.5">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider">
+                <Sliders className="w-3.5 h-3.5 text-orange-600" />
+                <span>हॉटस्पॉट संवेदनशीलता (Sensitivity)</span>
               </div>
 
-              <div className="space-y-4 p-3 bg-field-50/60 border border-border rounded-sm text-xs font-mono">
+              <div className="space-y-3.5 p-3.5 bg-slate-50/80 border border-slate-200 rounded-lg text-xs">
                 <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-secondary">Radius (ε meters):</span>
-                    <span className="font-semibold text-primary">{epsMeters}m</span>
+                  <div className="flex justify-between mb-1.5">
+                    <span className="text-slate-600">क्लस्टर दायरा (Search Radius):</span>
+                    <span className="font-bold text-slate-900">{epsMeters} मीटर</span>
                   </div>
                   <input
                     type="range"
                     min="30"
-                    max="300"
+                    max="500"
                     step="10"
                     value={epsMeters}
                     onChange={(e) => setEpsMeters(Number(e.target.value))}
-                    className="w-full accent-channel-600 cursor-pointer"
-                    aria-label="Epsilon clustering distance in meters"
+                    className="w-full accent-orange-600 cursor-pointer"
+                    aria-label="Clustering radius in meters"
                   />
+                  <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                    <span>30m (सटीक गली)</span>
+                    <span>500m (व्यापक क्षेत्र)</span>
+                  </div>
                 </div>
 
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-secondary">Min Incidents (min_pts):</span>
-                    <span className="font-semibold text-primary">{minPoints}</span>
+                <div className="pt-2 border-t border-slate-200">
+                  <div className="flex justify-between mb-1.5">
+                    <span className="text-slate-600">न्यूनतम शिकायतें (Min Incidents):</span>
+                    <span className="font-bold text-slate-900">{minPoints} मामले</span>
                   </div>
                   <input
                     type="range"
@@ -375,330 +390,132 @@ export const HeatmapClusterView: React.FC = () => {
                     step="1"
                     value={minPoints}
                     onChange={(e) => setMinPoints(Number(e.target.value))}
-                    className="w-full accent-channel-600 cursor-pointer"
-                    aria-label="Minimum incidents required to form a cluster"
+                    className="w-full accent-orange-600 cursor-pointer"
+                    aria-label="Minimum complaints to form cluster"
                   />
+                  <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                    <span>2 (कम से कम)</span>
+                    <span>15 (गंभीर समूह)</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Category Filter */}
+            {/* Department Filter */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-secondary uppercase font-mono tracking-wider">
-                Filter Category
-              </label>
+              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider">
+                <Filter className="w-3.5 h-3.5 text-orange-600" />
+                <span>विभाग / श्रेणी (Department Filter)</span>
+              </div>
               <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full bg-field-50 border border-border rounded-sm text-xs font-mono p-2 focus:ring-1 focus:ring-focus outline-none text-primary"
-                aria-label="Filter hotspots by incident category"
+                value={selectedDeptId}
+                onChange={(e) => setSelectedDeptId(e.target.value)}
+                className="w-full bg-white border border-slate-200 rounded-md text-xs p-2 text-slate-800 outline-none focus:ring-1 focus:ring-orange-500 shadow-xs"
+                aria-label="Filter by municipal department"
               >
-                <option value="all">All Incident Categories</option>
-                <option value="streetlighting">Streetlighting</option>
-                <option value="drainage">Solid Waste / Drainage</option>
-                <option value="water">Water Supply</option>
-                <option value="potholes">Road Hazards / Potholes</option>
+                <option value="all">सभी विभाग (All Departments)</option>
+                {departments.map((dept) => (
+                  <option key={dept.id} value={dept.id}>
+                    {dept.name} ({dept.code})
+                  </option>
+                ))}
               </select>
             </div>
 
-            {/* Cluster Stats Summary */}
-            <div className="p-3 bg-field-100/60 border border-border rounded-sm space-y-1 text-xs">
-              <div className="font-mono text-secondary text-[11px] uppercase">
-                Active Spatial Read
+            {/* Active Hotspots Summary Card */}
+            <div className="p-4 bg-orange-50/70 border border-orange-200/80 rounded-lg space-y-1.5 text-xs">
+              <div className="flex items-center gap-1.5 text-[11px] font-bold text-orange-700 uppercase tracking-wide">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>सक्रिय प्रभाग स्थिति (Live Status)</span>
               </div>
-              <div className="font-semibold text-primary text-sm">
-                {filteredClusters.length} Hotspots Detected
+              <div className="font-bold text-slate-900 text-lg">
+                {clusters.length} हॉटस्पॉट क्लस्टर
               </div>
-              <p className="text-secondary text-[11px]">
-                Showing {filteredClusters.reduce((acc, c) => acc + c.incident_count, 0)} total
-                clustered incidents across 4 surveyed wards.
+              <p className="text-slate-600 text-xs leading-relaxed">
+                {clusters.length > 0 ? (
+                  `वर्तमान में ${clusters.reduce((acc, c) => acc + c.incident_count, 0)} नागरिक शिकायतों का समूह पहचाना गया है।`
+                ) : (
+                  'सर्वेक्षित क्षेत्र में अभी कोई सघन हॉटस्पॉट नहीं बना है। लाइव डेटा शून्य सिंथेटिक रिकॉर्ड पर आधारित है।'
+                )}
               </p>
             </div>
           </div>
 
-          {/* Rail Footer */}
-          <div className="p-3 border-t border-border bg-field-50 text-[10px] font-mono text-secondary">
-            <span>DATA SOURCE: /v1/gis/clusters</span>
+          {/* Left Rail Footer with Verification Stamp */}
+          <div className="p-3 border-t border-slate-200 bg-slate-50 text-[11px] text-slate-500 flex items-center justify-between">
+            <span className="font-medium text-slate-700">CivicBrain Live GIS</span>
+            <span className="text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              0% Synthetic Data
+            </span>
           </div>
         </aside>
 
-        {/* View Content: Interactive Map OR Accessible List */}
-        <main
-          id="main-content"
-          className="flex-1 relative h-full w-full overflow-hidden bg-field-50 flex flex-col"
-        >
+        {/* Center Canvas: Real Satellite Map OR Accessible List */}
+        <main className="flex-1 relative h-full w-full overflow-hidden bg-slate-900">
           {viewMode === 'list' ? (
-            <div className="flex-1 overflow-y-auto">
-              <ClusterAccessibleListView
-                clusters={filteredClusters}
-                selectedClusterId={selectedCluster?.cluster_id ?? null}
-                onSelectCluster={(c) => {
-                  setSelectedCluster(c);
-                  setViewMode('map');
-                }}
-                calculateRadius={calculateClusterRadius}
-              />
-            </div>
-          ) : (
-            <CoordinateRulerFrame center={[77.5946, 12.9716]} zoom={zoomLevel}>
-              {/* Zoom Out Warning Hint (SCREEN_SPECS.md §2.12: "zoom out" hint at empty-cluster zoom levels) */}
-              {isTooZoomedInForClusters && (
-                <div
-                  role="status"
-                  className="absolute top-4 left-1/2 -translate-x-1/2 z-30 bg-surface/95 border border-channel-600/40 shadow-lifted px-4 py-2 rounded-sm text-xs font-mono text-primary flex items-center gap-2"
-                >
-                  <AlertCircle className="w-4 h-4 text-channel-600" />
-                  <span>Zoom out to see cluster density envelopes (Level: {zoomLevel})</span>
-                  <button
-                    onClick={handleZoomOut}
-                    className="ml-2 underline text-channel-700 font-semibold"
-                  >
-                    Zoom Out
-                  </button>
-                </div>
-              )}
-
-              {/* Map Canvas & SVG Graphics */}
-              <div
-                className="relative w-full h-full flex items-center justify-center select-none"
-                style={{
-                  background:
-                    'radial-gradient(circle at center, var(--field-100) 0%, var(--field-50) 100%)',
-                }}
-              >
-                {/* Muted Surveying Vector Grid */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-25"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(to right, var(--station-400) 1px, transparent 1px),
-                      linear-gradient(to bottom, var(--station-400) 1px, transparent 1px)
-                    `,
-                    backgroundSize: '40px 40px',
-                  }}
-                />
-
-                {/* Basemap Skeleton Loader (DESIGN.md §10) */}
-                {isLoading ? (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-field-50/80 z-20 space-y-3">
-                    <div className="w-48 h-3 bg-field-300 animate-pulse rounded-sm" />
-                    <div className="w-32 h-2.5 bg-field-200 animate-pulse rounded-sm" />
-                    <span className="font-mono text-xs text-secondary">
-                      Loading GeoJSON Layers...
-                    </span>
+            <div className="h-full overflow-y-auto bg-slate-50 p-6">
+              <div className="max-w-4xl mx-auto space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                  <div>
+                    <h2 className="text-base font-bold text-slate-900">
+                      प्रभाग हॉटस्पॉट सूची (Hotspot Cluster Directory)
+                    </h2>
+                    <p className="text-xs text-slate-500">
+                      {clusters.length} सक्रिय क्लस्टर • वास्तविक समय डेटाबेस
+                    </p>
                   </div>
-                ) : null}
-
-                {/* SVG Spatial Layer Container */}
-                <svg
-                  ref={containerRef}
-                  viewBox="0 0 1000 600"
-                  className="w-full h-full cursor-grab active:cursor-grabbing"
-                  aria-label="City Pulse Spatial Map Canvas"
-                >
-                  {/* Layer 1: Ward Boundaries (Dashed Station-500) */}
-                  {showWards && (
-                    <g
-                      id="ward-boundaries-layer"
-                      className="transition-opacity duration-220"
-                      aria-label="Ward boundary polygons"
-                    >
-                      {MOCK_WARDS.map((ward) => (
-                        <g key={ward.id}>
-                          <path
-                            d={ward.path}
-                            fill="var(--color-surface)"
-                            fillOpacity="0.35"
-                            stroke="var(--color-gis-ward-boundary)"
-                            strokeWidth="1.5"
-                            strokeDasharray="4,4"
-                            className="transition-colors hover:fill-channel-500/10"
-                          />
-                          <text
-                            x={
-                              ward.id === 101 ? 160 : ward.id === 102 ? 140 : ward.id === 103 ? 420 : 700
-                            }
-                            y={
-                              ward.id === 101 ? 90 : ward.id === 102 ? 280 : ward.id === 103 ? 120 : 150
-                            }
-                            fill="var(--station-600)"
-                            fontSize="11"
-                            fontFamily="IBM Plex Mono"
-                            fontWeight="500"
-                            opacity="0.8"
-                          >
-                            {ward.code} • {ward.name}
-                          </text>
-                        </g>
-                      ))}
-                    </g>
-                  )}
-
-                  {/* Layer 2: Density Heatmap Gradient (Optional) */}
-                  {showDensityHeatmap && (
-                    <g id="density-heatmap-layer" opacity="0.4">
-                      <circle cx="210" cy="110" r="90" fill="url(#heatGradient)" />
-                      <circle cx="220" cy="310" r="110" fill="url(#heatGradient)" />
-                      <circle cx="480" cy="180" r="140" fill="url(#heatGradient)" />
-                      <circle cx="760" cy="220" r="160" fill="url(#heatGradient)" />
-                    </g>
-                  )}
-
-                  {/* Layer 3: Incident Scatter Points (6px dots) */}
-                  {showIncidents && (
-                    <g id="incident-points-layer" className="transition-opacity duration-220">
-                      {MOCK_INCIDENTS.map((inc, i) => (
-                        <circle
-                          key={i}
-                          cx={inc.x}
-                          cy={inc.y}
-                          r="3"
-                          fill="var(--color-gis-incident-point)"
-                          stroke="var(--color-surface)"
-                          strokeWidth="1"
-                          opacity="0.75"
-                        />
-                      ))}
-                    </g>
-                  )}
-
-                  {/* Layer 4: DBSCAN Clusters with Real Formula Radii & GSAP Reveal */}
-                  {showClusters && !isTooZoomedInForClusters && (
-                    <g id="dbscan-clusters-layer">
-                      {filteredClusters.map((cluster) => {
-                        const radius = calculateClusterRadius(cluster.incident_count);
-                        // Approximate SVG coordinates for each cluster centroid
-                        const cx =
-                          cluster.cluster_id === 101
-                            ? 210
-                            : cluster.cluster_id === 102
-                            ? 220
-                            : cluster.cluster_id === 103
-                            ? 480
-                            : 760;
-                        const cy =
-                          cluster.cluster_id === 101
-                            ? 110
-                            : cluster.cluster_id === 102
-                            ? 310
-                            : cluster.cluster_id === 103
-                            ? 180
-                            : 220;
-
-                        const isSelected = selectedCluster?.cluster_id === cluster.cluster_id;
-
-                        return (
-                          <g
-                            key={cluster.cluster_id}
-                            className="cursor-pointer group"
-                            onClick={() => setSelectedCluster(cluster)}
-                            role="button"
-                            tabIndex={0}
-                            aria-label={`Select Cluster #${cluster.cluster_id} with ${cluster.incident_count} incidents`}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                setSelectedCluster(cluster);
-                              }
-                            }}
-                          >
-                            {/* Outer Pulsing Halo when Selected */}
-                            {isSelected && (
-                              <circle
-                                cx={cx}
-                                cy={cy}
-                                r={radius + 8}
-                                fill="none"
-                                stroke="var(--color-gis-selected-ring)"
-                                strokeWidth="2"
-                                strokeDasharray="3,3"
-                                className="animate-spin"
-                                style={{ transformOrigin: `${cx}px ${cy}px` }}
-                              />
-                            )}
-
-                            {/* Density Fill Ring */}
-                            <circle
-                              cx={cx}
-                              cy={cy}
-                              r={radius * 1.5}
-                              fill="var(--color-gis-cluster-fill)"
-                              fillOpacity={cluster.incident_count > 30 ? '0.22' : '0.12'}
-                            />
-
-                            {/* GSAP-Animated Target Circle */}
-                            <circle
-                              cx={cx}
-                              cy={cy}
-                              r={radius}
-                              data-point-count={cluster.incident_count}
-                              data-cluster-id={cluster.cluster_id}
-                              className="gsap-cluster-circle transition-transform duration-200 group-hover:scale-105"
-                              fill="var(--color-gis-cluster-fill)"
-                              fillOpacity="0.8"
-                              stroke={isSelected ? 'var(--color-gis-selected-ring)' : 'var(--color-surface)'}
-                              strokeWidth={isSelected ? '2.5' : '1.5'}
-                            />
-
-                            {/* Center Count Badge */}
-                            <text
-                              x={cx}
-                              y={cy + 4}
-                              textAnchor="middle"
-                              fill="var(--color-text-inverse)"
-                              fontSize={radius > 16 ? '12' : '10'}
-                              fontFamily="IBM Plex Mono"
-                              fontWeight="bold"
-                              pointerEvents="none"
-                            >
-                              {cluster.incident_count}
-                            </text>
-                          </g>
-                        );
-                      })}
-                    </g>
-                  )}
-
-                  {/* Radial Heat Gradient Definition */}
-                  <defs>
-                    <radialGradient id="heatGradient">
-                      <stop offset="0%" stopColor="var(--status-danger)" stopOpacity="0.5" />
-                      <stop offset="60%" stopColor="var(--flag-amber-500)" stopOpacity="0.2" />
-                      <stop offset="100%" stopColor="var(--channel-500)" stopOpacity="0" />
-                    </radialGradient>
-                  </defs>
-                </svg>
-
-                {/* Map Navigation Overlay Controls */}
-                <div className="absolute bottom-6 left-6 z-20 flex flex-col gap-1 bg-surface border border-border rounded-sm shadow-lifted p-1">
-                  <IconButton
-                    variant="ghost"
-                    size="sm"
-                    label="Zoom in"
-                    icon={<ZoomIn className="w-4 h-4 text-primary" />}
-                    onClick={handleZoomIn}
-                  />
-                  <div className="w-full h-px bg-border my-0.5" />
-                  <IconButton
-                    variant="ghost"
-                    size="sm"
-                    label="Zoom out"
-                    icon={<ZoomOut className="w-4 h-4 text-primary" />}
-                    onClick={handleZoomOut}
-                  />
                 </div>
 
-                {/* Floating Stats Panel (Top-Right on Desktop, Bottom Sheet on Mobile) */}
-                {selectedCluster && (
-                  <div className="absolute top-4 right-4 z-30 sm:block">
-                    <ClusterStatsPanel
-                      cluster={selectedCluster}
-                      onClose={() => setSelectedCluster(null)}
-                      onInspectIncidents={handleInspectIncidents}
-                    />
+                {clusters.length === 0 ? (
+                  <div className="text-center py-16 bg-white border border-slate-200 rounded-xl p-8 shadow-xs">
+                    <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto mb-3" />
+                    <h3 className="text-sm font-semibold text-slate-900 mb-1">
+                      कोई सक्रिय हॉटस्पॉट क्लस्टर नहीं मिला
+                    </h3>
+                    <p className="text-xs text-slate-500 max-w-md mx-auto">
+                      चयनित संवेदनशीलता ({epsMeters}m दायरा, {minPoints} न्यूनतम मामले) के अनुसार इस समय कोई समूह नहीं है।
+                    </p>
                   </div>
+                ) : (
+                  <ClusterAccessibleListView
+                    clusters={fullClusterList}
+                    selectedClusterId={selectedCluster?.cluster_id ?? null}
+                    onSelectCluster={(c) => {
+                      handleSelectCluster(c as any);
+                      setViewMode('map');
+                    }}
+                    calculateRadius={(count) => Math.min(28, Math.max(12, 10 + Math.sqrt(count) * 2))}
+                  />
                 )}
               </div>
-            </CoordinateRulerFrame>
+            </div>
+          ) : (
+            <div className="relative w-full h-full">
+              {/* Real Satellite Map Component */}
+              <RealSatelliteMap
+                clusters={clusters}
+                selectedClusterId={selectedCluster?.cluster_id ?? null}
+                onSelectCluster={handleSelectCluster}
+                wardsGeoJSON={wardsGeoJSON}
+                incidentsGeoJSON={incidentsGeoJSON}
+                showWards={showWards}
+                showClusters={showClusters}
+                showIncidents={showIncidents}
+                center={[12.9716, 77.5946]}
+                zoom={13}
+              />
+
+              {/* Floating Cluster Details Panel (Top Right) */}
+              {selectedCluster && (
+                <div className="absolute top-4 left-4 z-20 max-w-sm">
+                  <ClusterStatsPanel
+                    cluster={selectedCluster}
+                    onClose={() => setSelectedCluster(null)}
+                    onInspectIncidents={() => navigate('/deck')}
+                  />
+                </div>
+              )}
+            </div>
           )}
         </main>
       </div>

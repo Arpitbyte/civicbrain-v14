@@ -38,24 +38,37 @@ import { AhpWeightCalibrationView } from './views/AhpWeightCalibrationView';
 import { ServiceTimePriorsView } from './views/ServiceTimePriorsView';
 import { CouncilorDigestView } from './views/CouncilorDigestView';
 
+const ROLE_LABELS: Record<StaffRole, { title: string; hindi: string }> = {
+  admin: { title: 'Municipal Commissioner / Admin', hindi: 'आयुक्त / प्रशासक' },
+  dispatcher: { title: 'Central Control Room Dispatcher', hindi: 'नियंत्रण कक्ष' },
+  department_staff: { title: 'Department Officer', hindi: 'विभागीय अधिकारी' },
+  zonal_supervisor: { title: 'Zonal Health / Engg Supervisor', hindi: 'जोनल पर्यवेक्षक' },
+  field_worker: { title: 'Field Staff / Safai Karmachari', hindi: 'सफाई कर्मी / कर्मचारी' },
+  corporator: { title: 'Elected Ward Councilor / Corporator', hindi: 'वार्ड पार्षद / नगरसेवक' },
+};
+
 const RoleSwitcher: React.FC = () => {
   const { role, setRole } = useAuth();
   return (
-    <div className="space-y-1">
-      <div className="text-[11px] font-mono text-secondary uppercase tracking-wider">
-        Active Role (Dev Gating)
+    <div className="space-y-1.5 p-2 bg-surface-raised/40 rounded border border-border/50">
+      <div className="text-[10px] font-semibold text-text-secondary uppercase tracking-wider flex items-center justify-between">
+        <span>सक्रिय भूमिका / Staff Role</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="Active Session" />
       </div>
       <select
         value={role}
         onChange={e => setRole(e.target.value as StaffRole)}
-        className="w-full bg-surface text-primary border border-border rounded-sm text-xs font-mono p-1 focus:ring-1 focus:ring-focus outline-none"
-        aria-label="Switch staff role for testing"
+        className="w-full bg-surface text-primary border border-border rounded text-xs py-1.5 px-2 focus:ring-1 focus:ring-focus outline-none cursor-pointer"
+        aria-label="Switch municipal staff role"
       >
-        {ALL_STAFF_ROLES.map(r => (
-          <option key={r} value={r}>
-            {r}
-          </option>
-        ))}
+        {ALL_STAFF_ROLES.map(r => {
+          const info = ROLE_LABELS[r];
+          return (
+            <option key={r} value={r}>
+              {info ? `${info.title} (${info.hindi})` : r}
+            </option>
+          );
+        })}
       </select>
     </div>
   );

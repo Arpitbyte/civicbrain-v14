@@ -234,9 +234,9 @@
     "semantic_hash": ""
   },
   "civicbrain/api/v1/hierarchy.py": {
-    "mtime": 1790139702.1812885,
-    "seen": 1790140913.7019386,
-    "ast_hash": "be1e008e987304495042f92c475ed574",
+    "mtime": 1790214080.1256716,
+    "seen": 1790214247.2532475,
+    "ast_hash": "6fbe7ac9f218db7c063b2542f0d84437",
     "semantic_hash": ""
   },
   "civicbrain/domain/identity/jwt.py": {
@@ -648,9 +648,9 @@
     "semantic_hash": ""
   },
   "civicbrain/api/v1/dispatch.py": {
-    "mtime": 1789949290.502217,
-    "seen": 1789967238.7193067,
-    "ast_hash": "ddf3a51b99dab25f0a329eae8e7e73fd",
+    "mtime": 1790214232.6085267,
+    "seen": 1790214247.253238,
+    "ast_hash": "202cf7e993248140f8112d7e921254e2",
     "semantic_hash": ""
   },
   "civicbrain/domain/analytics/__init__.py": {
@@ -1038,9 +1038,9 @@
     "semantic_hash": ""
   },
   "apps/staff-console/package.json": {
-    "mtime": 1790213020.3709173,
-    "seen": 1790213127.826021,
-    "ast_hash": "375366e4a29786176fbe47f98c488132",
+    "mtime": 1790213925.3541422,
+    "seen": 1790213976.774732,
+    "ast_hash": "8d7f4b050918cc1410906d33fc8c5dbe",
     "semantic_hash": ""
   },
   "apps/staff-console/src/main.tsx": {
@@ -1050,15 +1050,15 @@
     "semantic_hash": ""
   },
   "apps/staff-console/vite.config.ts": {
-    "mtime": 1790212741.086425,
-    "seen": 1790213127.8260632,
-    "ast_hash": "e6ed59519c1253fad55ef84a7c4e1caa",
+    "mtime": 1790214105.627296,
+    "seen": 1790214247.2531822,
+    "ast_hash": "acff48f7d67c0dedbdb65f8cb2279ce2",
     "semantic_hash": ""
   },
   "apps/transparency-board/package.json": {
-    "mtime": 1790211120.979051,
-    "seen": 1790211234.6103957,
-    "ast_hash": "f38bc4c29355826ac5459c28a5c02df5",
+    "mtime": 1790214145.0788674,
+    "seen": 1790214247.2531855,
+    "ast_hash": "3169891012a0814d40b9f278e64a77d9",
     "semantic_hash": ""
   },
   "package.json": {
@@ -1152,9 +1152,9 @@
     "semantic_hash": ""
   },
   "docs/frontend context/IMPLEMENTATION_LOG.md": {
-    "mtime": 1790213389.5698082,
-    "seen": 1790213408.6829624,
-    "ast_hash": "e481b8057ee3de42d59a6337050ec4e5",
+    "mtime": 1790214226.878518,
+    "seen": 1790214247.2541304,
+    "ast_hash": "cadaf424b2e79a70349cd4be76df7423",
     "semantic_hash": ""
   },
   "docs/frontend context/SCREEN_SPECS.md": {
@@ -1212,9 +1212,9 @@
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/views/MyOrdersView.tsx": {
-    "mtime": 1790213334.451173,
-    "seen": 1790213408.6825397,
-    "ast_hash": "37cdf0fddd06d57f054f08aa5100ce8a",
+    "mtime": 1790213639.8624835,
+    "seen": 1790213678.3040552,
+    "ast_hash": "bb91820fbd7f1f94e3b7345f423622eb",
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/views/SyncStatusView.tsx": {
@@ -1224,9 +1224,9 @@
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/views/WorkOrderActionView.tsx": {
-    "mtime": 1790213319.7043185,
-    "seen": 1790213408.6825435,
-    "ast_hash": "03447a59e8cf5eb58017bf30891cbd77",
+    "mtime": 1790213632.8585622,
+    "seen": 1790213678.3040605,
+    "ast_hash": "43a7f11f83897e618dba70dd0b2ad460",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/App.tsx": {
@@ -1296,9 +1296,9 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/AhpWeightCalibrationView.tsx": {
-    "mtime": 1790211019.4282475,
-    "seen": 1790211234.6103733,
-    "ast_hash": "45ba85d7bea8ca47ff7a349a9e4da0c0",
+    "mtime": 1790214000.8782716,
+    "seen": 1790214057.598273,
+    "ast_hash": "5a61119e7b4a7d0aad462c346936206c",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/BulkImportView.tsx": {
@@ -1338,9 +1338,9 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/HeatmapClusterView.tsx": {
-    "mtime": 1790213093.104927,
-    "seen": 1790213127.826046,
-    "ast_hash": "5b98e27ae63e596d5c8daab3e59c2997",
+    "mtime": 1790214145.730901,
+    "seen": 1790214247.2531514,
+    "ast_hash": "806962367100323c711ba7af52551fc3",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/IncidentDetailView.tsx": {
@@ -1416,9 +1416,9 @@
     "semantic_hash": ""
   },
   "apps/transparency-board/src/views/CityFeedView.tsx": {
-    "mtime": 1790211097.5340276,
-    "seen": 1790211234.6104004,
-    "ast_hash": "3852df726bfa5545fa4bced2f5f80643",
+    "mtime": 1790214161.8297863,
+    "seen": 1790214247.2531986,
+    "ast_hash": "f2a004a02a1505ad0fe7e570843fb4c9",
     "semantic_hash": ""
   },
   "apps/transparency-board/src/views/CivicAssistantView.tsx": {
@@ -1737,6 +1737,18 @@
     "mtime": 1790213283.0328798,
     "seen": 1790213408.6825378,
     "ast_hash": "eec0cf0430dc8f9f8f91d1bfef96abba",
+    "semantic_hash": ""
+  },
+  "apps/staff-console/src/logic/ahpSolver.ts": {
+    "mtime": 1790213962.2292414,
+    "seen": 1790213976.774745,
+    "ast_hash": "c1c8b108d8d71d2d95e79e09b07941d5",
+    "semantic_hash": ""
+  },
+  "apps/staff-console/src/components/gis/RealSatelliteMap.tsx": {
+    "mtime": 1790214122.1101134,
+    "seen": 1790214247.2531092,
+    "ast_hash": "1aa3a9f6d29d0bd596d3a1520268853f",
     "semantic_hash": ""
   }
 }

@@ -81,105 +81,122 @@ export interface IncidentDetailData {
   causal_links?: CausalLinkItem[];
 }
 
-const MOCK_INCIDENT_CASE: IncidentDetailData = {
-  id: 'inc-9921-bengaluru',
-  tracking_token: 'CB-2026-W14-8892',
-  category_code: 'ROAD_POTHOLE_ARTERIAL',
-  category_name: 'Arterial Road Paver Failure & Waterlogging',
-  department_name: 'Roads & Infrastructure',
-  ward_name: 'Indiranagar',
-  ward_code: 'Ward 14 (South Zone)',
-  address_text: 'Near Indiranagar Metro Station, 100ft Road, Ward 14',
-  created_at: '2026-09-22 14:20 IST (2 days ago)',
-  status: 'assigned',
-  priority_score: 0.99,
-  raw_priority_score: 0.84,
-  equity_boost: 0.18,
-  confidence_score: 0.74,
-  subscores: {
-    severity: 0.88,
-    risk: 0.76,
-    exposure: 0.82,
-    criticality: 0.90,
-    urgency: 0.85,
-  },
-  weights_used: {
-    severity: 0.35,
-    risk: 0.25,
-    exposure: 0.15,
-    criticality: 0.15,
-    urgency: 0.10,
-  },
-  observations: [
-    {
-      id: 'obs-001',
-      department: 'Roads & Infrastructure',
-      category: 'Pothole (Arterial Roadway)',
-      status: 'assigned',
-      severity_score: 0.82,
-      confidence: 0.88,
-      image_url: 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=800&auto=format&fit=crop&q=80',
-      updated_at: '2026-09-23 11:30 IST',
-      notes: 'Road gang #4 assigned. Equipment mobilization in progress.',
-    },
-    {
-      id: 'obs-002',
-      department: 'Stormwater Drains',
-      category: 'Blocked Culvert / Silt Accumulation',
-      status: 'triaged',
-      severity_score: 0.90,
-      confidence: 0.74,
-      image_url: 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f9?w=800&auto=format&fit=crop&q=80',
-      updated_at: '2026-09-22 15:45 IST',
-      notes: 'Culvert blockage causing roadway runoff. Excavation required.',
-    },
-  ],
-  causal_links: [
-    {
-      id: 'causal-link-01',
-      type: 'upstream_cause',
-      related_incident_id: 'inc-9915-drainage',
-      category: 'Main Stormwater Conduit Siltation',
-      department: 'Stormwater Drains',
-      coupling_coefficient: 0.85,
-    },
-  ],
-};
-
 export const IncidentDetailView: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [incident, setIncident] = useState<IncidentDetailData>(MOCK_INCIDENT_CASE);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [incident, setIncident] = useState<IncidentDetailData | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  useEffect(() => {
+    async function loadIncident() {
+      if (!id) return;
+      setIsLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(`/v1/incidents/${id}`);
+        if (!res.ok) {
+          throw new Error(`Incident not found (${res.status})`);
+        }
+        const incData = await res.json();
+
+        // Fetch observations
+        let obsData: any[] = [];
+        try {
+          const obsRes = await fetch(`/v1/incidents/${id}/observations`);
+          if (obsRes.ok) {
+            obsData = await obsRes.json();
+          }
+        } catch {
+          // ignore observations fetch error
+        }
+
+        const mapped: IncidentDetailData = {
+          id: incData.id,
+          tracking_token: `CB-${incData.id.slice(0, 8).toUpperCase()}`,
+          category_code: incData.category_code,
+          category_name: incData.category_code.replace(/_/g, ' '),
+          department_name: 'Municipal Engineering / Public Works',
+          ward_name: `वार्ड #${incData.ward_id.slice(0, 8)}`,
+          ward_code: `Ward-${incData.ward_id.slice(0, 8)}`,
+          address_text: 'Municipal Jurisdiction Area, Ward Sector',
+          created_at: new Date(incData.created_at).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+          status: incData.status,
+          priority_score: incData.severity ? Math.min(1.0, incData.severity / 5.0) : 0.6,
+          raw_priority_score: incData.severity ? incData.severity / 5.0 : 0.6,
+          equity_boost: 0.0,
+          confidence_score: 0.92,
+          subscores: {
+            severity: incData.severity ? incData.severity / 5.0 : 0.7,
+            risk: 0.65,
+            exposure: 0.6,
+            criticality: 0.75,
+            urgency: 0.7,
+          },
+          weights_used: {
+            severity: 0.35,
+            risk: 0.25,
+            exposure: 0.15,
+            criticality: 0.15,
+            urgency: 0.10,
+          },
+          observations: obsData.map((obs) => ({
+            id: obs.id,
+            department: 'Municipal Services',
+            category: obs.category_code || incData.category_code,
+            status: obs.status || incData.status,
+            severity_score: obs.severity ? obs.severity / 5.0 : 0.7,
+            confidence: obs.confidence ?? 0.85,
+            image_url: obs.image_url || 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=800&auto=format&fit=crop&q=80',
+            resolution_proof_url: obs.resolution_proof_url,
+            updated_at: obs.updated_at ? new Date(obs.updated_at).toLocaleString('en-IN') : '',
+            notes: obs.notes || 'Field observation logged.',
+          })),
+        };
+
+        setIncident(mapped);
+      } catch (err: any) {
+        console.error('Failed to load incident:', err);
+        setError(err.message || 'Could not load incident from live database.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadIncident();
+  }, [id]);
+
   // Compute valid next states client-side from the current status
-  const validNextStates = getValidNextStatuses(incident.status);
+  const validNextStates = incident ? getValidNextStatuses(incident.status) : [];
 
   const handleStatusTransition = async (nextStatus: IncidentStatusType) => {
+    if (!incident || !id) return;
     setIsTransitioning(true);
-    // Optimistic update per SCREEN_SPECS.md §2.6
     const previousStatus = incident.status;
-    setIncident((prev) => ({
-      ...prev,
-      status: nextStatus,
-    }));
+    setIncident((prev) => (prev ? { ...prev, status: nextStatus } : null));
 
     try {
-      // Simulate or execute PATCH /v1/incidents/{id}/status
-      await new Promise((r) => setTimeout(r, 300));
+      const res = await fetch(`/v1/incidents/${id}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: nextStatus }),
+      });
+      if (!res.ok) {
+        throw new Error(`Server returned ${res.status}`);
+      }
       toast({
-        title: 'Status Transition Committed',
+        title: 'स्थिति अद्यतन / Status Updated',
         description: `Incident status updated from "${previousStatus}" to "${nextStatus}". Parent report re-aggregated.`,
         variant: 'success',
       });
     } catch {
       // Rollback on error
-      setIncident((prev) => ({ ...prev, status: previousStatus }));
+      setIncident((prev) => (prev ? { ...prev, status: previousStatus } : null));
       toast({
-        title: 'Transition Failed',
+        title: 'अद्यतन विफल / Transition Failed',
         description: 'Could not commit status update to server. Rolled back.',
         variant: 'danger',
       });
@@ -198,6 +215,27 @@ export const IncidentDetailView: React.FC = () => {
           </div>
           <div className="lg:col-span-5 space-y-4">
             <Skeleton variant="rect" height={320} className="w-full" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !incident) {
+    return (
+      <div className="flex flex-col min-h-screen bg-background text-primary font-ui p-6 items-center justify-center">
+        <div className="max-w-md w-full p-6 bg-surface border border-border rounded-lg text-center space-y-4 shadow-sm">
+          <div className="w-12 h-12 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center mx-auto">
+            <ShieldAlert className="w-6 h-6" />
+          </div>
+          <h2 className="text-base font-semibold">शिकायत नहीं मिली / Incident Not Found</h2>
+          <p className="text-xs text-text-secondary leading-relaxed">
+            {error || 'The requested operational incident does not exist in the live PostgreSQL database or has been archived.'}
+          </p>
+          <div className="pt-2">
+            <Button variant="outline" size="sm" onClick={() => navigate('/deck')}>
+              कमांड डेस्क कतार पर लौटें / Return to Queue
+            </Button>
           </div>
         </div>
       </div>

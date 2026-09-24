@@ -43,6 +43,7 @@ from civicbrain.schemas.identity import (
     DepartmentResponse,
     ElectedRepresentativeResponse,
     HierarchyTreeResponse,
+    OrganizationResponse,
     UserAccountCreate,
     UserAccountResponse,
 )
@@ -79,6 +80,23 @@ def normalize_indian_phone(raw_phone: str) -> str | None:
     if len(digits) == 12 and digits.startswith("91"):
         return f"+{digits}"
     return None
+
+
+@router.get(
+    "/orgs",
+    response_model=list[OrganizationResponse],
+    summary="List active ULB organizations",
+)
+async def list_organizations(
+    db: AsyncSession = Depends(get_db),
+) -> list[OrganizationResponse]:
+    """Retrieve list of registered Urban Local Body (ULB) organizations."""
+    from civicbrain.domain.identity.models import Organization
+
+    stmt = select(Organization).order_by(Organization.name.asc())
+    res = await db.execute(stmt)
+    orgs = res.scalars().all()
+    return [OrganizationResponse.model_validate(o) for o in orgs]
 
 
 @router.get(

@@ -110,6 +110,34 @@ async def create_new_work_order(
     return WorkOrderResponse.model_validate(work_order)
 
 
+@router.get("/work-orders", response_model=list[WorkOrderResponse])
+async def list_work_orders(
+    organization_id: uuid.UUID = Query(...),
+    department_id: uuid.UUID | None = None,
+    status: WorkOrderStatus | None = None,
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=50, ge=1, le=100),
+    db: AsyncSession = Depends(get_db),
+    claims: SupabaseClaims | None = Depends(get_optional_user_claims),
+) -> list[WorkOrderResponse]:
+    """Lists operational work orders scoped by organization, department, and status."""
+    stmt = (
+        select(WorkOrder)
+        .where(WorkOrder.organization_id == organization_id)
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+        .order_by(WorkOrder.created_at.desc())
+    )
+    if department_id:
+        stmt = stmt.where(WorkOrder.department_id == department_id)
+    if status:
+        stmt = stmt.where(WorkOrder.status == status)
+
+    res = await db.execute(stmt)
+    work_orders = list(res.scalars().all())
+    return [WorkOrderResponse.model_validate(wo) for wo in work_orders]
+
+
 @router.get("/work-orders/my", response_model=list[WorkOrderResponse])
 async def list_my_work_orders(
     db: AsyncSession = Depends(get_db),
