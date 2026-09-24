@@ -1098,15 +1098,15 @@
     "semantic_hash": ""
   },
   "packages/ui/package.json": {
-    "mtime": 1790210959.9234579,
-    "seen": 1790211234.6105633,
-    "ast_hash": "f5cf39a4d1993bdee71ea008f1e4b09a",
+    "mtime": 1790211306.431681,
+    "seen": 1790211582.127577,
+    "ast_hash": "395e1703bdfe03d24339269b625cdfc4",
     "semantic_hash": ""
   },
   "packages/ui/src/index.ts": {
-    "mtime": 1790211000.4546392,
-    "seen": 1790211234.6105697,
-    "ast_hash": "1cc95d5ad99c330754105b53151695b2",
+    "mtime": 1790211484.6956384,
+    "seen": 1790211582.1276,
+    "ast_hash": "9eb0a64a961b54d06aad77a17e4587ba",
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/index.html": {
@@ -1152,9 +1152,9 @@
     "semantic_hash": ""
   },
   "docs/frontend context/IMPLEMENTATION_LOG.md": {
-    "mtime": 1790210760.0026524,
-    "seen": 1790211234.6106644,
-    "ast_hash": "0d4d702f94eb038d3678d23d03bdda33",
+    "mtime": 1790211565.8791485,
+    "seen": 1790211582.1279662,
+    "ast_hash": "ebe11a6afdba094ed9d1fa39494f74e3",
     "semantic_hash": ""
   },
   "docs/frontend context/SCREEN_SPECS.md": {
@@ -1290,9 +1290,9 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/App.tsx": {
-    "mtime": 1790211037.0307066,
-    "seen": 1790211234.6103709,
-    "ast_hash": "103e35dc28896d8501c1ce2ef312d282",
+    "mtime": 1790211515.2514007,
+    "seen": 1790211582.127043,
+    "ast_hash": "7ee0070ce487a2c57b818e1e13c422db",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/AhpWeightCalibrationView.tsx": {
@@ -1497,6 +1497,126 @@
     "mtime": 1790211113.864016,
     "seen": 1790211234.6106553,
     "ast_hash": "696a1c345cb2f1ba6732471e85ff0667",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Badge.tsx": {
+    "mtime": 1790211453.196731,
+    "seen": 1790211582.1276178,
+    "ast_hash": "d176e7c8b2ffe2d97a0102da0e06dad9",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Button.tsx": {
+    "mtime": 1790211317.344404,
+    "seen": 1790211582.1276217,
+    "ast_hash": "e8c8bf0d9b07974f43f6e4ee4e8ae828",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Checkbox.tsx": {
+    "mtime": 1790211394.1014886,
+    "seen": 1790211582.127625,
+    "ast_hash": "4d43ea1f650162d7d50ca7319ee503a5",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Dialog.tsx": {
+    "mtime": 1790211439.4338505,
+    "seen": 1790211582.1276286,
+    "ast_hash": "240d15871f60916018b41461b063e573",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Drawer.tsx": {
+    "mtime": 1790211448.514551,
+    "seen": 1790211582.1276317,
+    "ast_hash": "624284a21a3899450c532307522b99da",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/EmptyState.tsx": {
+    "mtime": 1790211461.8992743,
+    "seen": 1790211582.127635,
+    "ast_hash": "4ef94f0a321a812522061700ab434c06",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/ErrorState.tsx": {
+    "mtime": 1790211472.7463334,
+    "seen": 1790211582.1276386,
+    "ast_hash": "82f75d47d779cc4111735d955f51b0b5",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Field.tsx": {
+    "mtime": 1790211375.2877812,
+    "seen": 1790211582.1276422,
+    "ast_hash": "05b59f3a7daef8d1145e094934870504",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Input.tsx": {
+    "mtime": 1790211381.6456597,
+    "seen": 1790211582.1276457,
+    "ast_hash": "27a45466304ca05c9a7a2fbcc0be3f26",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/PrimitivesShowcase.tsx": {
+    "mtime": 1790211501.8990052,
+    "seen": 1790211582.1276488,
+    "ast_hash": "b6bc914b5b9e8751fb7873366fc59526",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Radio.tsx": {
+    "mtime": 1790211399.5055473,
+    "seen": 1790211582.1276524,
+    "ast_hash": "a291855a85d369b990bf2a5a52f1b95f",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Select.tsx": {
+    "mtime": 1790211389.9169807,
+    "seen": 1790211582.1276555,
+    "ast_hash": "df67e1b25c88ee6c5394f9eb9523ec94",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Sheet.tsx": {
+    "mtime": 1790211443.880397,
+    "seen": 1790211582.1276586,
+    "ast_hash": "9c71b38034a1dccff4dda588119a4397",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Skeleton.tsx": {
+    "mtime": 1790211456.4706173,
+    "seen": 1790211582.1276612,
+    "ast_hash": "c31cf0f01b8efcc236d32ff902e5ef17",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Switch.tsx": {
+    "mtime": 1790211403.5199833,
+    "seen": 1790211582.1276643,
+    "ast_hash": "689635626ee974a90fd0f7da61fd429b",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Tabs.tsx": {
+    "mtime": 1790211419.8600159,
+    "seen": 1790211582.1276677,
+    "ast_hash": "865969329dc1f068cd394e2880b237e8",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Textarea.tsx": {
+    "mtime": 1790211385.3246145,
+    "seen": 1790211582.1276715,
+    "ast_hash": "4f24d263bf0e85ba71accd4bb53a2618",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Toast.tsx": {
+    "mtime": 1790211432.8999562,
+    "seen": 1790211582.127675,
+    "ast_hash": "4149dcaa55674a01b09fc0d3b51ee84c",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/Tooltip.tsx": {
+    "mtime": 1790211424.0333996,
+    "seen": 1790211582.1276784,
+    "ast_hash": "724f8c6f4b366d6675f325a175db9fc9",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/primitives/index.ts": {
+    "mtime": 1790211504.6431048,
+    "seen": 1790211582.127682,
+    "ast_hash": "ce701893b4134a34dc6351e9bdb0a913",
     "semantic_hash": ""
   }
 }

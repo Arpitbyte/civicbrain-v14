@@ -180,4 +180,40 @@
 - No generic illustration empty states; required specific message and next-step props.
 - No hardcoded workspace colors; components inherit purely through semantic tokens.
 
+## [2026-09-24] — PROMPT 4 — Tier 1 Civic-Specific Components (packages/ui)
+
+**Prompt reference:** PROMPT 4 — Tier 1 Civic-Specific Components
+**Files created:**
+- `packages/ui/src/civic/ConfidenceBadge.tsx` — Statistical certainty indicator (Z = n / [n + K] Bühlmann credibility factor). Strict Bootstrap Principle enforcement: if confidence_score is null/undefined, honestly renders "Citizen Declared" or "Pending Automated Triage" — never fabricates a percentage! Text + numeric Z value + icon, never color-only.
+- `packages/ui/src/civic/ScoreBreakdown.tsx` — Glass-box AHP prioritization breakdown matching real backend fields (`raw_priority_score`, `equity_boost`, `final_priority_score`, `confidence_score`, `subscores`, `weights_used`). Renders exact formula: `priority_score = raw_priority_score * (1 + equity_boost)`. Expandable itemization with mono numerals.
+- `packages/ui/src/civic/EvidencePhotoCard.tsx` — Evidence photography component conforming strictly to DESIGN.md §7: 4:3 native aspect preserved, full-width bordered card (not rounded thumbnail), GPS + timestamp burned into a Plex Mono caption strip *below* the photo (never overlaid), redaction badge for PII blurring, real-pixel blur-up placeholder while loading.
+- `packages/ui/src/civic/BeforeAfterPair.tsx` — Photographic resolution verification pair showing defect ingest vs field remediation side-by-side on tablet+ and stacked on mobile.
+- `packages/ui/src/civic/StatusTimeline.tsx` — 11-state incident lifecycle tracker implementing the non-negotiable least-advanced-child aggregation rule (§7.2, §A7). Renders independent progress steppers per observation defect. Fails loudly in dev if zero observations are provided.
+- `packages/ui/src/civic/TrackingTokenDisplay.tsx` — Waybill stub presentation component with tactile dashed perforation styling, Plex Mono tracking token, and copy-to-clipboard with toast confirmation.
+- `packages/ui/src/civic/OfflineSyncBadge.tsx` — Persistent sync state badge for Karmi Sahayak and staff shells displaying online/offline status, queued mutation counts, syncing spinner, and sync collision / dispute warnings.
+- `packages/ui/src/civic/PriorityChip.tsx` — Single-hue Marker scale priority indicator (P1–P4) with SLA targets and numeric scores. Never uses red/green traffic lights.
+- `packages/ui/src/civic/SealMark.tsx` — Cryptographic ledger audit verification stamp for officially committed actions with authority label and hash.
+- `packages/ui/src/civic/MapLayers.tsx` — Declarative MapLibre layer wrappers (`WardBoundaryMapLayer`, `IncidentPointLayer`, `ClusterLayer`) consuming DESIGN.md §3.4 tokens (`--map-point-radius-incident`, `--map-point-radius-cluster`, `--map-line-ward-boundary`). Dynamically imported at route level (UI_ARCHITECTURE.md §13) without polluting shared bundle.
+- `packages/ui/src/civic/CivicShowcase.tsx` — Isolated demo showcase demonstrating all Tier 1 civic components against real API fixtures and dynamic workspace switching.
+- `packages/ui/src/civic/index.ts` — Barrel export for all civic components.
+**Files modified:**
+- `packages/ui/src/index.ts` — Re-exported civic module from packages/ui.
+- `apps/staff-console/src/App.tsx` — Mounted `/civic` route to view CivicShowcase in staff-console.
+**Components introduced/changed:**
+- `ConfidenceBadge`, `ScoreBreakdown`, `EvidencePhotoCard`, `BeforeAfterPair`, `StatusTimeline`, `TrackingTokenDisplay`, `OfflineSyncBadge`, `PriorityChip`, `SealMark`, `WardBoundaryMapLayer`, `IncidentPointLayer`, `ClusterLayer`, `CivicShowcase`
+**Tokens added/changed:** None (purely consumed Layer 2 semantic tokens and GIS map tokens from DESIGN.md §3.4)
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 5 — Representative Screen: Nagrik Setu · Track Report (`/track/:token`).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ■ confidence/evidence ■ (Real cold-start null states, queued offline counts, blur-up loading, expanded glass-box AHP math, least-advanced child parent tracking, redaction badges)
+**Acceptance criteria self-check:**
+- [x] `ScoreBreakdown` renders correctly against a real sample API response: PASS (Verified with real API payload structure from `PrioritizationEvaluationResponse`)
+- [x] `StatusTimeline` correctly computes least-advanced-child status from a 2+ observation fixture, matching the rank table in `FRONTEND_CONTEXT.md` §4: PASS (Verified with automated test matrix covering multi-child partial resolution, active progression ranking, and all-rejected edge cases)
+- [x] No component in this prompt has a code path that fabricates a confidence value: PASS (Cold-start null/undefined values strictly render "Citizen Declared" or "Pending Automated Triage" with no percentage)
+**Anti-slop self-check:**
+- No raw hex values, no raw pixel shadows anywhere.
+- No `rounded-full` outside of status chips (`ConfidenceBadge`, `PriorityChip`, `OfflineSyncBadge`).
+- Evidence photos never force-cropped to squares; mono caption strip strictly below photos.
+- No fake AI confidence percentages or simulated scanning theater.
+- Priority scale uses single-hue Marker tokens, never good/bad traffic lights.
+
 

@@ -17,6 +17,7 @@ import {
   StaffRole,
   ALL_STAFF_ROLES,
   PrimitivesShowcase,
+  CivicShowcase,
 } from '@civicbrain/ui';
 
 import { IncidentQueueView } from './views/IncidentQueueView';
@@ -240,6 +241,9 @@ export const App: React.FC = () => {
 
             {/* Primitives Tier 0 Showcase */}
             <Route path="primitives" element={<PrimitivesShowcase />} />
+
+            {/* Civic Tier 1 Showcase */}
+            <Route path="civic" element={<CivicShowcase />} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/deck" replace />} />
