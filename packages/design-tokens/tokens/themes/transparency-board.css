@@ -1,0 +1,18 @@
+/* packages/design-tokens/tokens/themes/transparency-board.css */
+/* Workspace: Transparency Board / Jan Sunwai (Corporators, Public, Media)
+   Register: Editorial stamped-ledger, Seal-green audit trail motifs.
+   Overrides semantic tokens only per DESIGN.md §2 & §4. */
+
+[data-workspace="transparency-board"] {
+  --color-background: var(--field-50);
+  --color-surface: var(--field-100);
+  --color-surface-raised: var(--field-0);
+  --color-border: var(--field-300);
+  --color-border-strong: var(--seal-600);
+  --color-text-primary: var(--station-900);
+  --color-text-secondary: var(--station-600);
+  --color-text-inverse: var(--field-50);
+  --color-action-primary: var(--seal-600);
+  --color-action-secondary: var(--station-700);
+  --color-focus: var(--seal-600);
+}

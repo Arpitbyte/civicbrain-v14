@@ -1,0 +1,18 @@
+/* packages/design-tokens/tokens/themes/command-deck.css */
+/* Workspace: Command Deck (Dispatchers, Ops Chiefs)
+   Register: High density, table-first, Station-ink dark chrome, operational precision.
+   Overrides semantic tokens only per DESIGN.md §2 & §4. */
+
+[data-workspace="command-deck"] {
+  --color-background: var(--field-100);
+  --color-surface: var(--field-50);
+  --color-surface-raised: var(--field-0);
+  --color-border: var(--field-300);
+  --color-border-strong: var(--station-600);
+  --color-text-primary: var(--station-950);
+  --color-text-secondary: var(--station-600);
+  --color-text-inverse: var(--field-50);
+  --color-action-primary: var(--marker-600);
+  --color-action-secondary: var(--station-800);
+  --color-focus: var(--channel-600);
+}

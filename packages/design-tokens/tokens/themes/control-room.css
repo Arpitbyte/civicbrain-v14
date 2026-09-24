@@ -1,0 +1,18 @@
+/* packages/design-tokens/tokens/themes/control-room.css */
+/* Workspace: Control Room (Commissioners, System Admins)
+   Register: Administrative registry ledger, monochrome Station text, flat Field paper.
+   Overrides semantic tokens only per DESIGN.md §2 & §4. */
+
+[data-workspace="control-room"] {
+  --color-background: var(--field-100);
+  --color-surface: var(--field-0);
+  --color-surface-raised: var(--field-0);
+  --color-border: var(--field-300);
+  --color-border-strong: var(--station-700);
+  --color-text-primary: var(--station-900);
+  --color-text-secondary: var(--station-600);
+  --color-text-inverse: var(--field-50);
+  --color-action-primary: var(--station-800);
+  --color-action-secondary: var(--station-600);
+  --color-focus: var(--station-700);
+}

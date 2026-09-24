@@ -1,0 +1,19 @@
+{
+  "name": "@civicbrain/design-tokens",
+  "version": "14.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./tokens/index.css",
+    "./fonts": "./tokens/fonts.css",
+    "./primitives": "./tokens/primitives.css",
+    "./semantic": "./tokens/semantic.css",
+    "./tailwind": "./tokens/tailwind-theme.css",
+    "./themes/*": "./tokens/themes/*.css",
+    "./components/*": "./tokens/components/*.css"
+  },
+  "files": [
+    "tokens",
+    "fonts"
+  ]
+}

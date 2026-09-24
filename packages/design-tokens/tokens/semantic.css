@@ -1,0 +1,52 @@
+/* packages/design-tokens/tokens/semantic.css */
+/* Layer 2: Semantic tokens — meaning, workspace-agnostic.
+   Components touch semantic tokens only.
+   No hex values, no raw font names, no raw pixel shadows. */
+
+:root {
+  /* Surfaces & Backgrounds */
+  --color-background: var(--field-50);
+  --color-surface: var(--field-100);
+  --color-surface-raised: var(--field-0);
+
+  /* Borders */
+  --color-border: var(--field-300);
+  --color-border-strong: var(--station-500);
+
+  /* Typography / Text Colors */
+  --color-text-primary: var(--station-900);
+  --color-text-secondary: var(--station-600);
+  --color-text-inverse: var(--field-50);
+
+  /* Actions */
+  --color-action-primary: var(--marker-500);     /* Citizen apps default CTA */
+  --color-action-secondary: var(--station-700);   /* Secondary / staff actions */
+  --color-focus: var(--channel-600);              /* 2px focus ring */
+
+  /* System Status (System-state feedback only, never for priority ranking) */
+  --color-status-success: var(--seal-500);
+  --color-status-warning: var(--flag-amber-500);
+  --color-status-danger: var(--flag-red-500);
+  --color-status-info: var(--channel-500);
+
+  /* Confidence Bands (Always paired with numeric Z value and text label, never red) */
+  --color-confidence-low: var(--flag-amber-500);
+  --color-confidence-medium: var(--marker-400);
+  --color-confidence-high: var(--seal-500);
+
+  /* Verified Seal Stamp (Structurally distinct from transient toasts) */
+  --color-verified-seal: var(--seal-600);
+
+  /* Priority Rank (Single-hue Marker scale, never good/bad traffic lights) */
+  --color-priority-1: var(--marker-200); /* Low */
+  --color-priority-2: var(--marker-400); /* Medium */
+  --color-priority-3: var(--marker-600); /* High */
+  --color-priority-4: var(--marker-800); /* Critical */
+
+  /* GIS / Spatial Map Layers */
+  --color-gis-incident-point: var(--marker-500);
+  --color-gis-cluster-fill: var(--marker-500);
+  --color-gis-ward-boundary: var(--station-500);
+  --color-gis-causal-edge: var(--channel-600);
+  --color-gis-selected-ring: var(--seal-500);
+}

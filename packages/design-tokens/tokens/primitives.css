@@ -1,0 +1,217 @@
+/* packages/design-tokens/tokens/primitives.css */
+/* Layer 1: Raw scales, zero semantic meaning.
+   Approved families only: Field, Station, Marker, Channel, Seal, Flag.
+   Strictly no invented color families, no Inter, no unapproved fallbacks. */
+
+:root {
+  /* ==========================================================================
+     3.1 Primitive Color Scales
+     ========================================================================== */
+
+  /* Field: Paper/daylight neutrals (0–950) */
+  --field-0: #FFFFFF;
+  --field-50: #F7F4EE;   /* Base daylight background */
+  --field-100: #F0EDE5;
+  --field-200: #E4E0D6;
+  --field-300: #D3CDC1;
+  --field-400: #B8B0A2;
+  --field-500: #9B9283;
+  --field-600: #7A7264;
+  --field-700: #5C5549;
+  --field-800: #3E3830;
+  --field-900: #26221C;
+  --field-950: #17140F;  /* Deepest field ink */
+
+  /* Station: Survey-ink dark, staff chrome / night-ops (0–950) */
+  --station-50: #F2F4F5;
+  --station-100: #E1E6E8;
+  --station-200: #C2CBD0;
+  --station-300: #9EACB4;
+  --station-400: #71828D;
+  --station-500: #4A555C;  /* Anchor */
+  --station-600: #384248;
+  --station-700: #2A3238;
+  --station-800: #20272B;
+  --station-900: #1B2024;  /* Anchor dark chrome */
+  --station-950: #111417;
+
+  /* Marker: Survey/field orange — primary action, citizen accent (100–900) */
+  --marker-100: #FCECE4;
+  --marker-200: #F8D3C1;
+  --marker-300: #F0A988;
+  --marker-400: #E27E51;
+  --marker-500: #C1592B;  /* Anchor primary action */
+  --marker-600: #A8471E;
+  --marker-700: #883616;
+  --marker-800: #6B2910;
+  --marker-900: #4E1D0A;
+
+  /* Channel: River-teal — spatial/GIS accent (100–900) */
+  --channel-100: #E6F3F2;
+  --channel-200: #C3E3E1;
+  --channel-300: #92CBC7;
+  --channel-400: #58ABA6;
+  --channel-500: #2E6E6B;  /* Anchor spatial */
+  --channel-600: #235855;
+  --channel-700: #1C4442;
+  --channel-800: #153332;
+  --channel-900: #0E2221;
+
+  /* Seal: Verification green (100–900) */
+  --seal-100: #E8F4EB;
+  --seal-200: #C7E5CD;
+  --seal-300: #99CDA3;
+  --seal-400: #68AE75;
+  --seal-500: #3C7A4B;  /* Anchor verification */
+  --seal-600: #2E613B;
+  --seal-700: #22492C;
+  --seal-800: #18331F;
+  --seal-900: #0E2013;
+
+  /* Flag: Hazard / warning / danger (flagging tape colors) */
+  --flag-amber-100: #FEF6E6;
+  --flag-amber-200: #FDE8BE;
+  --flag-amber-300: #FBD486;
+  --flag-amber-400: #F5B63E;
+  --flag-amber-500: #D98E04;  /* Anchor warning */
+  --flag-amber-600: #B27002;
+  --flag-amber-700: #8C5301;
+  --flag-amber-800: #663B00;
+  --flag-amber-900: #452600;
+
+  --flag-red-100: #FBECE9;
+  --flag-red-200: #F6D1CA;
+  --flag-red-300: #ECAAA0;
+  --flag-red-400: #DD7566;
+  --flag-red-500: #B3311F;  /* Anchor danger */
+  --flag-red-600: #942516;
+  --flag-red-700: #741C10;
+  --flag-red-800: #55130A;
+  --flag-red-900: #3B0B06;
+
+  /* ==========================================================================
+     3.3 Typography Stacks & Fluid Scales (DESIGN.md §3.3 / §6)
+     ========================================================================== */
+  --font-family-ui: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-family-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-family-devanagari: "IBM Plex Sans Devanagari", sans-serif;
+  --font-family-display: "Fraunces", Georgia, serif;
+
+  /* Fluid type scale via clamp() */
+  --text-xs: clamp(0.75rem, 0.72rem + 0.1vw, 0.8125rem);
+  --text-sm: clamp(0.8125rem, 0.78rem + 0.12vw, 0.875rem);
+  --text-base: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+  --text-lg: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  --text-2xl: clamp(1.625rem, 1.4rem + 0.9vw, 2.25rem);
+  --text-3xl: clamp(2.125rem, 1.7rem + 1.8vw, 3.25rem); /* Fraunces display only */
+
+  /* Line heights */
+  --leading-tight: 1.1;  /* Fraunces display */
+  --leading-snug: 1.2;   /* UI labels & buttons */
+  --leading-normal: 1.5; /* Body copy */
+
+  /* Letter tracking */
+  --tracking-normal: 0;
+  --tracking-micro: 0.01em; /* All-caps status chips only */
+
+  /* ==========================================================================
+     3.3 Spacing Scale
+     ========================================================================== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ==========================================================================
+     3.3 Radius Scale
+     ========================================================================== */
+  --radius-sm: 4px;     /* Inputs, chips */
+  --radius-md: 8px;     /* Cards, buttons */
+  --radius-lg: 12px;    /* Modals, sheets */
+  --radius-xl: 16px;    /* Full-screen mobile sheets only */
+  --radius-full: 999px; /* Status chips ONLY — the single pill exception */
+
+  /* ==========================================================================
+     3.3 Elevation & Shadows (Only these two defined tokens exist)
+     ========================================================================== */
+  --shadow-flat: none;
+  --shadow-lifted: 0 8px 24px -12px rgba(23, 20, 15, 0.18);
+  --shadow-overlay: 0 16px 48px -16px rgba(23, 20, 15, 0.28); /* Modals/sheets only */
+
+  /* ==========================================================================
+     3.3 Z-Index Scale
+     ========================================================================== */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-dropdown: 20;
+  --z-scrim: 30;
+  --z-modal: 40;
+  --z-toast: 50;
+  --z-tooltip: 60;
+
+  /* ==========================================================================
+     3.3 Opacity Scale
+     ========================================================================== */
+  --opacity-disabled: 0.4;
+  --opacity-muted: 0.65;
+  --opacity-scrim: 0.5;
+  --opacity-hover-tint: 0.08;
+  --opacity-press-tint: 0.14;
+
+  /* ==========================================================================
+     3.3 Motion & Transitions
+     ========================================================================== */
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-slow: 360ms;
+  --duration-deliberate: 600ms;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --ease-spatial: cubic-bezier(0.16, 1, 0.3, 1); /* GSAP map / expressive moments only */
+
+  /* ==========================================================================
+     3.3 Controls, Icons & Layout Widths
+     ========================================================================== */
+  --control-height-sm: 32px;
+  --control-height-md: 40px;
+  --control-height-lg: 48px;
+
+  --icon-size-sm: 16px;
+  --icon-size-md: 20px;
+  --icon-size-lg: 24px;
+  --icon-size-xl: 32px;
+
+  --content-width-narrow: 720px;  /* Nagrik Setu, Transparency Board reading column */
+  --content-width-form: 560px;
+  --content-width-console: none;   /* Fluid, min 1280px */
+
+  /* ==========================================================================
+     3.3 & 11 Breakpoints
+     ========================================================================== */
+  --breakpoint-mobile: 0px;
+  --breakpoint-tablet: 640px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-desktop: 1440px;
+  --breakpoint-large-desktop: 1920px;
+
+  /* ==========================================================================
+     3.4 Map-Specific Tokens
+     ========================================================================== */
+  --map-point-radius-incident: 6px;
+  --map-point-radius-cluster: clamp(8px, calc(8px + sqrt(var(--cluster-count, 1)) * 1.5px), 28px);
+  --map-line-ward-boundary: 1.5px dashed var(--station-500);
+  --map-basemap-style: "civicbrain-field";
+}

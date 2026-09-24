@@ -1,0 +1,108 @@
+/* packages/design-tokens/tokens/tailwind-theme.css */
+/* Tailwind CSS v4 Theme Configuration
+   Maps Tailwind utility classes directly to CivicBrain CSS custom properties.
+   Never relies on Tailwind's default color palette. */
+
+@theme {
+  /* Semantic Colors */
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-raised: var(--color-surface-raised);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-inverse: var(--color-text-inverse);
+
+  --color-action-primary: var(--color-action-primary);
+  --color-action-secondary: var(--color-action-secondary);
+  --color-focus: var(--color-focus);
+
+  --color-status-success: var(--color-status-success);
+  --color-status-warning: var(--color-status-warning);
+  --color-status-danger: var(--color-status-danger);
+  --color-status-info: var(--color-status-info);
+
+  --color-confidence-low: var(--color-confidence-low);
+  --color-confidence-medium: var(--color-confidence-medium);
+  --color-confidence-high: var(--color-confidence-high);
+
+  --color-verified-seal: var(--color-verified-seal);
+
+  --color-priority-1: var(--color-priority-1);
+  --color-priority-2: var(--color-priority-2);
+  --color-priority-3: var(--color-priority-3);
+  --color-priority-4: var(--color-priority-4);
+
+  --color-gis-incident-point: var(--color-gis-incident-point);
+  --color-gis-cluster-fill: var(--color-gis-cluster-fill);
+  --color-gis-ward-boundary: var(--color-gis-ward-boundary);
+  --color-gis-causal-edge: var(--color-gis-causal-edge);
+  --color-gis-selected-ring: var(--color-gis-selected-ring);
+
+  /* Approved Multi-Script Font Stacks (DESIGN.md §3.3 / §6) */
+  --font-ui: var(--font-family-ui);
+  --font-mono: var(--font-family-mono);
+  --font-devanagari: var(--font-family-devanagari);
+  --font-display: var(--font-family-display);
+
+  /* Fluid Typography Scale */
+  --text-xs: var(--text-xs);
+  --text-sm: var(--text-sm);
+  --text-base: var(--text-base);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
+  --text-2xl: var(--text-2xl);
+  --text-3xl: var(--text-3xl);
+
+  /* Spacing Scale */
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-5: var(--space-5);
+  --spacing-6: var(--space-6);
+  --spacing-8: var(--space-8);
+  --spacing-10: var(--space-10);
+  --spacing-12: var(--space-12);
+  --spacing-16: var(--space-16);
+  --spacing-20: var(--space-20);
+  --spacing-24: var(--space-24);
+  --spacing-32: var(--space-32);
+
+  /* Radius Scale */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+
+  /* Shadows (Only two defined tokens per DESIGN.md §3.3) */
+  --shadow-flat: var(--shadow-flat);
+  --shadow-lifted: var(--shadow-lifted);
+  --shadow-overlay: var(--shadow-overlay);
+
+  /* Z-Index Scale */
+  --z-base: var(--z-base);
+  --z-sticky: var(--z-sticky);
+  --z-dropdown: var(--z-dropdown);
+  --z-scrim: var(--z-scrim);
+  --z-modal: var(--z-modal);
+  --z-toast: var(--z-toast);
+  --z-tooltip: var(--z-tooltip);
+
+  /* Transition Durations */
+  --duration-instant: var(--duration-instant);
+  --duration-fast: var(--duration-fast);
+  --duration-base: var(--duration-base);
+  --duration-slow: var(--duration-slow);
+  --duration-deliberate: var(--duration-deliberate);
+
+  /* Breakpoint Tokens (DESIGN.md §3.3 & §11) */
+  --breakpoint-mobile: var(--breakpoint-mobile);
+  --breakpoint-tablet: var(--breakpoint-tablet);
+  --breakpoint-laptop: var(--breakpoint-laptop);
+  --breakpoint-desktop: var(--breakpoint-desktop);
+  --breakpoint-large-desktop: var(--breakpoint-large-desktop);
+}

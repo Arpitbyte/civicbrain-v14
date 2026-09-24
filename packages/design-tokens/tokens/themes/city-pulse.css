@@ -1,0 +1,18 @@
+/* packages/design-tokens/tokens/themes/city-pulse.css */
+/* Workspace: City Pulse (Zonal Supervisors, Spatial Analysts)
+   Register: Spatial, map-first, Channel-teal chrome around Field map frame.
+   Overrides semantic tokens only per DESIGN.md §2 & §4. */
+
+[data-workspace="city-pulse"] {
+  --color-background: var(--field-50);
+  --color-surface: var(--field-100);
+  --color-surface-raised: var(--field-0);
+  --color-border: var(--field-300);
+  --color-border-strong: var(--channel-600);
+  --color-text-primary: var(--station-900);
+  --color-text-secondary: var(--station-600);
+  --color-text-inverse: var(--field-50);
+  --color-action-primary: var(--channel-600);
+  --color-action-secondary: var(--station-700);
+  --color-focus: var(--channel-600);
+}

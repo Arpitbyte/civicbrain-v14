@@ -1,0 +1,18 @@
+/* packages/design-tokens/tokens/themes/karmi-sahayak.css */
+/* Workspace: Karmi Sahayak (Field Companion)
+   Register: High-visibility outdoor mode, >=7:1 contrast for direct sunlight.
+   Overrides semantic tokens only per DESIGN.md §2 & §4. */
+
+[data-workspace="karmi-sahayak"] {
+  --color-background: var(--station-950);
+  --color-surface: var(--station-900);
+  --color-surface-raised: var(--station-800);
+  --color-border: var(--station-700);
+  --color-border-strong: var(--station-500);
+  --color-text-primary: var(--field-50);
+  --color-text-secondary: var(--field-300);
+  --color-text-inverse: var(--station-950);
+  --color-action-primary: var(--marker-400);
+  --color-action-secondary: var(--station-700);
+  --color-focus: var(--marker-400);
+}
