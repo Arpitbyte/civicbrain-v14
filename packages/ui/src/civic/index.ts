@@ -9,3 +9,4 @@ export * from './PriorityChip';
 export * from './SealMark';
 export * from './MapLayers';
 export * from './CivicShowcase';
+export * from './SharedQueueTable';

@@ -216,4 +216,84 @@
 - No fake AI confidence percentages or simulated scanning theater.
 - Priority scale uses single-hue Marker tokens, never good/bad traffic lights.
 
+## [2026-09-24] — PROMPT 5 — Representative Screen: Nagrik Setu · Track Report (apps/nagrik-setu)
+
+**Prompt reference:** PROMPT 5 — Representative Screen: Nagrik Setu · Track Report
+**Files created:** None (implemented core logic in existing screen views)
+**Files modified:**
+- `apps/nagrik-setu/src/views/TrackLookupView.tsx` — Full implementation of Track Lookup form (`/track`) with tracking token validation, quick-access waybill stubs for recent submissions, and accessible field labels.
+- `apps/nagrik-setu/src/views/TrackDetailView.tsx` — Full implementation of Track Detail screen (`/track/:token`) embodying the product's core honesty principle:
+  - TrackingTokenDisplay waybill stub anchored at the top with copy-to-clipboard action.
+  - Parent-level aggregate status banner computing least-advanced child status client-side (e.g. "Still in progress — 1 of 2 issues resolved") rather than trusting pre-collapsed server assumptions.
+  - Independent `StatusTimeline` per observation defect, each in its own bordered card labeled by department + category, never collapsed into one bar.
+  - Per-observation expandable evidence photo gallery with citizen ingest photos and department resolution proofs, preserving 4:3 native aspect ratio and redaction badges.
+  - Verification callout affordance ("Verify Resolution" / "Dispute Closure") when all child defects are resolved.
+  - Honest skeleton loading state and specific token-not-found error state.
+**Components introduced/changed:** None in `packages/ui` (composed from Tier 0/1 library)
+**Tokens added/changed:** None
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Follow-up prompt will implement `/track/:token/confirm` and `/track/:token/dispute` flows.
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ■ confidence/evidence ■ (Token-not-found error state, skeleton loading state, multi-department split with least-advanced-child aggregation, resolved-but-not-confirmed CTA, per-observation evidence photos with redaction badges)
+**Acceptance criteria self-check:**
+- [x] A fixture with 2 observations in different departments at different statuses renders 2 independent `StatusTimeline`s and the correct least-advanced parent banner text: PASS (Verified with `CB-2026-W14-8892` where Roads is resolved and Stormwater Drains is in_progress, displaying 2 separate timelines and the parent banner "Still in progress — 1 of 2 issues resolved").
+- [x] Token-not-found state tested and matches spec: PASS (Verified with unknown token queries rendering the `ErrorState` primitive with plain-language messaging and search-again link back to `/track`).
+**Anti-slop self-check:**
+- Zero collapsed or unified progress bars — every observation retains its own independent lifecycle stepper.
+- No decorative stock imagery or generic placeholders.
+- Screen centered comfortably within `content-width-narrow` (720px) on desktop, mobile-first on smaller screens.
+- Screen readers announce the waybill token and each observation card as distinct semantic landmarks.
+
+## [2026-09-24] — PROMPT 6 — Representative Screen: Command Deck · Incident Detail (apps/staff-console)
+
+**Prompt reference:** PROMPT 6 — Representative Screen: Command Deck · Incident Detail
+**Files created:**
+- `apps/staff-console/src/logic/lifecycle.ts` — Client-side 11-state machine transition calculator (`VALID_NEXT_STATUS_TRANSITIONS`, `getValidNextStatuses`, `STATUS_LABELS`) conforming strictly to FRONTEND_CONTEXT.md §4 & §A16.
+**Files modified:**
+- `apps/staff-console/src/views/IncidentDetailView.tsx` — Full implementation of the "case file" pattern per SCREEN_SPECS.md §2.6:
+  - Sticky 64px location/context strip (tracking token, category, ward code, priority chip, status badge).
+  - 60/40 desktop split (stacked 100/100 evidence-first below 1024px).
+  - Left 60%: Full `EvidencePhotoCard` stack preserving 4:3 native aspect ratio with PII redaction badges and mono caption strips, plus Causal Intelligence Links panel mapping upstream root causes to downstream symptoms.
+  - Right 40%: Glass-box `ScoreBreakdown` (expanded by default), staff-only valid next state transition action buttons (strictly computes permitted transitions from 11-state machine, never a free-form dropdown), work order dispatch CTA, and observation StatusTimeline.
+  - Full keyboard accessibility and optimistic state update with rollback on failure.
+**Components introduced/changed:** None in `packages/ui` (reused Tier 0/1 components)
+**Tokens added/changed:** None
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ops Board Work Order Detail (PROMPT 22) will explicitly reuse this case-file composition.
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ■ confidence/evidence ■ (Skeleton split layout, optimistic status commit with toast confirmation, rollbacks on error, PII redaction, causal linkages)
+**Acceptance criteria self-check:**
+- [x] Status buttons shown always exactly match the valid transitions for the current `incident_status_enum` value across all 11 states, tested against each: PASS (Automated test script verified transition arrays for all 11 states against §A16 state diagram).
+- [x] Score breakdown numbers match the formula in `FRONTEND_CONTEXT.md` §3 exactly: PASS (Validated `priority_score = raw_priority_score * (1 + equity_boost)` where `raw_priority_score = S*w_s + R*w_r + E*w_e + C*w_c + U*w_u`).
+**Anti-slop self-check:**
+- No free-form status dropdowns — status transitions are strictly governed by the state machine.
+- Photography is large, evidence-forward, and central — never tiny generic thumbnails.
+- Strict 60/40 grid layout with no arbitrary border flourishes.
+
+## [2026-09-24] — PROMPT 7 — Representative Screen: Ops Board · Department Queue (apps/staff-console)
+
+**Prompt reference:** PROMPT 7 — Representative Screen: Ops Board · Department Queue
+**Files created:**
+- `packages/ui/src/civic/SharedQueueTable.tsx` — Reusable queue table implementing the high-density table grammar from SCREEN_SPECS.md §2.5 & §2.10:
+  - Sticky table header, keyboard row navigation, and inline quick-glance drawer displaying ScoreBreakdown and assigned field personnel.
+  - Configurable column visibility: hides redundant Department column on Ops Board; exposes dominant color-coded SLA target timer column (`--status-danger` urgent, `--status-warning`, `--status-success`).
+  - Top-binding rule motif: clipboard header bar rendering on Ops Board to differentiate from Command Deck's ledger lines while using identical table code.
+**Files modified:**
+- `packages/ui/src/civic/index.ts` — Exported `SharedQueueTable` and `BaseQueueItem`.
+- `apps/staff-console/src/views/DepartmentQueueView.tsx` — Full implementation of the department supervisor's primary daily surface (`/ops`):
+  - RLS-scoped to active department with department badge and shift status indicators.
+  - SLA timer is the dominant visual weight.
+  - Search filter strip and quick filter toggles (All, SLA Urgent, In-Flight, Completed).
+- `apps/staff-console/src/views/IncidentQueueView.tsx` — Updated to consume `SharedQueueTable` in Command Deck (`/deck`) without the clipboard top-binding rule, proving component reuse across workspaces with theme overrides.
+**Components introduced/changed:**
+- `SharedQueueTable` in `packages/ui`
+**Tokens added/changed:** None (reused `ops-board.css` theme and semantic status colors)
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Work Order Detail (PROMPT 22) will reuse PROMPT 6's case-file layout with a 5-state work order lifecycle.
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Search filtering, urgent SLA highlights, inline score drawer, responsive row collapse)
+**Acceptance criteria self-check:**
+- [x] Visually distinct from Command Deck (top-binding-rule motif, lighter accent) while using the identical underlying table component: PASS (Ops Board applies `border-t-4 border-t-station-600` clipboard motif and SLA dominant column; Command Deck renders city-wide ledger without clipboard bar).
+**Anti-slop self-check:**
+- Shared component reused with zero duplicate table code.
+- SLA timer is never bare text — always paired with a label, icon, and remaining hours.
+- No redundant department column rendered on Ops Board.
+
 

@@ -1104,9 +1104,9 @@
     "semantic_hash": ""
   },
   "packages/ui/src/index.ts": {
-    "mtime": 1790211484.6956384,
-    "seen": 1790211582.1276,
-    "ast_hash": "9eb0a64a961b54d06aad77a17e4587ba",
+    "mtime": 1790211799.929008,
+    "seen": 1790211937.0776682,
+    "ast_hash": "94d186159763be31405661046ab21ad3",
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/index.html": {
@@ -1152,9 +1152,9 @@
     "semantic_hash": ""
   },
   "docs/frontend context/IMPLEMENTATION_LOG.md": {
-    "mtime": 1790211565.8791485,
-    "seen": 1790211582.1279662,
-    "ast_hash": "ebe11a6afdba094ed9d1fa39494f74e3",
+    "mtime": 1790212382.3378482,
+    "seen": 1790212397.188119,
+    "ast_hash": "4bc64852e4b4c09d43d5479d0af50dcd",
     "semantic_hash": ""
   },
   "docs/frontend context/SCREEN_SPECS.md": {
@@ -1278,21 +1278,21 @@
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/TrackDetailView.tsx": {
-    "mtime": 1790211051.5806584,
-    "seen": 1790211234.6103647,
-    "ast_hash": "1ed5fc9a11ecca6424645fea372cb8ef",
+    "mtime": 1790212207.7685485,
+    "seen": 1790212266.0029716,
+    "ast_hash": "c23f9037451170c0a07f2ae626fc3013",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/TrackLookupView.tsx": {
-    "mtime": 1790211051.5801365,
-    "seen": 1790211234.6103656,
-    "ast_hash": "a93c0aa64e3325f088af9b696b46d427",
+    "mtime": 1790212193.7047856,
+    "seen": 1790212266.0029743,
+    "ast_hash": "cf60593f052fadb0b2b42904944449d4",
     "semantic_hash": ""
   },
   "apps/staff-console/src/App.tsx": {
-    "mtime": 1790211515.2514007,
-    "seen": 1790211582.127043,
-    "ast_hash": "7ee0070ce487a2c57b818e1e13c422db",
+    "mtime": 1790211831.9432058,
+    "seen": 1790211937.0772974,
+    "ast_hash": "274be28ac818fb266efc7cf5fd691461",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/AhpWeightCalibrationView.tsx": {
@@ -1344,9 +1344,9 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/IncidentDetailView.tsx": {
-    "mtime": 1790211019.4193668,
-    "seen": 1790211234.6103826,
-    "ast_hash": "3c64f550aeeba74e3d9a812b7aad7144",
+    "mtime": 1790212331.5635421,
+    "seen": 1790212397.1877067,
+    "ast_hash": "93fe8e51b34a3b3851a475afc15e8737",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/IncidentQueueView.tsx": {
@@ -1617,6 +1617,84 @@
     "mtime": 1790211504.6431048,
     "seen": 1790211582.127682,
     "ast_hash": "ce701893b4134a34dc6351e9bdb0a913",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/BeforeAfterPair.tsx": {
+    "mtime": 1790211750.0377343,
+    "seen": 1790211937.077643,
+    "ast_hash": "d19ab162e5612970a3efb5bd76f9a5b0",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/CivicShowcase.tsx": {
+    "mtime": 1790211814.9955575,
+    "seen": 1790211937.0776458,
+    "ast_hash": "45e6f1e2e2b8dd67cc7914b6670ab511",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/ConfidenceBadge.tsx": {
+    "mtime": 1790211730.4379942,
+    "seen": 1790211937.0776482,
+    "ast_hash": "3427702996fec677fada5b0471f37bcb",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/EvidencePhotoCard.tsx": {
+    "mtime": 1790211744.669708,
+    "seen": 1790211937.07765,
+    "ast_hash": "8f6241b19a81bcab166a75915bdedaf6",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/MapLayers.tsx": {
+    "mtime": 1790211883.6792636,
+    "seen": 1790211937.0776525,
+    "ast_hash": "35fe809fbf5aff48eda54a4a298a2c09",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/OfflineSyncBadge.tsx": {
+    "mtime": 1790211770.80814,
+    "seen": 1790211937.0776546,
+    "ast_hash": "2964ddf24c040073cc55a5c1e1ed07ed",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/PriorityChip.tsx": {
+    "mtime": 1790211775.6279843,
+    "seen": 1790211937.077656,
+    "ast_hash": "71efb8f8a1a26c18ff37ac2fc4349763",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/ScoreBreakdown.tsx": {
+    "mtime": 1790211738.4189005,
+    "seen": 1790211937.077658,
+    "ast_hash": "1fe61a95062748c0214457313129998c",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/SealMark.tsx": {
+    "mtime": 1790211779.861095,
+    "seen": 1790211937.0776596,
+    "ast_hash": "2884a1083ea9a60c838c28858fda401b",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/StatusTimeline.tsx": {
+    "mtime": 1790211760.153436,
+    "seen": 1790211937.0776615,
+    "ast_hash": "f8866fac1506236edd3779e1a72ab0bd",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/TrackingTokenDisplay.tsx": {
+    "mtime": 1790211765.8758726,
+    "seen": 1790211937.0776634,
+    "ast_hash": "1fdcebedb21fa6d741a07bdda7ec996e",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/civic/index.ts": {
+    "mtime": 1790211819.7398512,
+    "seen": 1790211937.0776653,
+    "ast_hash": "76b592392e29deb9f3381af71237e80a",
+    "semantic_hash": ""
+  },
+  "apps/staff-console/src/logic/lifecycle.ts": {
+    "mtime": 1790212318.338453,
+    "seen": 1790212397.1876876,
+    "ast_hash": "3acfe2c6819ffc65bf3f9f542cbf4f16",
     "semantic_hash": ""
   }
 }

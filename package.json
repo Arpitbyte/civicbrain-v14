@@ -9,7 +9,11 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present"
+    "test": "npm run test --workspaces --if-present",
+    "dev:staff": "npm run dev --workspace=@civicbrain/staff-console",
+    "dev:citizen": "npm run dev --workspace=@civicbrain/nagrik-setu",
+    "dev:field": "npm run dev --workspace=@civicbrain/karmi-sahayak",
+    "dev:transparency": "npm run dev --workspace=@civicbrain/transparency-board"
   },
   "devDependencies": {
     "@fontsource/ibm-plex-mono": "^5.1.1",
