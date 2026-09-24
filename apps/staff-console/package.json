@@ -11,7 +11,9 @@
   "dependencies": {
     "@civicbrain/design-tokens": "*",
     "@civicbrain/ui": "*",
+    "@types/leaflet": "^1.9.22",
     "gsap": "^3.15.0",
+    "leaflet": "^1.9.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.6"

@@ -1014,9 +1014,9 @@
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/vite.config.ts": {
-    "mtime": 1790210386.4225953,
-    "seen": 1790210509.604481,
-    "ast_hash": "0dce7ee2ec41b3d69e1acb53e75fc75f",
+    "mtime": 1790212746.2429342,
+    "seen": 1790213127.8259947,
+    "ast_hash": "76fd4734d275e3aa607411878d387990",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/package.json": {
@@ -1032,15 +1032,15 @@
     "semantic_hash": ""
   },
   "apps/nagrik-setu/vite.config.ts": {
-    "mtime": 1790210345.9506721,
-    "seen": 1790210509.6044915,
-    "ast_hash": "c97e105da7d73b3a757c23e6d3bce0f1",
+    "mtime": 1790212743.6112983,
+    "seen": 1790213127.8260193,
+    "ast_hash": "2b54a9ecb29cc8999c40cd2bea4c1099",
     "semantic_hash": ""
   },
   "apps/staff-console/package.json": {
-    "mtime": 1790210938.3936646,
-    "seen": 1790211234.6103692,
-    "ast_hash": "527a6255e6ac1cc764c4a73a231d9095",
+    "mtime": 1790213020.3709173,
+    "seen": 1790213127.826021,
+    "ast_hash": "375366e4a29786176fbe47f98c488132",
     "semantic_hash": ""
   },
   "apps/staff-console/src/main.tsx": {
@@ -1050,9 +1050,9 @@
     "semantic_hash": ""
   },
   "apps/staff-console/vite.config.ts": {
-    "mtime": 1790210365.353762,
-    "seen": 1790210509.604495,
-    "ast_hash": "0dce7ee2ec41b3d69e1acb53e75fc75f",
+    "mtime": 1790212741.086425,
+    "seen": 1790213127.8260632,
+    "ast_hash": "e6ed59519c1253fad55ef84a7c4e1caa",
     "semantic_hash": ""
   },
   "apps/transparency-board/package.json": {
@@ -1062,9 +1062,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790210403.8914433,
-    "seen": 1790210509.6046538,
-    "ast_hash": "7d5806f9b2a9e3aedfe304a61ff60ffa",
+    "mtime": 1790212714.6593173,
+    "seen": 1790213127.8262439,
+    "ast_hash": "0947a774dc512e82b8b22f636de255be",
     "semantic_hash": ""
   },
   "packages/api-client/package.json": {
@@ -1152,9 +1152,9 @@
     "semantic_hash": ""
   },
   "docs/frontend context/IMPLEMENTATION_LOG.md": {
-    "mtime": 1790212607.2692819,
-    "seen": 1790212632.1446352,
-    "ast_hash": "c8a0693b2f091dd6e145884590f146bd",
+    "mtime": 1790213389.5698082,
+    "seen": 1790213408.6829624,
+    "ast_hash": "e481b8057ee3de42d59a6337050ec4e5",
     "semantic_hash": ""
   },
   "docs/frontend context/SCREEN_SPECS.md": {
@@ -1206,27 +1206,27 @@
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/App.tsx": {
-    "mtime": 1790211074.1538885,
-    "seen": 1790211234.6103418,
-    "ast_hash": "76216f01e20a16b5712be424862f64d2",
+    "mtime": 1790213303.3411846,
+    "seen": 1790213408.682531,
+    "ast_hash": "0bec18ab28dc57c4a49e81ce218a9fff",
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/views/MyOrdersView.tsx": {
-    "mtime": 1790211069.6406653,
-    "seen": 1790211234.610346,
-    "ast_hash": "0b38b914dd7149c5e5184f48491cf747",
+    "mtime": 1790213639.8624835,
+    "seen": 1790213678.3040552,
+    "ast_hash": "bb91820fbd7f1f94e3b7345f423622eb",
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/views/SyncStatusView.tsx": {
-    "mtime": 1790211069.6474366,
-    "seen": 1790211234.6103473,
-    "ast_hash": "0b5f3d62bdce46843526f3392dac0384",
+    "mtime": 1790213349.6552432,
+    "seen": 1790213408.6825418,
+    "ast_hash": "32c16492910729be328893b672eb1f92",
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/views/WorkOrderActionView.tsx": {
-    "mtime": 1790211069.6469169,
-    "seen": 1790211234.6103487,
-    "ast_hash": "248a1cb2dea9801120bf76a6ad13979c",
+    "mtime": 1790213632.8585622,
+    "seen": 1790213678.3040605,
+    "ast_hash": "43a7f11f83897e618dba70dd0b2ad460",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/App.tsx": {
@@ -1338,9 +1338,9 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/HeatmapClusterView.tsx": {
-    "mtime": 1790211019.4244642,
-    "seen": 1790211234.6103816,
-    "ast_hash": "a94c6b61442e597d899f4a4ad3c2927d",
+    "mtime": 1790213093.104927,
+    "seen": 1790213127.826046,
+    "ast_hash": "5b98e27ae63e596d5c8daab3e59c2997",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/IncidentDetailView.tsx": {
@@ -1446,9 +1446,9 @@
     "semantic_hash": ""
   },
   "apps/transparency-board/vite.config.ts": {
-    "mtime": 1790211117.2920594,
-    "seen": 1790211234.6104062,
-    "ast_hash": "0dce7ee2ec41b3d69e1acb53e75fc75f",
+    "mtime": 1790212750.0921361,
+    "seen": 1790213127.8260815,
+    "ast_hash": "1c9da158ab6c9575a83f3c29a585e5af",
     "semantic_hash": ""
   },
   "packages/ui/src/auth/AuthContext.tsx": {
@@ -1701,6 +1701,42 @@
     "mtime": 1790212542.506122,
     "seen": 1790212632.1445003,
     "ast_hash": "1c68ce042ccaae466a2f863c90e02bf2",
+    "semantic_hash": ""
+  },
+  "apps/staff-console/src/components/gis/ClusterAccessibleListView.tsx": {
+    "mtime": 1790213062.4339168,
+    "seen": 1790213127.826025,
+    "ast_hash": "b58b4b4ca899a6e28189dcb07aa15142",
+    "semantic_hash": ""
+  },
+  "apps/staff-console/src/components/gis/ClusterStatsPanel.tsx": {
+    "mtime": 1790213056.579784,
+    "seen": 1790213127.8260267,
+    "ast_hash": "b6e7b215ac4374a6566c359c0d91ddce",
+    "semantic_hash": ""
+  },
+  "apps/staff-console/src/components/gis/CoordinateRulerFrame.tsx": {
+    "mtime": 1790213049.4426057,
+    "seen": 1790213127.826028,
+    "ast_hash": "1b2e39c03fc50f08520e34e50e7c9e07",
+    "semantic_hash": ""
+  },
+  "apps/staff-console/src/components/gis/useGsapClusterReveal.ts": {
+    "mtime": 1790213068.2412846,
+    "seen": 1790213127.8260295,
+    "ast_hash": "c3d92e530312b2e03d6b401133c1a9a5",
+    "semantic_hash": ""
+  },
+  "apps/karmi-sahayak/src/context/OfflineSyncContext.tsx": {
+    "mtime": 1790213291.280636,
+    "seen": 1790213408.682534,
+    "ast_hash": "59d93b118462f1818ab03115cbcc73e0",
+    "semantic_hash": ""
+  },
+  "apps/karmi-sahayak/src/services/offlineSync.ts": {
+    "mtime": 1790213283.0328798,
+    "seen": 1790213408.6825378,
+    "ast_hash": "eec0cf0430dc8f9f8f91d1bfef96abba",
     "semantic_hash": ""
   }
 }

@@ -294,6 +294,60 @@
 **Anti-slop self-check:**
 - Shared component reused with zero duplicate table code.
 - SLA timer is never bare text — always paired with a label, icon, and remaining hours.
-- No redundant department column rendered on Ops Board.
+## [2026-09-24] — PROMPT 8 — Representative Screen: City Pulse · Heatmap / Cluster View (apps/staff-console)
+
+**Prompt reference:** PROMPT 8 — Representative Screen: City Pulse · Heatmap / Cluster View
+**Files created:**
+- `apps/staff-console/src/components/gis/CoordinateRulerFrame.tsx` — City Pulse's signature surveyed map frame motif with high-contrast coordinate ruler ticks (`12°58'30" N`, `77°35'40" E`), datum references, corner surveying crosshairs (`+`), and Channel-teal chrome accents.
+- `apps/staff-console/src/components/gis/ClusterStatsPanel.tsx` — Floating stats panel (top-right on desktop, bottom sheet on mobile) displaying cluster centroid, `ConfidenceBadge`, point count, category mix distribution bars, severity breakdown, and action to inspect incidents in the queue.
+- `apps/staff-console/src/components/gis/ClusterAccessibleListView.tsx` — Full accessible tabular alternative to WebGL/Canvas map rendering with ARIA landmarks, `aria-live` announcements, and keyboard selection.
+- `apps/staff-console/src/components/gis/useGsapClusterReveal.ts` — Route-isolated dynamic GSAP hook animating cluster circles from radius 0 to target over 600ms (`duration-deliberate`) with `ease-spatial` (`cubic-bezier(0.16, 1, 0.3, 1)`). Strictly detects `prefers-reduced-motion: reduce` and applies instant final state with zero animation.
+**Files modified:**
+- `apps/staff-console/src/views/HeatmapClusterView.tsx` — Replaced scaffold with full City Pulse hotspot & cluster spatial analysis screen (`/pulse`):
+  - 280px left rail with layer toggles (Ward boundaries, 6px incident points, DBSCAN clusters, density heatmap), DBSCAN calibration sliders (epsilon meters, min points), category filtering, and map/list view switcher.
+  - Interactive surveyed spatial map canvas with SVG vector layers and radial heat gradients.
+  - Strict mathematical calculation of cluster circle radius from `DESIGN.md` §3.4: `clamp(8px, calc(8px + sqrt(count) * 1.5px), 28px)`.
+  - Non-blocking layer retry banner and "Zoom out to see clusters" threshold hint.
+- `apps/staff-console/package.json` — Added `gsap` dependency for dynamic route-level spatial animation.
+**Components introduced/changed:**
+- `CoordinateRulerFrame`, `ClusterStatsPanel`, `ClusterAccessibleListView`, `useGsapClusterReveal`
+**Tokens added/changed:** None (consumed GIS tokens: `--color-gis-cluster-fill`, `--color-gis-selected-ring`, `--color-gis-ward-boundary`, `--color-gis-incident-point`, `--duration-deliberate`, `--ease-spatial`)
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 9 — Representative Screen: Karmi Sahayak · Work Order Action.
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Basemap skeleton loader, "Zoom out to see clusters" empty zoom hint, non-blocking data retry banner, floating stats panel on selection, accessible list view)
+**Acceptance criteria self-check:**
+- [x] Cluster radii verified to scale with real point counts across at least 3 different cluster sizes in test data: PASS (Verified with 4 points -> 11.0px, 19 points -> 14.54px, 45 points -> 18.06px, 200 points -> 28.0px max clamp).
+## [2026-09-24] — PROMPT 9 — Representative Screen: Karmi Sahayak · Work Order Action (apps/karmi-sahayak)
+
+**Prompt reference:** PROMPT 9 — Representative Screen: Karmi Sahayak · Work Order Action
+**Files created:**
+- `apps/karmi-sahayak/src/services/offlineSync.ts` — Client-side offline mutation engine mirroring `sync_mutation_log` with local storage persistence for START and RESOLVE mutations.
+- `apps/karmi-sahayak/src/context/OfflineSyncContext.tsx` — React context providing offline queue state, online/offline status detection, simulated network dev switcher, and sync replay actions.
+**Files modified:**
+- `apps/karmi-sahayak/src/App.tsx` — Wrapped application in `OfflineSyncProvider`, connected `OfflineSyncBadge` in `FieldShell`'s `syncBadgeSlot` to live pending queue count, and added simulated offline toggle.
+- `apps/karmi-sahayak/src/views/WorkOrderActionView.tsx` — Full implementation of the core field task screen (`/orders/:id`):
+  - High-visibility outdoor theme on Station-950 base with Marker-amber accents, exceeding 7:1 contrast ratio.
+  - Large touch targets ($\ge 48\text{px}$) for single-thumb field operation.
+  - Top context strip: Work order ID (`WO-2026-8492`), Ward 102, category, SLA countdown timer, and citizen defect photo.
+  - Supervisor conflict review warning banner when `hasOpenConflict` is flagged.
+  - Stage 1 (Assigned): navigation card with GPS directions and large primary action button ("Start Task").
+  - Stage 2 (In Progress): active repair elapsed timer, camera/photo capture zone, and work notes.
+  - **Hard Block on Resolve without Photo:** primary resolve button remains strictly disabled with explicit notice ("* Attach completion photo to enable resolve") until a photo proof is attached.
+  - **Honest Offline State:** when offline, saving resolution transitions button to `"Saved — will sync"` (amber indicator, never false "Done" or "Completed"), saves mutation to local queue, and increments header `OfflineSyncBadge` (`● 1 Queued`).
+- `apps/karmi-sahayak/src/views/MyOrdersView.tsx` — List of assigned work order cards with SLA countdowns and queued indicators.
+- `apps/karmi-sahayak/src/views/SyncStatusView.tsx` — Mutation manifest view with "Sync Now" trigger and SealMark verification.
+**Components introduced/changed:** None in `packages/ui` (reused `FieldShell`, `OfflineSyncBadge`, `SealMark`)
+**Tokens added/changed:** None (reused `karmi-sahayak.css` high-visibility theme tokens)
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 10 — Representative Screen: Control Room · AHP Weight Calibration.
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ■ confidence/evidence ■ (Offline queuing, "Saved — will sync" honest status, photo-required resolve block, conflict review alert, online resolved confirmation)
+**Acceptance criteria self-check:**
+- [x] Full flow tested with network disabled: action queues, badge updates, no false success state shown: PASS (Verified with simulated offline mode: button changes to "Saved — will sync", mutation is stored in local queue, and header OfflineSyncBadge increments).
+- [x] Resolve blocked without a photo, tested explicitly: PASS (Primary button disabled and aria-disabled=true when completionPhoto is null).
+**Anti-slop self-check:**
+- Never shows false "Done"/"Completed" language for an action that is queued locally offline.
+- No decorative stock imagery or generic illustrations.
+- All interactive controls are $\ge 48\text{px}$ for gloved or one-thumb field use.
+- Core bundle remains under $200\text{KB}$ gzipped ($64.96\text{ kB}$ JS / $7.82\text{ kB}$ CSS).
 
 

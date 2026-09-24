@@ -7,23 +7,44 @@ import {
   Outlet,
   Link,
 } from 'react-router-dom';
-import { FieldShell } from '@civicbrain/ui';
+import { FieldShell, OfflineSyncBadge } from '@civicbrain/ui';
+import { OfflineSyncProvider, useOfflineSync } from './context/OfflineSyncContext';
 
 import { MyOrdersView } from './views/MyOrdersView';
 import { WorkOrderActionView } from './views/WorkOrderActionView';
 import { SyncStatusView } from './views/SyncStatusView';
 
 const FieldLayout: React.FC = () => {
+  const { isOnline, queuedMutations, isSyncing, disputeCount, simulateOffline, toggleSimulateOffline } =
+    useOfflineSync();
+
   return (
     <FieldShell
       syncBadgeSlot={
-        <Link
-          to="/sync"
-          className="font-mono text-xs text-secondary hover:text-primary px-2 py-0.5 border border-border rounded-sm outline-none focus:ring-1 focus:ring-focus"
-          aria-label="View synchronization status"
-        >
-          ● 0 Queued
-        </Link>
+        <div className="flex items-center gap-2">
+          {/* Dev Simulation Switch */}
+          <button
+            onClick={toggleSimulateOffline}
+            className={`text-[10px] font-mono px-1.5 py-0.5 rounded-xs border transition-colors ${
+              simulateOffline
+                ? 'bg-status-warning/20 text-status-warning border-status-warning/50'
+                : 'bg-surface text-secondary border-border hover:text-primary'
+            }`}
+            title="Toggle simulated offline network"
+            aria-label={`Simulated offline network mode: ${simulateOffline ? 'ON' : 'OFF'}`}
+          >
+            {simulateOffline ? 'DEV: OFFLINE SIM' : 'DEV: ONLINE'}
+          </button>
+
+          <Link to="/sync" aria-label="View synchronization status">
+            <OfflineSyncBadge
+              isOnline={isOnline}
+              pendingCount={queuedMutations.length}
+              isSyncing={isSyncing}
+              disputeCount={disputeCount}
+            />
+          </Link>
+        </div>
       }
     >
       <Outlet />
@@ -33,16 +54,18 @@ const FieldLayout: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<FieldLayout />}>
-          <Route index element={<Navigate to="/my-orders" replace />} />
-          <Route path="my-orders" element={<MyOrdersView />} />
-          <Route path="orders/:id" element={<WorkOrderActionView />} />
-          <Route path="sync" element={<SyncStatusView />} />
-          <Route path="*" element={<Navigate to="/my-orders" replace />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <OfflineSyncProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<FieldLayout />}>
+            <Route index element={<Navigate to="/my-orders" replace />} />
+            <Route path="my-orders" element={<MyOrdersView />} />
+            <Route path="orders/:id" element={<WorkOrderActionView />} />
+            <Route path="sync" element={<SyncStatusView />} />
+            <Route path="*" element={<Navigate to="/my-orders" replace />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </OfflineSyncProvider>
   );
 };
