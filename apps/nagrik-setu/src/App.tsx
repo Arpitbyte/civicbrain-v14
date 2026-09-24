@@ -16,6 +16,7 @@ import { TrackLookupView } from './views/TrackLookupView';
 import { TrackDetailView } from './views/TrackDetailView';
 import { ResolutionConfirmView } from './views/ResolutionConfirmView';
 import { ResolutionDisputeView } from './views/ResolutionDisputeView';
+import { ReportDraftProvider } from './context/ReportDraftContext';
 
 const LanguageSwitcher: React.FC = () => {
   const [lang, setLang] = React.useState<'en' | 'hi' | 'kn'>('en');
@@ -64,12 +65,14 @@ const LanguageSwitcher: React.FC = () => {
 
 const CitizenLayout: React.FC = () => {
   return (
-    <CitizenShell
-      headerSlot={<LanguageSwitcher />}
-      bottomNavSlot={<NavTabBar />}
-    >
-      <Outlet />
-    </CitizenShell>
+    <ReportDraftProvider>
+      <CitizenShell
+        headerSlot={<LanguageSwitcher />}
+        bottomNavSlot={<NavTabBar />}
+      >
+        <Outlet />
+      </CitizenShell>
+    </ReportDraftProvider>
   );
 };
 

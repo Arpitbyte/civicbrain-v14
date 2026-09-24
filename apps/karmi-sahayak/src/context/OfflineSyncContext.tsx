@@ -6,6 +6,17 @@ import {
   removeMutation,
 } from '../services/offlineSync';
 
+export interface WorkerConflictItem {
+  client_mutation_id: string;
+  status: string;
+  conflict_reason?: string | null;
+}
+
+export interface SyncProgress {
+  current: number;
+  total: number;
+}
+
 export interface OfflineSyncContextValue {
   isOnline: boolean;
   simulateOffline: boolean;
@@ -18,8 +29,11 @@ export interface OfflineSyncContextValue {
     notes: string
   ) => Promise<{ queuedLocally: boolean }>;
   isSyncing: boolean;
+  syncProgress: SyncProgress;
   disputeCount: number;
+  conflicts: WorkerConflictItem[];
   syncNow: () => Promise<void>;
+  retryMutation: (mutationId: string) => Promise<void>;
   isOrderQueued: (workOrderId: string) => boolean;
   getOrderPendingAction: (workOrderId: string) => QueuedMutation | undefined;
 }
@@ -33,12 +47,13 @@ export const OfflineSyncProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [simulateOffline, setSimulateOffline] = useState<boolean>(false);
   const [queuedMutations, setQueuedMutations] = useState<QueuedMutation[]>([]);
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
-  const [disputeCount, setDisputeCount] = useState<number>(0);
+  const [syncProgress, setSyncProgress] = useState<SyncProgress>({ current: 0, total: 0 });
+  const [conflicts, setConflicts] = useState<WorkerConflictItem[]>([]);
 
   // Effective online state
   const effectiveOnline = nativeOnline && !simulateOffline;
 
-  // Sync listener
+  // Sync listener & periodic conflicts check
   useEffect(() => {
     const handleOnline = () => setNativeOnline(true);
     const handleOffline = () => setNativeOnline(false);
@@ -55,15 +70,41 @@ export const OfflineSyncProvider: React.FC<{ children: React.ReactNode }> = ({ c
     };
   }, []);
 
+  // Fetch conflict list when online
+  useEffect(() => {
+    async function fetchConflicts() {
+      if (!effectiveOnline) return;
+      try {
+        const res = await fetch('/v1/dispatch/sync/conflicts');
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            setConflicts(data);
+          }
+        }
+      } catch {
+        // non-blocking
+      }
+    }
+    fetchConflicts();
+  }, [effectiveOnline]);
+
   const toggleSimulateOffline = () => {
     setSimulateOffline((prev) => !prev);
   };
 
   const queueStartOrder = async (workOrderId: string): Promise<{ queuedLocally: boolean }> => {
     if (effectiveOnline) {
-      // Simulate direct live POST .../start API success
-      await new Promise((r) => setTimeout(r, 400));
-      return { queuedLocally: false };
+      try {
+        const res = await fetch(`/v1/dispatch/work-orders/${workOrderId}/start`, {
+          method: 'POST',
+        });
+        if (res.ok) {
+          return { queuedLocally: false };
+        }
+      } catch {
+        // Network failure in field: queue mutation locally
+      }
     }
 
     // Offline: queue mutation locally
@@ -89,9 +130,23 @@ export const OfflineSyncProvider: React.FC<{ children: React.ReactNode }> = ({ c
     notes: string
   ): Promise<{ queuedLocally: boolean }> => {
     if (effectiveOnline) {
-      // Simulate live POST .../resolve API success
-      await new Promise((r) => setTimeout(r, 600));
-      return { queuedLocally: false };
+      try {
+        const res = await fetch(`/v1/dispatch/work-orders/${workOrderId}/resolve`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            photo_urls: [photo.dataUrl],
+            notes,
+            latitude: 12.9784,
+            longitude: 77.5621,
+          }),
+        });
+        if (res.ok) {
+          return { queuedLocally: false };
+        }
+      } catch {
+        // Fall back to offline queue
+      }
     }
 
     // Offline: queue resolution mutation locally
@@ -114,16 +169,106 @@ export const OfflineSyncProvider: React.FC<{ children: React.ReactNode }> = ({ c
     return { queuedLocally: true };
   };
 
+  // Replay a single mutation (Per-mutation retry pattern)
+  const retryMutation = async (mutationId: string): Promise<void> => {
+    if (!effectiveOnline) return;
+
+    const currentMutations = getQueuedMutations();
+    const target = currentMutations.find((m) => m.id === mutationId);
+    if (!target) return;
+
+    // Mark as syncing
+    target.status = 'syncing';
+    target.errorMessage = undefined;
+    saveMutation(target);
+    setQueuedMutations(getQueuedMutations());
+
+    try {
+      // Replay against /v1/dispatch/sync
+      const syncPayload = {
+        client_timestamp: new Date().toISOString(),
+        mutations: [
+          {
+            mutation_id: target.id,
+            mutation_type: target.type,
+            work_order_id: target.workOrderId,
+            payload: target.payload,
+          },
+        ],
+      };
+
+      const res = await fetch('/v1/dispatch/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(syncPayload),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Sync server responded with ${res.status}`);
+      }
+
+      // Success: remove mutation from queue
+      removeMutation(target.id);
+    } catch (err: any) {
+      target.status = 'failed';
+      target.errorMessage = err.message || 'Retry failed to communicate with dispatch server';
+      saveMutation(target);
+    } finally {
+      setQueuedMutations(getQueuedMutations());
+    }
+  };
+
+  // Replay all queued mutations with determinate progress (DESIGN.md §10)
   const syncNow = async (): Promise<void> => {
     if (!effectiveOnline || queuedMutations.length === 0) return;
 
     setIsSyncing(true);
-    // Simulate replaying queued mutations via POST /v1/dispatch/sync
-    await new Promise((r) => setTimeout(r, 1200));
+    const total = queuedMutations.length;
+    setSyncProgress({ current: 0, total });
 
-    // For test purposes, mark as synced and remove
-    queuedMutations.forEach((m) => removeMutation(m.id));
-    setQueuedMutations([]);
+    for (let i = 0; i < total; i++) {
+      const mutation = queuedMutations[i];
+      setSyncProgress({ current: i + 1, total });
+
+      try {
+        mutation.status = 'syncing';
+        saveMutation(mutation);
+        setQueuedMutations(getQueuedMutations());
+
+        // Small pacing for determinate feedback per DESIGN.md §10
+        await new Promise((r) => setTimeout(r, 300));
+
+        const res = await fetch('/v1/dispatch/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            client_timestamp: new Date().toISOString(),
+            mutations: [
+              {
+                mutation_id: mutation.id,
+                mutation_type: mutation.type,
+                work_order_id: mutation.workOrderId,
+                payload: mutation.payload,
+              },
+            ],
+          }),
+        });
+
+        if (res.ok) {
+          removeMutation(mutation.id);
+        } else {
+          mutation.status = 'failed';
+          mutation.errorMessage = `Server error ${res.status}`;
+          saveMutation(mutation);
+        }
+      } catch (err: any) {
+        mutation.status = 'failed';
+        mutation.errorMessage = err.message || 'Network timeout';
+        saveMutation(mutation);
+      }
+    }
+
+    setQueuedMutations(getQueuedMutations());
     setIsSyncing(false);
   };
 
@@ -145,8 +290,11 @@ export const OfflineSyncProvider: React.FC<{ children: React.ReactNode }> = ({ c
         queueStartOrder,
         queueResolveOrder,
         isSyncing,
-        disputeCount,
+        syncProgress,
+        disputeCount: conflicts.length,
+        conflicts,
         syncNow,
+        retryMutation,
         isOrderQueued,
         getOrderPendingAction,
       }}

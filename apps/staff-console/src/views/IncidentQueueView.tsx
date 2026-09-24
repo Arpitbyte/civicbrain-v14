@@ -6,6 +6,7 @@ import {
   Button,
   Badge,
   Input,
+  Skeleton,
 } from '@civicbrain/ui';
 import {
   Search,
@@ -14,6 +15,8 @@ import {
   Building2,
   AlertCircle,
   Inbox,
+  Filter,
+  X,
 } from 'lucide-react';
 
 interface Organization {
@@ -76,10 +79,13 @@ function timeAgo(dateString: string): string {
   return `${diffDays}d ago`;
 }
 
+type QuickFilter = 'all' | 'p1' | 'p2' | 'triaged' | 'in_progress';
+
 export const IncidentQueueView: React.FC = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDept, setSelectedDept] = useState<string>('all');
+  const [quickFilter, setQuickFilter] = useState<QuickFilter>('all');
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [selectedOrgId, setSelectedOrgId] = useState<string>('');
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -111,7 +117,7 @@ export const IncidentQueueView: React.FC = () => {
   const fetchIncidents = useCallback(async (orgId: string) => {
     if (!orgId) return;
     setIsLoading(true);
-    setError(null);
+    // Note: Do not clear `error` until call succeeds or fails, and NEVER clear `incidents`
     try {
       // 1. Fetch departments
       const deptsRes = await fetch(`/v1/orgs/${orgId}/departments`);
@@ -153,10 +159,14 @@ export const IncidentQueueView: React.FC = () => {
         equity_boost: 0.0,
       }));
 
+      // Commit new verified data and clear any error
       setIncidents(queueItems);
+      setError(null);
     } catch (err: any) {
       console.error('Incident fetch error:', err);
-      setError(err.message || 'Error fetching incidents from backend');
+      // STRICT DO NOT RULE per SCREEN_SPECS.md §2.5 & PROMPT 15:
+      // "Never blank the table on a background refetch error — keep last-good data"
+      setError(err.message || 'Background sync error fetching incidents from backend');
     } finally {
       setIsLoading(false);
     }
@@ -176,8 +186,22 @@ export const IncidentQueueView: React.FC = () => {
 
     if (!matchesSearch) return false;
     if (selectedDept !== 'all' && item.department !== selectedDept) return false;
+
+    if (quickFilter === 'p1' && item.priority_score < 0.85) return false;
+    if (quickFilter === 'p2' && (item.priority_score < 0.65 || item.priority_score >= 0.85)) return false;
+    if (quickFilter === 'triaged' && item.status !== 'triaged') return false;
+    if (quickFilter === 'in_progress' && item.status !== 'in_progress') return false;
+
     return true;
   });
+
+  const clearFilters = () => {
+    setSearchTerm('');
+    setSelectedDept('all');
+    setQuickFilter('all');
+  };
+
+  const hasActiveFilters = searchTerm !== '' || selectedDept !== 'all' || quickFilter !== 'all';
 
   return (
     <div
@@ -241,8 +265,8 @@ export const IncidentQueueView: React.FC = () => {
         </div>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="px-6 py-3 bg-surface-raised border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* Sticky 56px Filter and Search Strip */}
+      <div className="sticky top-0 z-10 px-6 py-2.5 bg-surface-raised border-b border-border flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-xs">
         <div className="flex items-center gap-3 flex-1 max-w-md">
           <div className="relative w-full">
             <Input
@@ -255,42 +279,114 @@ export const IncidentQueueView: React.FC = () => {
           </div>
         </div>
 
-        {/* Department Filter Selector */}
-        <div className="flex items-center gap-2">
-          <label htmlFor="dept-filter" className="text-xs font-semibold text-text-secondary">
-            विभाग / Department:
-          </label>
-          <select
-            id="dept-filter"
-            value={selectedDept}
-            onChange={e => setSelectedDept(e.target.value)}
-            className="text-xs bg-surface border border-border rounded py-1 px-2.5 font-medium text-primary outline-none focus:ring-1 focus:ring-focus"
-          >
-            <option value="all">सभी विभाग / All Municipal Departments</option>
-            {departments.map(d => (
-              <option key={d.id} value={d.name}>
-                {d.name}
-              </option>
-            ))}
-          </select>
+        {/* Quick Filter Tabs & Department Filter */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Quick Filter Buttons */}
+          <div className="flex items-center bg-surface border border-border rounded p-0.5 text-xs font-mono">
+            <button
+              type="button"
+              onClick={() => setQuickFilter('all')}
+              className={`px-2 py-1 rounded transition-colors ${quickFilter === 'all' ? 'bg-surface-raised font-bold text-primary shadow-xs' : 'text-text-secondary hover:text-primary'}`}
+            >
+              All ({incidents.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setQuickFilter('p1')}
+              className={`px-2 py-1 rounded transition-colors ${quickFilter === 'p1' ? 'bg-marker-500/20 text-marker-600 font-bold shadow-xs' : 'text-text-secondary hover:text-primary'}`}
+            >
+              P1 Critical
+            </button>
+            <button
+              type="button"
+              onClick={() => setQuickFilter('p2')}
+              className={`px-2 py-1 rounded transition-colors ${quickFilter === 'p2' ? 'bg-surface-raised font-bold text-primary shadow-xs' : 'text-text-secondary hover:text-primary'}`}
+            >
+              P2 High
+            </button>
+            <button
+              type="button"
+              onClick={() => setQuickFilter('triaged')}
+              className={`px-2 py-1 rounded transition-colors ${quickFilter === 'triaged' ? 'bg-surface-raised font-bold text-primary shadow-xs' : 'text-text-secondary hover:text-primary'}`}
+            >
+              Triaged
+            </button>
+            <button
+              type="button"
+              onClick={() => setQuickFilter('in_progress')}
+              className={`px-2 py-1 rounded transition-colors ${quickFilter === 'in_progress' ? 'bg-surface-raised font-bold text-primary shadow-xs' : 'text-text-secondary hover:text-primary'}`}
+            >
+              In Progress
+            </button>
+          </div>
+
+          {/* Department Filter Selector */}
+          <div className="flex items-center gap-1.5">
+            <select
+              id="dept-filter"
+              value={selectedDept}
+              onChange={e => setSelectedDept(e.target.value)}
+              className="text-xs bg-surface border border-border rounded py-1 px-2 font-medium text-primary outline-none focus:ring-1 focus:ring-focus"
+            >
+              <option value="all">सभी विभाग / All Departments</option>
+              {departments.map(d => (
+                <option key={d.id} value={d.name}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="inline-flex items-center gap-1 text-xs text-text-secondary hover:text-primary px-2 py-1 rounded border border-dashed border-border"
+              title="Clear all active filters"
+            >
+              <X className="w-3 h-3" />
+              <span>Clear</span>
+            </button>
+          )}
         </div>
       </div>
 
       {/* Main Queue Content */}
       <div className="p-6 flex-1 flex flex-col">
-        {error ? (
-          <div className="p-4 bg-red-500/10 border border-red-500/30 rounded text-red-700 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            <span>{error}</span>
+        {/* NON-BLANKING ERROR BANNER (SCREEN_SPECS.md §2.5: Never blank screen on refetch error, retain last-good data) */}
+        {error && (
+          <div
+            role="alert"
+            className="mb-4 p-3.5 bg-status-danger/10 border border-status-danger text-status-danger text-xs rounded-md flex items-center justify-between shadow-xs font-mono"
+          >
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>
+                <strong>Background Sync Notice:</strong> {error}. {incidents.length > 0 ? 'Displaying last-verified records.' : 'Could not fetch records.'}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => selectedOrgId && fetchIncidents(selectedOrgId)}
+              className="font-bold underline hover:text-primary ml-3 whitespace-nowrap cursor-pointer"
+            >
+              Retry Sync
+            </button>
           </div>
-        ) : isLoading ? (
-          <div className="flex-1 flex flex-col items-center justify-center py-16 text-text-secondary">
-            <RefreshCw className="w-6 h-6 animate-spin mb-3 text-primary" />
-            <p className="text-sm font-medium">डेटाबेस से वास्तविक शिकायतें लोड हो रही हैं...</p>
-            <p className="text-xs text-text-secondary mt-1">Fetching live municipal records from PostgreSQL</p>
+        )}
+
+        {/* INITIAL LOADING STATE: Skeleton rows matching real row height */}
+        {isLoading && incidents.length === 0 ? (
+          <div className="w-full bg-surface rounded-md border border-border overflow-hidden p-4 space-y-3">
+            <Skeleton className="w-full h-10 rounded" />
+            <Skeleton className="w-full h-14 rounded" />
+            <Skeleton className="w-full h-14 rounded" />
+            <Skeleton className="w-full h-14 rounded" />
+            <Skeleton className="w-full h-14 rounded" />
+            <Skeleton className="w-full h-14 rounded" />
           </div>
         ) : incidents.length === 0 ? (
-          /* Authentic zero synthetic data empty state */
+          /* Empty Database State (Honest zero synthetic data) */
           <div className="flex-1 flex flex-col items-center justify-center py-20 px-4 text-center bg-surface-raised/30 rounded-lg border border-border border-dashed my-4">
             <div className="w-12 h-12 rounded-full bg-surface-raised flex items-center justify-center mb-3 text-text-secondary">
               <Inbox className="w-6 h-6" />
@@ -312,14 +408,35 @@ export const IncidentQueueView: React.FC = () => {
               </Button>
             </div>
           </div>
+        ) : filteredItems.length === 0 ? (
+          /* Empty Filter Result State per SCREEN_SPECS.md §2.5 */
+          <div className="flex-1 flex flex-col items-center justify-center py-16 px-4 text-center bg-surface rounded-md border border-border my-2">
+            <Filter className="w-8 h-8 text-text-secondary mb-2" />
+            <h3 className="text-sm font-semibold text-primary">
+              No incidents match these filters
+            </h3>
+            <p className="text-xs text-text-secondary max-w-sm mt-1">
+              Try modifying your search term, department selection, or priority filter to view other active cases.
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={clearFilters}
+              className="mt-4"
+              leftIcon={<X className="w-3.5 h-3.5" />}
+            >
+              Clear Filters
+            </Button>
+          </div>
         ) : (
+          /* Stamped Ledger Table */
           <SharedQueueTable
             items={filteredItems}
             showDepartmentColumn={true}
             showSlaDominantColumn={false}
             topBindingMotif={false}
             onOpenDetailRoute={id => navigate(`/deck/incidents/${id}`)}
-            emptyMessage="सक्रिय फ़िल्टर से मेल खाती कोई शिकायत नहीं मिली। (No incidents matching active filters)."
+            emptyMessage="No incidents match these filters."
           />
         )}
       </div>

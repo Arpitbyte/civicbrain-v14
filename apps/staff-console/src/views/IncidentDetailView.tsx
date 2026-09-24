@@ -471,14 +471,24 @@ export const IncidentDetailView: React.FC = () => {
                 <span className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
                   Prioritization Mathematics
                 </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => navigate(`/deck/prioritize/${incident.id}`)}
-                  className="text-xs h-7 px-2"
-                >
-                  Re-run AHP Matrix
-                </Button>
+                <div className="flex items-center gap-1.5">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate(`/pulse/eta/${incident.id}`)}
+                    className="text-xs h-7 px-2"
+                  >
+                    ETA / SLA
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate(`/deck/prioritize/${incident.id}`)}
+                    className="text-xs h-7 px-2"
+                  >
+                    Re-run AHP Matrix
+                  </Button>
+                </div>
               </div>
 
               <ScoreBreakdown

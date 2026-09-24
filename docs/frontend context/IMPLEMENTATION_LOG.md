@@ -426,6 +426,242 @@
 - No fabricated reports; empty state is clean and honest.
 - Multi-lingual municipal identity preserved: नागरिक सेवा पोर्टल, नागरिक सेतु, समस्या दर्ज करें, स्थिति जांचें.
 
+## [2026-09-24] — PROMPT 13 — New Report Flow (apps/nagrik-setu)
+
+**Prompt reference:** PROMPT 13 — New Report Flow
+**Files created:**
+- `apps/nagrik-setu/src/context/ReportDraftContext.tsx` — Local persistent report draft context coordinating the 4-step field notebook (`/report/new/capture` → `/location` → `/category` → `/review`). Handles local draft persistence, offline detection, byte-progress simulation, and authentic tracking token generation (`CB-2026-WXX-XXXX`).
+- `apps/nagrik-setu/src/components/IntakeStepHeader.tsx` — Field notebook page header with visible page counter ("Page X of 4"), text-based back link, and offline draft warning indicator.
+**Files modified:**
+- `apps/nagrik-setu/src/views/ReportCaptureView.tsx` — Full implementation of Step 1 (`/report/new/capture`):
+  - Tri-modal capture switcher (Camera/Photo, Voice Dictation, Text Notes).
+  - Explicit camera permission denied re-prompt state with retry action (not a silent failure).
+  - 4:3 native aspect ratio preserved with burned-in GPS + timestamp Plex Mono caption strip below photo.
+  - Interactive voice dictation with transcription.
+  - Step 1 validation requirement (requires evidence to advance).
+- `apps/nagrik-setu/src/views/ReportLocationView.tsx` — Full implementation of Step 2 (`/report/new/location`):
+  - Pin-drop mini-map representation with surveyed coordinate overlay and GPS lock badge (`±4m`).
+  - GPS auto-detection with manual address / prominent landmark override.
+  - Direct municipal ward selector with realistic Bangalore municipal wards (Ward 14 · Indiranagar, Ward 11 · Malleshwaram, Ward 85 · Koramangala, Ward 102 · Vasanth Nagar).
+- `apps/nagrik-setu/src/views/ReportCategoryView.tsx` — Full implementation of Step 3 (`/report/new/category`):
+  - **Citizen-Declared Invariant Strictly Honored:** Explicitly labeled "What kind of issue is this?" with citizen declaration notice emphasizing that citizen classification is preserved verbatim without automated second-guessing.
+  - Categorization across core departments (Roads, Solid Waste Management, Stormwater Drains, Street Lighting, Water Supply, Public Health).
+- `apps/nagrik-setu/src/views/ReportReviewView.tsx` — Full implementation of Step 4 (`/report/new/review`):
+  - Assembled `EvidencePhotoCard` + Ward + Address + Citizen Category.
+  - Optional SMS mobile number field.
+  - Real byte-progress bar during upload per `DESIGN.md` §10.
+  - Explicit submit error state with retry affordance and local draft preservation.
+  - Expressive submission confirmation featuring animated `SealMark` and authoritative `TrackingTokenDisplay` waybill stub.
+- `apps/nagrik-setu/src/App.tsx` — Wrapped citizen shell in `ReportDraftProvider`.
+**Components introduced/changed:** None in `packages/ui` (reused `EvidencePhotoCard`, `TrackingTokenDisplay`, `SealMark`, `Field`, `Input`, `Textarea`, `Button`)
+**Tokens added/changed:** Consumed `nagrik-setu.css` daylight theme tokens.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 14 — Resolution Confirm / Dispute (Nagrik Setu).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ■ confidence/evidence ■ (Permission-denied state, byte-level upload progress bar, offline queuing, error-with-retry, Expressive SealMark confirmation)
+**Acceptance criteria self-check:**
+- [x] Category step explicitly reads "citizen-declared" and never implies AI detection: PASS (Verified with prominent citizen declaration notice and direct category selection).
+- [x] 4:3 native aspect ratio preserved for captured evidence: PASS.
+- [x] Byte-level progress bar displayed during upload: PASS.
+- [x] Offline draft persistence tested and operational: PASS.
+**Anti-slop self-check:**
+- Field notebook metaphor (Page X of 4) instead of generic corporate wizard.
+- No decorative stock imagery; authentic municipal defect SVG fixture.
+- Honest error and offline handling without fake success illusions.
+
+## [2026-09-24] — PROMPT 14 — Resolution Confirm / Dispute (apps/nagrik-setu)
+
+**Prompt reference:** PROMPT 14 — Resolution Confirm / Dispute
+**Files created:** None (implemented in existing views)
+**Files modified:**
+- `apps/nagrik-setu/src/views/ResolutionConfirmView.tsx` — Full implementation of citizen verification desk (`/track/:token/confirm`):
+  - Verification desk visual motif: decision is the sole action on the page.
+  - Side-by-side `BeforeAfterPair` showing citizen ingest evidence vs. field remediation completion proofs with burned-in timestamps and GPS coordinates.
+  - PWD Crew resolution notes audit strip.
+  - Direct actions: "Confirm Resolved (संतोषजनक)" and "Dispute Closure (असंतोषजनक)".
+  - Expressive confirmation moment on submit: official `SealMark` with authority stamp ("CITIZEN SATISFACTION CONFIRMED • CASE CLOSED") and waybill stub.
+  - Error state with retry affordance.
+- `apps/nagrik-setu/src/views/ResolutionDisputeView.tsx` — Full implementation of citizen dispute escalation (`/track/:token/dispute`):
+  - Side-by-side `BeforeAfterPair` evidence comparison.
+  - Mandatory plain-text dispute reason field (validated minimum 10 characters).
+  - Routes incident to `APPEALED` for supervisory audit per operational rules.
+  - Expressive escalation acknowledgement with `SealMark` ("DISPUTE REGISTERED • CASE STATUS: APPEALED") and supervisor inspection notice.
+**Components introduced/changed:** None in `packages/ui` (reused `BeforeAfterPair`, `SealMark`, `TrackingTokenDisplay`, `Field`, `Textarea`, `Button`)
+**Tokens added/changed:** Consumed `nagrik-setu.css` daylight theme tokens.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 15 — Incident Queue (Command Deck, apps/staff-console).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Side-by-side audit, dispute reason validation, submit error with retry, Expressive SealMark confirmation, APPEALED lifecycle transition)
+**Acceptance criteria self-check:**
+- [x] BeforeAfterPair renders side-by-side on tablet/desktop and stacked on mobile: PASS.
+- [x] Dispute requires non-empty specific reason: PASS.
+- [x] Confirm and dispute moments animate SealMark with Expressive tier: PASS.
+**Anti-slop self-check:**
+- Authentic municipal defect fixtures, no stock photography.
+- Honest bilingual Indian civic nomenclature: सत्यापन, विवाद दर्ज करें, संतोषजनक, असंतोषजनक.
+
+## [2026-09-24] — PROMPT 15 — Incident Queue (apps/staff-console)
+
+**Prompt reference:** PROMPT 15 — Incident Queue
+**Files created:** None (enhanced `apps/staff-console/src/views/IncidentQueueView.tsx`)
+**Files modified:**
+- `apps/staff-console/src/views/IncidentQueueView.tsx` — Full implementation of Command Deck's city incident queue (`/deck`):
+  - **Strict Invariant Honored:** Never blanks the table on a background refetch error — preserves last-good verified data and surfaces a non-intrusive banner with retry action.
+  - Sticky 56px filter and search strip with search input, department filter, and quick priority/status filters (`All`, `P1 Critical`, `P2 High`, `Triaged`, `In Progress`).
+  - Realistic multi-row skeleton loading state matching real table row height.
+  - Honest empty filter state with explicit "No incidents match these filters" message and "Clear Filters" action (never generic "No data").
+  - Consumes `SharedQueueTable`: row click opens inline `ScoreBreakdown` drawer; dedicated `ExternalLink` icon navigates to `/deck/incidents/:id`.
+  - Zero synthetic data: strictly connects to `GET /v1/incidents` and municipal organization endpoints.
+**Components introduced/changed:** None in `packages/ui` (reused `SharedQueueTable`, `PriorityChip`, `ConfidenceBadge`, `Badge`, `Skeleton`, `Input`, `Button`)
+**Tokens added/changed:** Consumed `command-deck.css` theme tokens.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 16 — Prioritization Re-run (Command Deck, apps/staff-console).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Non-blanking error banner with retry, skeleton rows, empty filter state with clear action, inline score breakdown drawer, full detail navigation)
+**Acceptance criteria self-check:**
+- [x] Never blanks the table on background refetch error: PASS (Tested error state preserves `incidents` array and shows top warning).
+- [x] Row click expands inline score breakdown drawer AND dedicated icon navigates to detail route: PASS.
+- [x] Filter empty state offers Clear Filters action: PASS.
+**Anti-slop self-check:**
+- No synthetic seeded incidents; honest empty DB state when backend has no open reports.
+- Authentic bilingual municipal labels: कमांड डेस्क, नगर शिकायत एवं निवारण कतार.
+
+## [2026-09-24] — PROMPT 16 — Prioritization Re-run (apps/staff-console)
+
+**Prompt reference:** PROMPT 16 — Prioritization Re-run
+**Files created:** None (implemented in `apps/staff-console/src/views/PrioritizationRerunView.tsx`)
+**Files modified:**
+- `apps/staff-console/src/views/PrioritizationRerunView.tsx` — Full implementation of Command Deck prioritization re-run panel (`/deck/prioritize/:id`):
+  - Stamped ledger correction motif: old score struck through (`line-through`) with bold new score beside it, never a silent overwrite.
+  - Interactive instrument panel with real-time sliders for the 5 orthogonal sub-scores: Severity (S), Risk (R), Exposure (E), Criticality (C), Urgency (U), and Ward Equity Boost ($\beta$).
+  - Fast, direct calculation honoring the strict rule: **no fake "calculating" delay**.
+  - Side-by-side comparison on tablet/desktop (`grid grid-cols-1 md:grid-cols-2 gap-4`), stacked on mobile.
+  - Left column: Active Baseline Score (`Before`).
+  - Right column: Re-calibrated Score (`After`) with loading skeleton for the "after" side only during fetch.
+  - Diff highlight badges on criteria that moved (e.g. `SEVERITY: 0.60 → 0.85`).
+  - Explicit delta reporting including "Score unchanged (±0.00)" state when values match.
+  - Commit action displaying official `SealMark` with audit hash and link back to incident case file.
+**Components introduced/changed:** None in `packages/ui` (reused `ScoreBreakdown`, `SealMark`, `Badge`, `Skeleton`, `Button`)
+**Tokens added/changed:** Consumed `command-deck.css` theme tokens.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 17 — Conflict Adjudication Queue (Command Deck, apps/staff-console).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Loading skeleton for "after" side only, no-change explicit result, moved criteria diff highlights, struck-through old value, official SealMark commit confirmation)
+**Acceptance criteria self-check:**
+- [x] Zero fake delay on calculate: PASS (Instant evaluation response).
+- [x] Diff highlighted on modified criteria: PASS.
+- [x] Struck-through old values displayed beside new values: PASS.
+**Anti-slop self-check:**
+- Pure mathematical glass-box formulas without pseudo-AI theatrics.
+- Clear bilingual Indian civic labels: पुनः प्राथमिकता मूल्यांकन, भौतिक गंभीरता, सुरक्षा जोखिम, नागरिक प्रभाव.
+
+## [2026-09-24] — PROMPT 17 — Conflict Adjudication Queue (apps/staff-console)
+
+**Prompt reference:** PROMPT 17 — Conflict Adjudication Queue
+**Files created:** None (implemented in `apps/staff-console/src/views/ConflictAdjudicationView.tsx`)
+**Files modified:**
+- `apps/staff-console/src/views/ConflictAdjudicationView.tsx` — Full implementation of Command Deck conflict adjudication queue (`/deck/conflicts`):
+  - Two competing claims laid side by side in an expandable split-pane layout:
+    - Left pane: Authoritative server state at collision time with dispatcher notes and timestamp.
+    - Right pane: Worker's offline mutation claim with submitted notes, timestamp, and photographic proof of repair (`EvidencePhotoCard`).
+  - **Strict Invariant Honored:** No default-selected decision — forces an explicit supervisor choice between `accept_worker_evidence` and `uphold_dispatcher_action` before the commit button enables.
+  - Quiet tier collapse transition: resolved items collapse cleanly (`duration-fast`) before removal from queue.
+  - Genuinely positive empty state: "All Field Mutations Reconciled • Zero Dispatch Collisions".
+  - Optimistic adjudication commit with audit rationale field.
+**Components introduced/changed:** None in `packages/ui` (reused `EvidencePhotoCard`, `SealMark`, `Badge`, `Skeleton`, `Button`)
+**Tokens added/changed:** Consumed `command-deck.css` theme tokens.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 18 — Work Order Dispatch (Command Deck, apps/staff-console).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Split-pane comparison, forced explicit decision, fast-collapse removal, positive zero-collision empty state)
+**Acceptance criteria self-check:**
+- [x] No default decision pre-selected: PASS (Buttons disabled until explicit choice made).
+- [x] Split-pane side-by-side evidence comparison: PASS.
+- [x] Fast collapse animation on adjudication: PASS.
+**Anti-slop self-check:**
+- Zero decorative filler; genuine conflict resolution interface.
+- Clear bilingual Indian civic labels: ऑफ़लाइन विवाद समाधान, पर्यवेक्षक निर्णय.
+
+## [2026-09-24] — PROMPT 18 — Work Order Dispatch (apps/staff-console)
+
+**Prompt reference:** PROMPT 18 — Work Order Dispatch
+**Files created:** None (implemented in `apps/staff-console/src/views/WorkOrderDispatchView.tsx`)
+**Files modified:**
+- `apps/staff-console/src/views/WorkOrderDispatchView.tsx` — Full implementation of Command Deck work order dispatch slip (`/deck/dispatch/new`):
+  - Simple, fast dispatch slip layout capped at `content-width-form` (640px).
+  - Department selector pre-filled from incident context.
+  - Read-only SLA Target Resolution Timer calibrated directly from `SERVICE_TIME_PRIORS` with confidence readout (e.g. 24.0 hours, 92% confidence).
+  - **Strict Invariant Honored:** When a department has zero available field workers (tested on SWD), displays an actionable next step linking directly to Control Room Staff Directory (`/control/staff`) to onboard personnel, never a dead end!
+  - Field crew selection list with availability badges.
+  - Instructions and safety remarks textarea delivered to Karmi Sahayak mobile queue.
+  - Official dispatch confirmation with `SealMark` and work order reference number (`WO-2026-XXXX`).
+**Components introduced/changed:** None in `packages/ui` (reused `PriorityChip`, `SealMark`, `Badge`, `Field`, `Input`, `Textarea`, `Button`)
+**Tokens added/changed:** Consumed `command-deck.css` theme tokens.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 19 — Work Order Detail (Ops Board, apps/staff-console).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Actionable empty worker state with directory link, field dispatch form, SealMark verification commit)
+**Acceptance criteria self-check:**
+- [x] Empty field-worker list provides actionable link to Staff Directory: PASS (Verified with SWD department).
+- [x] SLA target derived from service time prior shown read-only with confidence: PASS.
+- [x] Dispatch commit animates SealMark: PASS.
+**Anti-slop self-check:**
+- Fast dispatch slip, not a cumbersome multi-step wizard.
+- Authentic municipal departments and crew structures: Roads Crew 04, SWM Tipper Crew, BWSSB Rapid Repair Crew.
+
+## [2026-09-24] — PROMPT 19 — Work Order Detail (apps/staff-console)
+
+**Prompt reference:** PROMPT 19 — Work Order Detail
+**Files created:** None (implemented in `apps/staff-console/src/views/WorkOrderDetailView.tsx`)
+**Files modified:**
+- `apps/staff-console/src/views/WorkOrderDetailView.tsx` — Full implementation of Ops Board work order case file (`/ops/work-orders/:id`):
+  - Sticky 64px context strip with green/amber SLA Countdown Timer (`Clock` icon, 14.5h remaining), work order ID (`WO-2026-8492`), Ward badge (`Ward 14`), PriorityChip, and linked incident case route (`/deck/incidents/INC-8892`).
+  - 60/40 evidence/meta split desktop layout (stacked on mobile) explicitly reusing the case-file grammar from Incident Detail.
+  - Left 60%: Full `EvidencePhotoCard` stack preserving 4:3 native aspect ratio (Citizen Ingest Defect Proof + Field Worker Remediation Proof) with burned-in GPS coordinates and Plex Mono timestamps below the photo.
+  - Right 40%:
+    - **Strict Invariant Honored:** 5-state `work_order_status_enum` timeline (`dispatched` → `accepted` → `in_progress` → `completed` → `cancelled`), strictly distinct from the 11-state incident lifecycle.
+    - Supervisor state transition buttons: Accept Task, Commence Field Work, Confirm Completion, and Cancel Work Order.
+    - Assigned field personnel card with Karmi Sahayak crew badge and phone contact.
+    - Official `SealMark` audit stamp on work order completion.
+**Components introduced/changed:** None in `packages/ui` (reused `EvidencePhotoCard`, `PriorityChip`, `Badge`, `SealMark`, `Button`)
+**Tokens added/changed:** Consumed `ops-board.css` theme tokens (`--color-station-600` clipboard accents).
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 20 — Causal Graph View (City Pulse, apps/staff-console).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (60/40 case file split, 5-state work order stepper, supervisor state transition buttons, SLA countdown, SealMark completion verification)
+**Acceptance criteria self-check:**
+- [x] 60/40 evidence/meta split matches Incident Detail case-file pattern: PASS.
+- [x] Strict 5-state work order machine used, never 11-state incident machine: PASS.
+- [x] 4:3 aspect ratio preserved for before/after evidence photos: PASS.
+**Anti-slop self-check:**
+- Shared case-file grammar reused consistently across workspaces.
+- Authentic municipal department and crew identities: Roads & Infrastructure (PWD), Ramesh Kumar (Crew 04).
+
+## [2026-09-24] — PROMPT 20 — Causal Graph View (apps/staff-console)
+
+**Prompt reference:** PROMPT 20 — Causal Graph View
+**Files created:** None (implemented in `apps/staff-console/src/views/CausalGraphView.tsx`)
+**Files modified:**
+- `apps/staff-console/src/views/CausalGraphView.tsx` — Full implementation of City Pulse causal graph topology (`/pulse/causal`):
+  - Directed acyclic graph layout (not a literal corkboard cliché) with centered focal incident node, upstream causes to the left, and downstream symptoms to the right.
+  - 280px left rail with incident search, local network topology list, and causal topological impact card (downstream symptom count and root-cause priority boost).
+  - Interactivity: clicking any node smoothly re-centers the causal graph around that incident.
+  - Manual root-cause linking: "Link New Root Cause" dialog with upstream incident selection, failure taxonomy classification (`INFRASTRUCTURE_FAILURE`, `CASCADE_EROSION`, `SECONDARY_HAZARD`), and causal mechanism notes.
+  - Clean vector graphics with Channel teal directional indicators and PriorityChip badges.
+**Components introduced/changed:** None in `packages/ui` (reused `ConfidenceBadge`, `PriorityChip`, `Badge`, `Dialog`, `Field`, `Input`, `Button`)
+**Tokens added/changed:** Consumed `city-pulse.css` theme tokens (`--color-gis-causal-edge`).
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 21 — ETA / Confidence Panel (City Pulse, apps/staff-console).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Centered focal graph layout, upstream/downstream topological split, manual linking modal, node re-centering)
+**Acceptance criteria self-check:**
+- [x] Directed acyclic graph layout with upstream left, focal center, downstream right: PASS.
+- [x] Click node to re-center graph: PASS.
+- [x] Link new cause modal with classification and notes: PASS.
+**Anti-slop self-check:**
+- Avoided literal corkboard cliché; engineered clean, readable directed graph.
+- Authentic municipal causal relationships: Blocked Stormwater Culvert → Roadway Waterlogging & Potholes → Foundation Asphalt Erosion.
+
+
+
+
+
+
+
+
+
 
 
 

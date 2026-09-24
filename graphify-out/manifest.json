@@ -1152,9 +1152,9 @@
     "semantic_hash": ""
   },
   "docs/frontend context/IMPLEMENTATION_LOG.md": {
-    "mtime": 1790214365.0491686,
-    "seen": 1790214445.7627099,
-    "ast_hash": "7acd63e42d3316f94df8c1689746899b",
+    "mtime": 1790215085.878065,
+    "seen": 1790232095.0320866,
+    "ast_hash": "a94a48dd5a3922e712f94f656642bce3",
     "semantic_hash": ""
   },
   "docs/frontend context/SCREEN_SPECS.md": {
@@ -1212,9 +1212,9 @@
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/views/MyOrdersView.tsx": {
-    "mtime": 1790213639.8624835,
-    "seen": 1790213678.3040552,
-    "ast_hash": "bb91820fbd7f1f94e3b7345f423622eb",
+    "mtime": 1790215370.8978124,
+    "seen": 1790232095.0310624,
+    "ast_hash": "a5d0a69386bb3f3d61e943602fb03517",
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/views/SyncStatusView.tsx": {
@@ -1230,9 +1230,9 @@
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/App.tsx": {
-    "mtime": 1790214347.8012784,
-    "seen": 1790214445.7622266,
-    "ast_hash": "5ae9820027f2d32c5e39b9d23f74246e",
+    "mtime": 1790214545.273521,
+    "seen": 1790232095.0310802,
+    "ast_hash": "d344facc61eef027d2892f27417b1bee",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/HomeReportView.tsx": {
@@ -1242,39 +1242,39 @@
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/ReportCaptureView.tsx": {
-    "mtime": 1790211051.5779278,
-    "seen": 1790211234.6103575,
-    "ast_hash": "f0d92f3dfc8e01cd8f4c356cb76add78",
+    "mtime": 1790214457.6730952,
+    "seen": 1790232095.031174,
+    "ast_hash": "f167f322f9d15940edca5c8c38a7ed1a",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/ReportCategoryView.tsx": {
-    "mtime": 1790211051.579057,
-    "seen": 1790211234.610359,
-    "ast_hash": "52effcbba486a66c3023461081fe84d9",
+    "mtime": 1790214480.6330845,
+    "seen": 1790232095.0311782,
+    "ast_hash": "285e15511ceca3404e1afe86fd031599",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/ReportLocationView.tsx": {
-    "mtime": 1790211051.5785155,
-    "seen": 1790211234.6103601,
-    "ast_hash": "5da733bbc4366e2278f41722a29679bb",
+    "mtime": 1790214468.3634803,
+    "seen": 1790232095.031182,
+    "ast_hash": "59aba655d260e01b52a39125c1d1a8e4",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/ReportReviewView.tsx": {
-    "mtime": 1790211051.5795982,
-    "seen": 1790211234.610361,
-    "ast_hash": "cb61d22edd410c5ebba4d869738c0919",
+    "mtime": 1790214506.836097,
+    "seen": 1790232095.0311859,
+    "ast_hash": "b7ff1f9e2a88c78e734ea483e597ea89",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/ResolutionConfirmView.tsx": {
-    "mtime": 1790211051.5811994,
-    "seen": 1790211234.6103623,
-    "ast_hash": "1e938a5a46f8a23d669984a5708f403e",
+    "mtime": 1790214612.6885335,
+    "seen": 1790232095.0311887,
+    "ast_hash": "ffee14b5bd37aeb14ae672480c763508",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/ResolutionDisputeView.tsx": {
-    "mtime": 1790211051.5817244,
-    "seen": 1790211234.6103637,
-    "ast_hash": "e5143612e3499955467791d108356182",
+    "mtime": 1790214624.1151135,
+    "seen": 1790232095.0311923,
+    "ast_hash": "d9ef8e8fa168b8cedb9215cadaf73fcf",
     "semantic_hash": ""
   },
   "apps/nagrik-setu/src/views/TrackDetailView.tsx": {
@@ -1308,15 +1308,15 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/CausalGraphView.tsx": {
-    "mtime": 1790211019.4249988,
-    "seen": 1790211234.610376,
-    "ast_hash": "112faa97809e0d7b5ca71b18cf89e57a",
+    "mtime": 1790215062.005471,
+    "seen": 1790232095.0312605,
+    "ast_hash": "d0ea10053dd13a1ab2683388960f51b8",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/ConflictAdjudicationView.tsx": {
-    "mtime": 1790211019.422319,
-    "seen": 1790211234.6103773,
-    "ast_hash": "382c4b310d711faccf2acc12fdd9be07",
+    "mtime": 1790214898.1788914,
+    "seen": 1790232095.0312638,
+    "ast_hash": "0b0edfa5c25770a612cf30187145e021",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/CouncilorDigestView.tsx": {
@@ -1332,9 +1332,9 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/EtaConfidenceView.tsx": {
-    "mtime": 1790211019.4258795,
-    "seen": 1790211234.6103806,
-    "ast_hash": "95b5bae210ebf8063821434c36e3505d",
+    "mtime": 1790215270.1839201,
+    "seen": 1790232095.0312755,
+    "ast_hash": "6f8db7f763a869ed669c1ea4f99203f9",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/HeatmapClusterView.tsx": {
@@ -1344,15 +1344,15 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/IncidentDetailView.tsx": {
-    "mtime": 1790214386.8871696,
-    "seen": 1790214445.7623525,
-    "ast_hash": "5807946c695e254328f6c1b743dd3c57",
+    "mtime": 1790215277.44694,
+    "seen": 1790232095.031282,
+    "ast_hash": "aec5537c0e9019ba8986fbba01ab002a",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/IncidentQueueView.tsx": {
-    "mtime": 1790214298.2946825,
-    "seen": 1790214445.7623632,
-    "ast_hash": "f16214fe91d05d8af2996844aed39065",
+    "mtime": 1790214716.0935848,
+    "seen": 1790232095.0312853,
+    "ast_hash": "7a639014bd30fa8a61845846195d7765",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/OrgHierarchyView.tsx": {
@@ -1362,9 +1362,9 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/PrioritizationReRunView.tsx": {
-    "mtime": 1790211019.4217782,
-    "seen": 1790211234.6103866,
-    "ast_hash": "7c788f59ccd189304d3decc15e6e471a",
+    "mtime": 1790214801.146289,
+    "seen": 1790232095.0312922,
+    "ast_hash": "5841cff78d7940e8aa373d0f10c46d01",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/ServiceTimePriorsView.tsx": {
@@ -1386,15 +1386,15 @@
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/WorkOrderDetailView.tsx": {
-    "mtime": 1790211019.4239237,
-    "seen": 1790211234.6103914,
-    "ast_hash": "a6b06a62fc19e0acf4c4699992a6e9ff",
+    "mtime": 1790215000.331468,
+    "seen": 1790232095.0313058,
+    "ast_hash": "d92a872af7b71f4cc89c0501a7c00c9f",
     "semantic_hash": ""
   },
   "apps/staff-console/src/views/WorkOrderDispatchView.tsx": {
-    "mtime": 1790211019.4228616,
-    "seen": 1790211234.6103923,
-    "ast_hash": "300f7833e721e225af9fea3644816fcd",
+    "mtime": 1790214945.7424705,
+    "seen": 1790232095.0313094,
+    "ast_hash": "7fb0d395c7b422382a04eeb267459abf",
     "semantic_hash": ""
   },
   "apps/transparency-board/src/App.tsx": {
@@ -1728,15 +1728,15 @@
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/context/OfflineSyncContext.tsx": {
-    "mtime": 1790213291.280636,
-    "seen": 1790213408.682534,
-    "ast_hash": "59d93b118462f1818ab03115cbcc73e0",
+    "mtime": 1790215443.9063346,
+    "seen": 1790232095.0310478,
+    "ast_hash": "deee21e2f76f730becc8def1af41fea4",
     "semantic_hash": ""
   },
   "apps/karmi-sahayak/src/services/offlineSync.ts": {
-    "mtime": 1790213283.0328798,
-    "seen": 1790213408.6825378,
-    "ast_hash": "eec0cf0430dc8f9f8f91d1bfef96abba",
+    "mtime": 1790215418.2932844,
+    "seen": 1790232095.0310578,
+    "ast_hash": "942b39fad974adf7589e3559a784c6b3",
     "semantic_hash": ""
   },
   "apps/staff-console/src/logic/ahpSolver.ts": {
@@ -1767,6 +1767,12 @@
     "mtime": 1790214324.4587731,
     "seen": 1790214445.7622364,
     "ast_hash": "904fb36270ebdd8fa01a3ced5ceb7643",
+    "semantic_hash": ""
+  },
+  "docs/TECH_STACK_AND_ARCHITECTURE_REPORT.md": {
+    "mtime": 1790231417.7025213,
+    "seen": 1790232095.032068,
+    "ast_hash": "48796bea10cc0285db70129b3303c70b",
     "semantic_hash": ""
   }
 }
