@@ -32,6 +32,8 @@ pass/fail self-check against this prompt's Acceptance Criteria and against `DESI
 3. **Navigation & routing** — PROMPT 2
 4. **Primitives** — PROMPT 3 (Tier 0), PROMPT 4 (Tier 1 civic-specific)
 5. **First representative screen per workspace** — PROMPT 5–11
+5.5. **RETROFIT v2** — run once, after PROMPT 11, before PROMPT 12 (design system
+   correction: color palette + the Nagrik Setu Home responsive fix — see below)
 6. **Remaining screens** — PROMPT 12–33
 7. **Responsive refinement pass** — PROMPT 34
 8. **Motion pass** — PROMPT 35
@@ -54,7 +56,7 @@ BACKEND/API SOURCES: none directly — this is pure frontend infra.
 LAYOUT: n/a.
 COMPONENTS: n/a.
 TYPOGRAPHY: load IBM Plex Sans, IBM Plex Mono, IBM Plex Sans Devanagari (self-hosted
-woff2, not a CDN dependency for the primary UI faces — Fraunces may load from Google
+woff2, not a CDN dependency for the primary UI faces — Newsreader may load from Google
 Fonts per `DESIGN.md` publishing constraints if this becomes a published artifact later,
 but for the app itself, self-host all four families).
 COLOR TOKENS: implement the full four-layer system from `DESIGN.md` §3 exactly —
@@ -70,10 +72,11 @@ RESPONSIVE BEHAVIOR: implement the breakpoint tokens from `DESIGN.md` §3.3/§11
 LOADING/EMPTY/ERROR/SUCCESS: n/a.
 ACCESSIBILITY: n/a at this stage.
 PERFORMANCE: fonts subset to Latin+Devanagari only, `font-display: swap`.
-DO NOT: do not invent additional primitive color families beyond Field/Station/Marker/
-Channel/Seal/Flag (`DESIGN.md` §3.1). Do not add Inter or any fallback that isn't in the
-approved stacks. Do not skip creating the per-workspace theme file scaffolds even if
-empty.
+DO NOT: do not invent additional primitive color families beyond Paper/Ink/Ledger/
+Channel/Brick/Turmeric/Moss/Slate/hivis-amber (`DESIGN.md` §3.1, v2). Do not add Inter
+or any fallback that isn't in the approved stacks. Do not skip creating the per-
+workspace theme file scaffolds even if empty. Do not let `--color-action-primary`
+resolve to anything but `Ledger` outside Karmi Sahayak's theme file.
 ACCEPTANCE CRITERIA:
 - [ ] Repo builds and runs with zero visual output (this prompt ships plumbing only)
 - [ ] All four token layers exist as separate files matching `DESIGN.md` §3 structure
@@ -449,11 +452,11 @@ PROJECT CONTEXT: CivicBrain.
 WORKSPACE: Transparency Board (Astro).
 USER: public, media.
 SCREEN: Nagar Pragati City Feed, per `SCREEN_SPECS.md` §2.24.
-GOAL: the public's front page — sets the editorial Fraunces + Lenis-scroll pattern that
+GOAL: the public's front page — sets the editorial Newsreader + Lenis-scroll pattern that
 Ward Report Card (PROMPT 30) reuses.
 FILES TO READ: standard, plus `SCREEN_SPECS.md` §2.24, `DESIGN.md` §6/§9.
 BACKEND/API SOURCES: `GET /v1/transparency/pragati`.
-LAYOUT: hero metric block (one real headline number, Fraunces label + Plex Mono
+LAYOUT: hero metric block (one real headline number, Newsreader label + Plex Mono
 numeral) → short editorial framing paragraph → grid of secondary real metrics, each
 linking to its source (ward report cards, the ledger) → recent notable ledger entries —
 exact composition per `SCREEN_SPECS.md` §2.24.
@@ -463,7 +466,7 @@ cleanly.
 PERFORMANCE: this is THE public/SEO page — Lighthouse ≥90 on simulated Moto G4/Slow 4G
 is a hard requirement here specifically (`UI_ARCHITECTURE.md` §8); ship this as a mostly-
 static Astro page with React islands only where genuinely interactive.
-ACCESSIBILITY: Fraunces headline number still has a plain-text numeric equivalent
+ACCESSIBILITY: Newsreader headline number still has a plain-text numeric equivalent
 readable by screen reader (large display type sometimes renders oddly for some SR/
 font-rendering combos — verify).
 DO NOT: do not fabricate or round metrics in a way that isn't traceable to the API
@@ -475,6 +478,81 @@ ACCEPTANCE CRITERIA:
 - [ ] Every number on the page traces to a field in the `/v1/transparency/pragati`
       response
 DOCUMENTATION: standard.
+
+---
+
+## RETROFIT — Apply Design System v2 (run this now, before PROMPT 12)
+
+`DESIGN.md` was revised (v2) after review of what PROMPTS 0–11 produced: the brand
+color was orange and used too broadly, neutrals were too warm/generic, and the Nagrik
+Setu Home screen (and possibly others) shipped a mobile layout just centered on desktop
+instead of a real desktop composition. Run this once, before continuing to PROMPT 12,
+so everything built after this point starts from the corrected system.
+
+```
+PROJECT CONTEXT: CivicBrain frontend, PROMPTS 0\u201311 already implemented. DESIGN.md has
+been revised to v2 — read its changelog note at the top before doing anything else.
+
+GOAL: Bring everything already built into line with DESIGN.md v2, in two independent
+passes. Do both; they touch different files and don't depend on each other.
+
+FILES TO READ: DESIGN.md (full — note the v2 changelog and every "changed in v2" /
+"new in v2" callout), SCREEN_SPECS.md §2.1 (the Nagrik Setu Home fix, the reference
+case for pass 2), IMPLEMENTATION_LOG.md (to see what's actually been built so far).
+
+PASS 1 — Color/type retrofit (should require zero component edits if the token layer
+was respected):
+1. Update tokens/primitives.css and tokens/semantic.css to the v2 values in DESIGN.md
+   §3.1/§3.2 exactly — primitive family renames included (Field→Paper, Station→Ink,
+   Marker→Brick/repurposed, Channel unchanged but now spatial-only, Seal folded into
+   Moss, Flag split into Turmeric/Brick, new Ledger and Slate and hivis-amber added).
+2. Update the two font tokens: --font-family-display now Newsreader, not Fraunces.
+3. Grep the entire codebase for any raw hex value, or any use of the old Marker-orange
+   primitive, or any Google-Fonts/CDN reference to Fraunces. Every hit is a violation
+   of the "components touch semantic tokens only" rule — fix each one to reference the
+   correct semantic token instead of hardcoding a value. Do NOT just swap the hardcoded
+   hex to a new hardcoded hex — replace it with the token reference.
+4. Confirm visually that every primary button/link across every workspace now renders
+   `Ledger` teal, except Karmi Sahayak which keeps its hi-vis amber theme override.
+5. Confirm no component anywhere uses Brick/Turmeric/Moss/Slate/Channel for anything
+   other than an actual status/priority/confidence/map-data element.
+
+PASS 2 — Responsive audit (the Nagrik Setu Home bug specifically, and a check for
+recurrence elsewhere):
+1. Re-implement Nagrik Setu Home exactly per the rewritten SCREEN_SPECS.md §2.1 — real
+   two-column composition at ≥1024px (primary actions left, Recent Device Waybills
+   right, sticky), `--content-width-dashboard` (960px) container, not the narrow reading
+   column, not a centered mobile stack.
+2. Check every OTHER screen built so far (PROMPTS 5\u201311's representative screens, plus
+   any of PROMPTS 12\u201333 if work started early) against DESIGN.md §11's new rule: does
+   this screen have more than one primary kind of content, and if so, does it actually
+   use the available width at ≥1024px instead of just centering the mobile stack? List
+   every screen you check and its pass/fail — don't only check the one already known to
+   be broken.
+3. Fix anything found failing, following the same reasoning as the §2.1 rewrite (a
+   real composition, not more margin).
+
+DO NOT:
+- Do not introduce any new primitive color beyond the v2 set in DESIGN.md §3.1.
+- Do not "fix" the responsive issue by just adding a max-width and centering — re-read
+  §11's test (\"could a wide viewport show something useful beside the primary content
+  instead of empty margin?\") and build an actual second column where the answer is yes.
+- Do not touch layout/component logic while doing Pass 1, or color while doing Pass 2 —
+  keep them as separate, separately-reviewable changes.
+
+ACCEPTANCE CRITERIA:
+- [ ] Zero raw hex values or hardcoded old-primitive references remain anywhere in the
+      codebase (grep confirms it)
+- [ ] Nagrik Setu Home matches the new SCREEN_SPECS.md §2.1 composition exactly at
+      ≥1024px
+- [ ] Every previously-built screen checked against the §11 rule, with results listed
+- [ ] `Ledger` teal renders as the primary action color everywhere except Karmi Sahayak
+
+DOCUMENTATION: Append a dated entry to IMPLEMENTATION_LOG.md covering both passes —
+files touched in Pass 1, the full per-screen pass/fail list from Pass 2, anything fixed
+in Pass 2 beyond the known Home-screen bug, and confirmation that no component file
+needed a logic change for Pass 1 (or an honest note on which ones did, and why).
+```
 
 ---
 
@@ -577,7 +655,7 @@ GOAL: run the `DESIGN.md` §14 banned-pattern checklist and the `AUDIT.md` §7 c
 against every screen; this is the final pass before the product is considered v1-ready.
 FILES TO READ: standard, plus `DESIGN.md` §14 and `AUDIT.md` in full.
 DO NOT: anything on the `DESIGN.md` §14 list. Reject a pattern because it's unearned,
-not because it's trendy — don't strip something intentional (e.g. the one Fraunces
+not because it's trendy — don't strip something intentional (e.g. the one Newsreader
 headline per Transparency Board page) in an overcorrection.
 ACCEPTANCE CRITERIA:
 - [ ] Every item in `DESIGN.md` §14 explicitly checked against every screen
@@ -587,3 +665,261 @@ ACCEPTANCE CRITERIA:
 - [ ] Any remaining gap gets a prioritized repair note in `AUDIT.md` per its "Repair-
       prompt priority convention" section
 DOCUMENTATION: standard, plus the `AUDIT.md` update above.
+
+---
+
+## REUSABLE PROMPT — Retheme (font / color / radius / spacing / motion)
+
+Use this any time you want to change a visual value later — it's a token-only edit, so
+it never touches component code or layout. Copy, fill the brackets, paste into
+Antigravity.
+
+```
+PROJECT CONTEXT: CivicBrain frontend. This is a token-only visual change — no component
+logic, no layout, no new features.
+WORKSPACE: [ALL WORKSPACES  /  name one, e.g. "Nagrik Setu only"]
+GOAL: Change [FONT FAMILY / COLOR / RADIUS / SPACING / MOTION] from [current value] to
+[new value — or "your recommendation for <the feeling I want instead>"].
+
+FILES TO READ: DESIGN.md (§1 typography / §5 color / §3 tokens — whichever applies),
+FRONTEND_CONTEXT.md — from the frontend-context docs folder, before touching any code.
+
+WHAT TO CHANGE:
+- Edit ONLY the relevant primitive/semantic token(s) in tokens/primitives.css and
+  tokens/semantic.css — or, if this is workspace-scoped, only the matching
+  tokens/themes/<workspace>.css file.
+- Do NOT touch any component file. If a component turns out to be hardcoding a raw
+  value instead of a token, don't silently fix it here — flag it as a pre-existing
+  violation in IMPLEMENTATION_LOG.md so it gets its own fix pass.
+- Update the matching section of DESIGN.md itself to the new value, so the doc and the
+  code never drift apart.
+
+DO NOT:
+- Do not introduce any other new typeface/color/token beyond this one change.
+- Do not touch layout, spacing rhythm, component structure, or any token category not
+  named above.
+- Do not apply this globally if it was scoped to one workspace, or vice versa.
+
+ACCEPTANCE CRITERIA:
+- [ ] The change is visible everywhere the token is used, with zero component-file edits
+- [ ] DESIGN.md's token table reflects the new value
+- [ ] Nothing outside the named scope changed
+
+DOCUMENTATION: After finishing, append a dated entry to IMPLEMENTATION_LOG.md per its
+template — which token(s) changed, old value → new value, scope, and confirm no
+component files were touched.
+```
+
+### Ready-filled example — "I don't like the current font"
+
+```
+PROJECT CONTEXT: CivicBrain frontend. This is a token-only visual change — no component
+logic, no layout, no new features.
+WORKSPACE: ALL WORKSPACES
+GOAL: Change the UI typeface from IBM Plex Sans to [your pick — or write "recommend a
+replacement that feels less like a developer tool and more editorial/civic, still not
+Inter, still pairs cleanly with a Devanagari companion for Nagrik Setu"].
+
+FILES TO READ: DESIGN.md §1/§6, FRONTEND_CONTEXT.md — from the frontend-context docs
+folder, before touching any code.
+
+WHAT TO CHANGE:
+- Update `--font-family-ui` (and its Devanagari companion token) in tokens/semantic.css
+  only.
+- Do NOT touch `--font-family-mono` (IBM Plex Mono) or `--font-family-display`
+  (Newsreader) — this change is scoped to the UI/body typeface only.
+- Do NOT touch any component file.
+- Update DESIGN.md §1's typography table and §6 to the new typeface and its rationale.
+
+DO NOT:
+- Do not pick Inter.
+- Do not change color, spacing, radius, or motion in this same pass.
+
+ACCEPTANCE CRITERIA:
+- [ ] New typeface renders across every screen with zero component-file edits
+- [ ] Devanagari companion still weight-matched and legible
+- [ ] DESIGN.md §1/§6 updated to match
+
+DOCUMENTATION: After finishing, append a dated entry to IMPLEMENTATION_LOG.md — old
+typeface → new typeface, reasoning, and confirm no component files were touched.
+```
+
+---
+
+## OPS — GitHub Push & Local Run
+
+Two standing utility prompts, not tied to any screen. Render/production deployment is
+deliberately NOT included here yet — the product isn't ready for that. Add a Render
+prompt to this section once real changes are locked in.
+
+### Push this folder to GitHub
+
+```
+PROJECT CONTEXT: CivicBrain frontend-context folder (design docs + the Antigravity
+Prompts HTML tool). This folder is currently local-only and needs to become a GitHub
+repo.
+
+GOAL: Initialize git (if not already), commit everything in this folder, create a new
+GitHub repository, and push it — with zero manual steps left for me.
+
+WHAT TO DO:
+1. Check if this folder is already a git repo (`git status`). If not, run `git init`.
+2. Add a `.gitignore` (node_modules, .DS_Store, dist/build output, .env) if one doesn't
+   already exist.
+3. Stage and commit everything currently in this folder with a clear first commit
+   message (e.g. "CivicBrain frontend design system + Antigravity prompts").
+4. Check whether the GitHub CLI (`gh`) is installed and authenticated
+   (`gh auth status`).
+   - If authenticated: create a new GitHub repository named
+     `civicbrain-frontend-context` (private by default — ask me only if a repo with
+     that name already exists under my account) using `gh repo create`, and push the
+     current branch to it (`git push -u origin main`).
+   - If `gh` is NOT installed/authenticated: stop and tell me exactly what command to
+     run to authenticate (e.g. `gh auth login`) — do not fabricate credentials or
+     guess a remote URL.
+5. Confirm the push by running `git remote -v` and `git log --oneline -1`, and report
+   the final repo URL back to me.
+
+DO NOT:
+- Do not make the repo public unless I say so.
+- Do not force-push.
+- Do not commit anything that looks like a credential/secret/API key — if you find
+  one, stop and flag it instead of committing it.
+
+ACCEPTANCE CRITERIA:
+- [ ] Repo exists on GitHub with all current files committed
+- [ ] Remote URL reported back to me
+- [ ] No secrets committed
+
+DOCUMENTATION: Append a dated entry to IMPLEMENTATION_LOG.md noting the repo was
+created/pushed, its URL, and its visibility (private/public).
+```
+
+### Run it locally (no deployment)
+
+```
+PROJECT CONTEXT: CivicBrain frontend-context folder, including
+`civicbrain-antigravity-prompts.html` (the copy-paste prompts tool) and the markdown
+docs.
+
+GOAL: Serve this folder locally so I can view it in my browser — no deployment, no
+Render, nothing pushed anywhere online. Local only, for now, on purpose — changes are
+still needed before anything goes live.
+
+WHAT TO DO:
+1. From inside this folder, start the simplest possible local static file server, zero
+   install if possible:
+   - If Python 3 is available: `python3 -m http.server 8080`
+   - Otherwise, if Node is available: `npx serve -l 8080` (or `npx http-server -p 8080`)
+2. Open `http://localhost:8080/civicbrain-antigravity-prompts.html` in the default
+   browser automatically once the server is running.
+3. Tell me the exact URL and the exact command you used to start the server, so I can
+   stop/restart it myself later (Ctrl+C to stop).
+4. Leave the server running — don't kill it after starting it.
+
+DO NOT:
+- Do not deploy this anywhere online (no Render, no Vercel, no Netlify, no GitHub
+  Pages) — explicitly local only for now.
+- Do not modify any file content while setting this up.
+- Do not install a global package if a zero-install option (`python3 -m http.server`)
+  works.
+
+ACCEPTANCE CRITERIA:
+- [ ] Local server running and reachable at the reported URL
+- [ ] Page opened and confirmed working in a browser
+- [ ] I have the exact restart command for next time
+
+DOCUMENTATION: Append a dated entry to IMPLEMENTATION_LOG.md noting the local run
+command used, so future sessions don't have to rediscover it.
+```
+
+### Push the FULL project (backend + frontend, clean) + verify offline local run
+
+Broader than the prompt above — use this one instead when you want the whole project
+(not just the docs folder) on GitHub, with every Claude/Antigravity tooling/skill/scratch
+artifact deliberately excluded, and confirmation that it still runs locally with no
+internet once installed.
+
+```
+PROJECT CONTEXT: The full CivicBrain project — backend (already built) and frontend
+(design docs + whatever has been built so far) — currently living in this local
+project directory, alongside various Claude/Antigravity tooling, skill folders, and
+scratch/generated artifacts (e.g. skill folders, generated diagram/"graphify" output,
+caches) that are NOT part of the shipped project.
+
+GOAL: Push ONLY the real, working project (backend code + frontend code + genuinely
+useful project docs) to a single clean GitHub repository — nothing else. Then confirm
+the whole thing can be installed once and run locally afterward without needing
+internet access.
+
+STEP 1 — Inventory and classify:
+1. List every top-level file and folder in the project directory.
+2. Classify each one as either:
+   (a) PROJECT — actual backend/frontend source code, the config needed to build/run
+       it (package.json, requirements.txt, etc.), and genuinely useful project
+       documentation — this includes the frontend-context docs folder in full
+       (DESIGN.md, FRONTEND_CONTEXT.md, UI_ARCHITECTURE.md, SCREEN_SPECS.md,
+       ANTIGRAVITY_PROMPTS.md, IMPLEMENTATION_LOG.md, AUDIT.md,
+       civicbrain-antigravity-prompts.html).
+   (b) NOT PROJECT — anything that is Claude/Antigravity tooling, a "skill" folder, any
+       generated/scratch output from a tool run (including any graphify/diagram-
+       generator output that isn't intentionally part of the shipped product), caches,
+       logs, editor/IDE settings, OS files (.DS_Store, Thumbs.db), local environment
+       files, or anything you can't confidently explain the purpose of.
+3. Print this classification as a clear two-column list BEFORE doing anything else —
+   this becomes the .gitignore reasoning and a record of what was included/excluded.
+   Anything genuinely ambiguous goes into NOT PROJECT and gets flagged explicitly —
+   silently including something by default is not acceptable.
+
+STEP 2 — Clean repo setup:
+1. Initialize git at the project root if not already initialized.
+2. Write a .gitignore excluding: node_modules, __pycache__/venv/.venv, dist/build
+   output, .env and any secret/credential files, IDE folders (.vscode, .idea), OS files
+   (.DS_Store, Thumbs.db), logs, and every item classified NOT PROJECT in Step 1.
+3. Stage only what's left and confirm via `git status`/`git ls-files` that nothing from
+   the NOT PROJECT list is staged, before committing.
+4. Commit with a clear message describing this as the initial clean commit of the real
+   project.
+5. Create a new private GitHub repository named after the actual project (e.g.
+   `civicbrain`) via `gh repo create` if authenticated (same stop-and-tell-me behavior
+   as the simpler prompt above if `gh` isn't authenticated), and push.
+6. Add a short README.md at the repo root if one doesn't exist — briefly describe what
+   the repo contains and point to the frontend-context docs folder. Don't claim
+   features that don't exist yet.
+
+STEP 3 — Verify local + offline run:
+1. Confirm all dependencies needed to run the frontend locally are installed via the
+   normal package manager (this step alone needs internet once).
+2. Confirm every runtime asset the frontend needs — fonts (IBM Plex Sans/Mono/Sans
+   Devanagari, Newsreader, per DESIGN.md §1) and any other static asset — is self-hosted
+   inside the repo, not loaded from a CDN at runtime. Fix any CDN font/script reference
+   found, so runtime has zero external dependency, per DESIGN.md §1/§13.
+3. Disable network access (or simulate it) and confirm the local dev server still
+   starts and the app/tool still loads with no broken assets. Note: this only verifies
+   the frontend UI works offline — any screen calling the live backend API still needs
+   the backend reachable (localhost is fine; the public internet is not required for
+   that).
+4. Report back the exact command to start it next time, and state plainly whether it
+   worked fully offline or only partially (and why, if partially) — don't overstate
+   offline capability if part of it genuinely still needs the backend.
+
+DO NOT:
+- Do not include any Claude/Antigravity skill, tooling, or scratch-generated folder in
+  the repo, however it's named.
+- Do not make the repo public unless I say so.
+- Do not commit secrets/credentials — flag and stop instead.
+- Do not silently decide something ambiguous is "probably fine to include."
+
+ACCEPTANCE CRITERIA:
+- [ ] Step 1's PROJECT vs NOT PROJECT classification shown to me
+- [ ] Repo on GitHub contains only PROJECT files, verified before commit
+- [ ] .gitignore covers every NOT PROJECT item
+- [ ] README added
+- [ ] Local dev server verified working with network disabled, with an honest note on
+      anything that still needs the backend
+- [ ] Exact local-run command reported back
+
+DOCUMENTATION: Append a dated entry to IMPLEMENTATION_LOG.md with the repo URL, the
+full PROJECT/NOT PROJECT classification (or a pointer to where it's recorded), and the
+confirmed local-run command.
+```

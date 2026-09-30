@@ -6,9 +6,20 @@ In strict accordance with:
   Drop the 'or 1.0' branch entirely.
 """
 
+import os
+import io
+import logging
 from typing import Protocol
-
 from pydantic import BaseModel, ConfigDict, Field
+
+logger = logging.getLogger(__name__)
+
+try:
+    from PIL import Image
+    from ultralytics import YOLO
+    HAS_ULTRALYTICS = True
+except ImportError:
+    HAS_ULTRALYTICS = False
 
 
 class DetectedDefect(BaseModel):
@@ -32,7 +43,7 @@ class DetectedDefect(BaseModel):
         description="Suggested severity tier 1-5 from model rubric matching.",
     )
     detection_source: str = Field(
-        description="Provenance of detection: citizen_declared, test_fixture, model_yolo_world, unclassified",
+        description="Provenance of detection: citizen_declared, test_fixture, model_yolo_world, unclassified, civicbrain-pothole-yolov8-v1",
     )
     needs_manual_triage: bool = Field(
         default=False,
@@ -101,11 +112,83 @@ class HonestColdStartDetector:
         ]
 
 
-class FixtureVisionDetector:
-    """Deterministic fixture detector for multi-defect pipeline testing and CI.
-
-    Produces realistic bounding boxes and department routing solely for pre-defined test assets.
+class YoloV8PotholeDetector:
+    """CivicBrain Pothole Detection Model — YOLOv8
+    Version: civicbrain-pothole-yolov8-v1
+    Source: Samdutse/pothole-yolov8
     """
+    def __init__(self, model_path: str, fallback_detector: VisionDetector | None = None) -> None:
+        self.fallback = fallback_detector or HonestColdStartDetector()
+        self.model_version = "civicbrain-pothole-yolov8-v1"
+        self.model = None
+        if HAS_ULTRALYTICS:
+            logger.info(f"Loading YOLOv8 pothole model from {model_path}")
+            # Load model once on initialization
+            self.model = YOLO(model_path)
+        else:
+            logger.warning("Ultralytics not installed. YoloV8PotholeDetector will fallback.")
+
+    async def detect(
+        self,
+        image_bytes: bytes,
+        filename: str,
+        citizen_categories: list[str] | None = None,
+    ) -> list[DetectedDefect]:
+        if not self.model:
+            return await self.fallback.detect(image_bytes, filename, citizen_categories)
+
+        try:
+            image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        except Exception as e:
+            logger.error(f"Failed to decode image bytes: {e}")
+            return await self.fallback.detect(image_bytes, filename, citizen_categories)
+
+        conf_threshold = float(os.getenv("CIVICBRAIN_POTHOLE_CONF_THRESHOLD", "0.25"))
+
+        # Predict synchronously - Ultralytics YOLOv8 inference
+        results = self.model.predict(image, conf=conf_threshold, verbose=False)
+        
+        defects = []
+        if results and len(results) > 0:
+            result = results[0]
+            boxes = result.boxes
+            if boxes is not None:
+                for box in boxes:
+                    # Convert bounding box to [0,1] normalized dict {x, y, w, h}
+                    # xyxyn gives [xmin, ymin, xmax, ymax] normalized
+                    xyxyn = box.xyxyn[0].tolist()
+                    xmin, ymin, xmax, ymax = xyxyn
+                    w = xmax - xmin
+                    h = ymax - ymin
+                    
+                    confidence = float(box.conf[0])
+                    
+                    # Assume class 0 is POTHOLE as per model description
+                    # severity_hint = 3 (medium severity as a reasonable default for potholes, matching fixture)
+                    defects.append(
+                        DetectedDefect(
+                            category_code="POTHOLE",
+                            confidence=confidence,
+                            bbox={"x": xmin, "y": ymin, "w": w, "h": h},
+                            severity_hint=3,
+                            detection_source=self.model_version,
+                            needs_manual_triage=False,
+                        )
+                    )
+        
+        # If no potholes found and citizen declared categories, process them
+        if not defects and citizen_categories:
+            return await self.fallback.detect(image_bytes, filename, citizen_categories)
+
+        # If no potholes found and no citizen categories, return fallback (unclassified)
+        if not defects:
+            return await self.fallback.detect(image_bytes, filename, citizen_categories)
+
+        return defects
+
+
+class FixtureVisionDetector:
+    """Deterministic fixture detector for multi-defect pipeline testing and CI."""
 
     FIXTURES: dict[str, list[DetectedDefect]] = {
         "multi_issue_road_swm.jpg": [
@@ -147,7 +230,6 @@ class FixtureVisionDetector:
         filename: str,
         citizen_categories: list[str] | None = None,
     ) -> list[DetectedDefect]:
-        # Check if filename or substring matches a known fixture
         for fixture_name, defects in self.FIXTURES.items():
             if fixture_name in filename.lower():
                 return [d.model_copy() for d in defects]
@@ -155,8 +237,15 @@ class FixtureVisionDetector:
         return await self.fallback.detect(image_bytes, filename, citizen_categories)
 
 
+def _init_vision_detector() -> VisionDetector:
+    model_path = os.getenv("CIVICBRAIN_POTHOLE_MODEL_PATH")
+    if model_path and os.path.exists(model_path):
+        return YoloV8PotholeDetector(model_path)
+    return HonestColdStartDetector()
+
+
 # Default global detector instance for application dependency injection
-default_vision_detector: VisionDetector = HonestColdStartDetector()
+default_vision_detector: VisionDetector = _init_vision_detector()
 
 
 def get_vision_detector() -> VisionDetector:

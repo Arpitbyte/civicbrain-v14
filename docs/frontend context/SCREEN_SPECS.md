@@ -82,7 +82,9 @@ Build once, theme per workspace (`DESIGN.md` §4). Grouped by build priority —
   observation, renders the least-advanced-child rule at the parent level.
 - `TrackingTokenDisplay` — waybill-stub styled, mono, copy-to-clipboard.
 - `OfflineSyncBadge` — persistent, shows queued-mutation count, tap for `Sync Status`.
-- `PriorityChip` — single-hue Marker scale per `DESIGN.md` §5, always with numeric value.
+- `PriorityChip` — uses the Slate/Turmeric/Brick status hue family per `DESIGN.md` §3.2
+  (v2), always paired with its numeric value and a "Priority" label so it's never
+  confused with a plain status pill by color alone.
 - `WardBoundaryMapLayer` / `IncidentPointLayer` / `ClusterLayer` — MapLibre layer
   wrappers, tokens from `DESIGN.md` §3.4.
 - `SealMark` — the verification stamp visual for confirmed/verified states.
@@ -103,28 +105,45 @@ mutation (if any) → error condition handled`.
 
 ### NAGRIK SETU
 
-#### 2.1 Home / Report an Issue
+#### 2.1 Home / Report an Issue — **v2: fixed reference case for the §11 responsive rule**
 - **Purpose**: single fork — start a report, or track one you already made.
-- **Visual idea**: the tracking token *is* the artifact — a field waybill stub sits
-  visually at the center, not a generic hero banner.
-- **Layout (mobile, default)**: full-bleed `CitizenShell`. Top: workspace wordmark +
-  language switch. Center: one large primary CTA card ("Report an issue" — camera icon,
-  Marker-filled) stacked above a secondary flat card ("Track my report"). Bottom tab bar
-  fixed.
-- **Layout (tablet+)**: same stack, capped at `content-width-narrow`, centered.
+- **Visual idea**: the tracking token *is* the artifact — a field waybill stub, not a
+  generic hero banner.
+- **Layout (mobile, 0–1023px)**: full-bleed `CitizenShell`, single column. Top:
+  workspace wordmark + language switch. Then: hero heading, then one large primary CTA
+  card ("Report an issue" — camera icon, `Ledger`-filled) stacked above a secondary flat
+  card ("Track my report"), then a "Recent Device Waybills" section **below** both
+  cards. Bottom tab bar fixed. This part was correct in v1 and is unchanged.
+- **Layout (≥1024px) — this is the fix**: this screen has two genuinely distinct kinds
+  of content (primary actions vs. recent activity), so per `DESIGN.md` §11 it gets a
+  real two-column composition, not the mobile stack centered with more margin. Container
+  widens to `--content-width-dashboard` (960px, `DESIGN.md` §3.3), split roughly 60/40:
+  - **Left column**: hero heading + subhead, then "Report an issue" and "Track my
+    report" as two clear cards — stacked at 1024–1439px (cards stay full-width and
+    legible), side-by-side as a 2-up grid only at ≥1440px where there's room without
+    cramping either card.
+  - **Right column** (sticky, top-aligned, starts level with the hero): "Recent Device
+    Waybills" panel — persistent, not buried below the fold. If empty, the empty-state
+    copy still renders here, not hidden.
+  - The two columns share the same vertical rhythm (`--space-8` gutter between them);
+    neither column is capped at `content-width-narrow` — that token is for continuous
+    reading content, which this screen is not.
 - **Imagery**: none decorative — if the citizen has past reports, show up to 2 recent
-  `TrackingTokenDisplay` stubs inline as quick-access, real data only.
-- **Interaction**: tap CTA → `/report/new/capture`. Tap track → `/track`.
+  `TrackingTokenDisplay` stubs in the right column, real data only.
+- **Interaction**: tap/click CTA → `/report/new/capture`. Tap/click track → `/track`.
 - **Motion**: Expressive-tier — CTA card has a `duration-base` press-scale only; no
-  entrance animation on load (first paint must be instant).
-- **States**: empty (no past reports → CTA-only), loading (fetching recent tokens from
-  local cache), error (cache read fails → CTA-only, silent).
+  entrance animation on load (first paint must be instant). The column reflow at 1024px
+  is a CSS breakpoint change, not an animated transition.
+- **States**: empty (no past reports → right column shows calm empty-state copy, left
+  column CTAs unaffected), loading (right column shows a skeleton while local cache is
+  read), error (cache read fails → right column shows empty-state copy, silent, left
+  column unaffected).
 - **Data mapping**: recent tokens read from local IndexedDB draft/history store, not an
   API call — no endpoint for "my reports list" exists (citizen auth is OTP/token-based,
   not session-listing) — **do not build a "my reports" list backed by an API call that
   doesn't exist.**
 
-#### 2.2 New Report Flow (`capture` → `location` → `category` → `review`)
+#### 2.2 New Report Flow (`capture` → `location` → `category` → `review`) — v2: confirmed single-column-at-every-breakpoint is intentional here, per the `DESIGN.md` §11 exception for single-purpose linear flows, not the anti-pattern fixed in §2.1
 - **Purpose**: submit photo/voice/text + GPS.
 - **Visual idea**: a field notebook — one page (step) at a time, a visible page-count
   indicator, not a generic progress bar.
@@ -153,7 +172,7 @@ mutation (if any) → error condition handled`.
   `TrackingTokenDisplay` → mutation queued to IndexedDB if offline, replayed on
   reconnect → error: 4xx validation shown inline per field, 5xx shows a plain retry.
 
-#### 2.3 Track Report (lookup + detail)
+#### 2.3 Track Report (lookup + detail) — v2: single-column at every breakpoint is intentional here (one linear status record, not a multi-element dashboard), confirmed compliant with `DESIGN.md` §11's exception; width still capped at `content-width-narrow` since this genuinely is reading content
 - **Purpose**: show real, per-observation, least-advanced-child status — the screen that
   most directly embodies the product's honesty principle.
 - **Visual idea**: the field waybill stub, expanded into a full status ledger.
@@ -382,7 +401,8 @@ mutation (if any) → error condition handled`.
 #### 2.15 My Work Orders
 - **Purpose**: what do I do next — nothing else competes for attention.
 - **Visual idea**: a hi-vis vest, not a dashboard — near-black Station background,
-  Marker-amber accents, large everything.
+  hi-vis amber accents (`--hivis-amber-*`, `DESIGN.md` §3.1/§2 — the one sanctioned
+  brand-color exception), large everything.
 - **Layout (mobile only — this app is not built for tablet/desktop)**: single column,
   cards not a table, each card: category + location (large), SLA countdown (large,
   color-coded), tap-to-open. `OfflineSyncBadge` persistent at the very top, always
@@ -496,11 +516,11 @@ mutation (if any) → error condition handled`.
 
 #### 2.24 Nagar Pragati (City Feed)
 - **Purpose**: the public's first impression of city-wide progress.
-- **Visual idea**: an editorial front page — Fraunces headline number (the one
+- **Visual idea**: an editorial front page — Newsreader headline number (the one
   legitimate use of large display type), real aggregate metrics only, Lenis scroll
   reveal as sections come into view.
 - **Layout**: hero metric block (one real headline number, e.g. resolution rate, in
-  Fraunces + Plex Mono for the numeral) → a short editorial framing paragraph → a grid
+  Newsreader + Plex Mono for the numeral) → a short editorial framing paragraph → a grid
   of secondary real metrics (not decorative — each links to its source: ward report
   cards, the ledger) → recent notable ledger entries as a short list.
 - **Motion**: Expressive — Lenis smooth scroll, section reveals `duration-slow`
@@ -525,7 +545,7 @@ mutation (if any) → error condition handled`.
 
 #### 2.27 Ward Report Card
 - **Purpose**: one ward's performance, public and corporator-facing.
-- **Visual idea**: an actual report card register — Fraunces ward name as the one
+- **Visual idea**: an actual report card register — Newsreader ward name as the one
   headline, metrics below in a clean data table, not a dashboard of cards.
 - **Data mapping**: `GET /v1/analytics/wards/{id}/report-card`.
 

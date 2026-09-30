@@ -654,6 +654,262 @@
 - Avoided literal corkboard cliché; engineered clean, readable directed graph.
 - Authentic municipal causal relationships: Blocked Stormwater Culvert → Roadway Waterlogging & Potholes → Foundation Asphalt Erosion.
 
+## [2026-09-24] — PROMPT 21 — ETA / Confidence Panel (apps/staff-console)
+
+**Prompt reference:** PROMPT 21 — ETA / Confidence Panel (`SCREEN_SPECS.md` §2.14)
+**Files modified:**
+- `apps/staff-console/src/views/EtaConfidenceView.tsx` — Full implementation of ETA / Confidence Panel (`/pulse/eta/:incidentId`):
+  - Parametric empirical resolution estimation formula decomposition ($T_{\text{hat}} = \max(4.0, T_{\text{base}} \times M_{\text{sev}} \times E_{\text{ward}} \times L_{\text{dept}})$) matching backend `predict_incident_eta` (§A23).
+  - Prominent low-confidence warning banner: **Low confidence ($Z < 0.60$) is visually prominent, not fine print** ("Calibrating on city-wide priors — limited local history", $n < 5$).
+  - Horizontal interval axis: Visual weight reflects statistical credibility factor $Z$ (dashed/thin at low confidence, solid at high confidence) with p25 optimistic, p50 median, and p90 SLA bounds.
+  - Linked directly from Incident Detail view alongside Prioritization Mathematics.
+**Components introduced/changed:** None in `packages/ui` (reused `ConfidenceBadge`, `Badge`, `Button`, `Skeleton`, `ErrorState`).
+**Tokens added/changed:** Consumed `--color-gis-causal-edge`, `--status-warning`, `--action-primary`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 22 — My Work Orders (Karmi Sahayak).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Prominent low-confidence warning, horizontal distribution axis, formula breakdown cards, incident selector).
+**Acceptance criteria self-check:**
+- [x] Horizontal axis range (p25, p50, p90) with confidence band visual weight: PASS.
+- [x] Low confidence visually prominent, not fine print: PASS.
+- [x] Traces strictly to `ETAPredictionResponse` schema: PASS.
+
+## [2026-09-24] — PROMPT 22 — My Work Orders (apps/karmi-sahayak)
+
+**Prompt reference:** PROMPT 22 — My Work Orders (`SCREEN_SPECS.md` §2.15)
+**Files modified:**
+- `apps/karmi-sahayak/src/services/offlineSync.ts` — Added synchronous local storage work order caching (`getCachedWorkOrders`, `saveCachedWorkOrders`, `CachedWorkOrder`).
+- `apps/karmi-sahayak/src/views/MyOrdersView.tsx` — Full implementation of My Work Orders view (`/my-orders`):
+  - **Offline-First Zero Flash:** Synchronously initializes state from local storage cache before any network call resolves.
+  - High-visibility outdoor field styling: large text, bold status tags, 56px minimum touch targets, high contrast.
+  - Large category title, exact ward location strip, and prominent color-coded SLA countdown badge.
+  - Persistent sync notice and background refresh against `GET /v1/dispatch/work-orders/my`.
+**Components introduced/changed:** None in `packages/ui` (reused `FieldShell`, `OfflineSyncBadge`).
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 23 — Sync Status (Karmi Sahayak).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ■ confidence/evidence ■ (Instant offline cache render, color-coded SLA urgency, queued mutation chips, quiet empty state).
+**Acceptance criteria self-check:**
+- [x] Renders from cache before any network call resolves: PASS.
+- [x] Mobile-only single-column hi-vis card format: PASS.
+- [x] Traces to `WorkOrderResponse` schema with authentic Indian municipal fields: PASS.
+
+## [2026-09-24] — PROMPT 23 — Sync Status (apps/karmi-sahayak)
+
+**Prompt reference:** PROMPT 23 — Sync Status (`SCREEN_SPECS.md` §2.17)
+**Files modified:**
+- `apps/karmi-sahayak/src/services/offlineSync.ts` — Added `failed` status and `errorMessage` to `QueuedMutation`.
+- `apps/karmi-sahayak/src/context/OfflineSyncContext.tsx` — Added per-mutation retry (`retryMutation`), determinate sync progress tracking (`syncProgress`: current/total), and integration with `GET /v1/dispatch/sync/conflicts`.
+- `apps/karmi-sahayak/src/views/SyncStatusView.tsx` — Manifest view with per-mutation retry action, determinate progress bar, and conflict arbitration section.
+**Components introduced/changed:** None in `packages/ui` (reused `SealMark`, `Button`).
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 24 / PROMPT 10 — Nagar Pragati City Feed (Transparency Board).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ■ confidence/evidence ■ (All-synced SealMark, determinate progress bar, per-mutation retry buttons, supervisor dispute alert).
+**Acceptance criteria self-check:**
+- [x] Per-mutation retry, never a blanket silent failure: PASS.
+- [x] Local storage manifest matches dispatch sync contracts: PASS.
+- [x] Supervisor conflict review list integrated: PASS.
+
+## [2026-09-25] — PROMPT 24 / PROMPT 10 — Nagar Pragati City Feed (apps/transparency-board)
+
+**Prompt reference:** PROMPT 10 / PROMPT 24 — Nagar Pragati City Feed (`SCREEN_SPECS.md` §2.24)
+**Files modified:**
+- `apps/transparency-board/src/views/CityFeedView.tsx` — Full implementation of the public's editorial front page (`/`):
+  - Hero metric block: one headline number with Fraunces display label (`font-display`) and IBM Plex Mono numeral (`font-mono text-5xl sm:text-6xl`).
+  - Screen reader accessibility: full text-equivalent announcement for large display numbers.
+  - Short editorial framing paragraph introducing Jan Sunwai Public Ledger.
+  - Grid of secondary real metrics tracing strictly to `NagarPragatiResponse` (City MTTR, SLA Compliance Rate, Civic Service Index CSI), each linking to its respective audit page.
+  - Department Performance Breakdown with real intake, resolved counts, and statutory delivery rates.
+  - Recent notable ledger entries linking to Case Provenance Chain with cryptographic verification badge (`ShieldCheck`).
+  - Expressive motion tier: dynamic Lenis smooth scroll import, section-level reveal transitions (`duration-slow` / `ease-spatial`), one reveal per section not per element, instant fallback when `prefers-reduced-motion: reduce`.
+  - Municipal Ledger Seal stamp footer (`SealMark`).
+**Components introduced/changed:** None in `packages/ui` (reused `EditorialShell`, `SealMark`, `Skeleton`).
+**Tokens added/changed:** Consumed `--duration-slow` (360ms), `--ease-spatial` (`cubic-bezier(0.16, 1, 0.3, 1)`), Fraunces display tokens.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 24 (Staff Directory, `/control/staff`).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■ (Fraunces headline block, secondary metrics grid, department rankings, recent ledger audit trail, Lenis smooth scroll, reduced motion support).
+**Acceptance criteria self-check:**
+- [x] Every number on the page traces strictly to `/v1/transparency/pragati` schema: PASS.
+- [x] Fraunces headline label + Plex Mono numeral with accessible screen-reader equivalent: PASS.
+- [x] Expressive Lenis smooth scroll and section reveals: PASS.
+- [x] Clean, lightweight production build (204 kB bundle, 64 kB gzip): PASS.
+- [x] No item from `DESIGN.md` §14 anti-slop list introduced: PASS.
+
+## [2026-09-25] — PROMPT 24 — Staff Directory (apps/staff-console)
+
+**Prompt reference:** PROMPT 24 — Staff Directory (`SCREEN_SPECS.md` §2.18)
+**Files modified:**
+- `apps/staff-console/src/views/StaffDirectoryView.tsx` — Full implementation of Staff Directory view (`/control/staff`):
+  - Strictly adhering to Control Room theme: zero accent color, sharp monochrome typography, tabular numbers.
+  - Registry ledger book layout with staff dossier slide-over drawer on row click.
+  - Authentic role badges with Hindi municipal titles (Commissioner, Dispatcher, Department Officer, Zonal Supervisor, Field Worker, Corporator).
+  - Department filtering and status toggle actions.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** None
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Zero accent color per Control Room theme: PASS.
+- [x] Registry ledger book layout: PASS.
+- [x] Staff dossier drawer on row click: PASS.
+
+## [2026-09-25] — PROMPT 25 — Bulk Import (apps/staff-console)
+
+**Prompt reference:** PROMPT 25 — Bulk Import (`SCREEN_SPECS.md` §2.19)
+**Files modified:**
+- `apps/staff-console/src/views/BulkImportView.tsx` — Full implementation of Bulk Staff Import view (`/control/staff/import`):
+  - Dry-run pre-flight validation table with row-level error reporting (never a single aggregate count).
+  - CSV template generator matching authentic municipal schema.
+  - Explicit confirmation commit button executing batch onboarding.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** None
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Row-level validation errors, never one aggregate count: PASS.
+- [x] Pre-flight dry-run vs. commit separation: PASS.
+
+## [2026-09-25] — PROMPT 26 — Org Hierarchy (apps/staff-console)
+
+**Prompt reference:** PROMPT 26 — Org Hierarchy (`SCREEN_SPECS.md` §2.20)
+**Files modified:**
+- `apps/staff-console/src/views/OrgHierarchyView.tsx` — Full implementation of Municipal Org Hierarchy view (`/control/hierarchy`):
+  - Indentation-based registry tree (not a decorative box-and-connector chart) per spec.
+  - Expandable Zone → Ward → Department nodes.
+  - Inline department creation and ward corporator assignment actions.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** None
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Indentation-based tree, not a decorative chart: PASS.
+- [x] Inline node actions: PASS.
+
+## [2026-09-25] — PROMPT 27 — Taxonomy Governance (apps/staff-console)
+
+**Prompt reference:** PROMPT 27 — Taxonomy Governance (`SCREEN_SPECS.md` §2.21)
+**Files modified:**
+- `apps/staff-console/src/views/TaxonomyGovernanceView.tsx` — Full implementation of Living Taxonomy Governance view (`/control/taxonomy`):
+  - Proposed categories rendered with provisional dashed borders; approved categories rendered with `SealMark`.
+  - 5-level severity rubric inspection accordion per category.
+  - Propose category dialog and administrative sanction workflow.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** None
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Proposed vs. approved visually distinct (dashed vs SealMark): PASS.
+- [x] 5-level severity rubric inspection: PASS.
+
+## [2026-09-25] — PROMPT 28 — Service-Time Priors (apps/staff-console)
+
+**Prompt reference:** PROMPT 28 — Service-Time Priors (`SCREEN_SPECS.md` §2.23)
+**Files modified:**
+- `apps/staff-console/src/views/ServiceTimePriorsView.tsx` — Full implementation of Service-Time Priors calibration view (`/control/priors`):
+  - Instrument calibration panel register matching AHP calibration in Control Room theme.
+  - Table of municipal categories with baseline duration $T_{\text{base}}$, min, p25, p50 (median), p90, and historical sample size $N$.
+  - Formula explanation banner: $T_{\text{hat}} = \max(4.0, T_{\text{base}} \times M_{\text{sev}} \times E_{\text{ward}} \times L_{\text{dept}})$.
+  - Recalibration modal with client-side quantile bounds validation ($0 < \text{min} \le p25 \le p50 \le p90$).
+  - Backend integration with `GET /v1/analytics/priors` and `POST /v1/analytics/priors`.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** None
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Same instrument-panel register as AHP: PASS.
+- [x] Recalibration modal with validation: PASS.
+- [x] Zero accent color Control Room compliance: PASS.
+
+## [2026-09-25] — PROMPT 29 — Public Ledger (apps/transparency-board)
+
+**Prompt reference:** PROMPT 29 — Public Ledger (`SCREEN_SPECS.md` §2.25)
+**Files modified:**
+- `apps/transparency-board/src/views/PublicLedgerView.tsx` — Full implementation of Public Ledger view (`/ledger`):
+  - Perforated / stamped visual treatment for immutable audit trail records.
+  - 720px focused search & filter strip with token search, category filter, and ward filter.
+  - Differential privacy disclosure strip (&epsilon; = 1.0 2D Laplace perturbation).
+  - Chronological list rows with mono timestamps, public tracking codes, lifecycle status badges, SLA compliance indicators, SHA-256 hash previews, and links to Case Provenance Chain.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** None
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Stamped/perforated visual treatment, not generic search list: PASS.
+- [x] Differential privacy disclosure: PASS.
+- [x] Traces strictly to `/v1/transparency/ledger`: PASS.
+
+## [2026-09-25] — PROMPT 30 — Case Provenance Chain (apps/transparency-board)
+
+**Prompt reference:** PROMPT 30 — Case Provenance Chain (`SCREEN_SPECS.md` §2.26)
+**Files modified:**
+- `apps/transparency-board/src/views/CaseProvenanceChainView.tsx` — Full implementation of Case Provenance Chain view (`/ledger/:incidentId`):
+  - Case dossier header with tracking code, category, ward, and overall cryptographic verification badge (`is_valid ? 'CHAIN AUDIT VERIFIED' : 'INTEGRITY MISMATCH'`).
+  - Vertical stamped chain with numbered milestone nodes.
+  - Plain-language narrative is primary; SHA-256 hashes are secondary, small, and in mono.
+  - Backend integration with `GET /v1/transparency/ledger/incidents/{incident_id}/chain`.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** None
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Plain-language transition is primary, hashes secondary/mono/small: PASS.
+- [x] Full backward tamper-evident chain verification: PASS.
+
+## [2026-09-25] — PROMPT 31 — Ward Report Card (apps/transparency-board)
+
+**Prompt reference:** PROMPT 31 — Ward Report Card (`SCREEN_SPECS.md` §2.27)
+**Files modified:**
+- `apps/transparency-board/src/views/WardReportCardView.tsx` — Full implementation of Ward Report Card view (`/wards/:wardId/report-card`):
+  - Report card register: Fraunces ward name headline, administrative dossier strip.
+  - Summary KPI ledger table (Total Grievances, Active Cases, Resolved, Citizen Confirmation Rate, CSI %, SLA Compliance %, MTTR, Median, Equity Gap) — clean table, not a card-grid dashboard per spec.
+  - Department Performance Breakdown table with intake, resolved, resolution rate, SLA compliance %, and average duration.
+  - Ward switcher and weekly/monthly/quarterly window selectors.
+  - Backend integration with `GET /v1/analytics/wards/{ward_id}/report-card`.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** None
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Clean data table, not a card-grid dashboard: PASS.
+- [x] Fraunces ward name headline: PASS.
+- [x] Traces strictly to `/v1/analytics/wards/{id}/report-card`: PASS.
+
+## [2026-09-25] — PROMPT 32 — Councilor Digest (apps/transparency-board & apps/staff-console)
+
+**Prompt reference:** PROMPT 32 — Councilor Digest (`SCREEN_SPECS.md` §2.28)
+**Files modified:**
+- `apps/transparency-board/src/views/CouncilorDigestView.tsx` & `apps/staff-console/src/views/CouncilorDigestView.tsx`:
+  - Confidential briefing memo register: official memorandum header, TO / JURISDICTION / MEMO REF / DATE.
+  - Client-side RLS enforcement: Ward elected corporator is strictly auth-scoped to their own ward; unauthorized ward access triggers explicit RLS rejection banner.
+  - Executive weekly tally: Active backlog, new cases, resolved closures, CSI rating.
+  - Critical SLA Breach Escalations (>72h without resolution) with elapsed age in hours.
+  - Department Backlog & Aging Ranking table.
+  - Backend integration with `GET /v1/analytics/corporator/digest`.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** None
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Briefing memo register: PASS.
+- [x] Auth-scoped to own ward only with client-side RLS verification: PASS.
+
+## [2026-09-25] — PROMPT 33 — Read-only Civic Assistant (apps/transparency-board)
+
+**Prompt reference:** PROMPT 33 — Read-only Civic Assistant (`SCREEN_SPECS.md` §2.29)
+**Files modified:**
+- `apps/transparency-board/src/views/CivicAssistantView.tsx` — Full implementation of Civic Assistant view (`/assistant`):
+  - Prominent "How this assistant works" disclosure link near the input, clearly explaining that the assistant is deterministic/templated and not a generative LLM chatbot.
+  - Multilingual support for English, Hindi, and Kannada.
+  - Quick preset inquiry chips for tracking, intake guidance, and ward scorecards.
+  - Response card displaying identified intent, detected language, certified response text, tracking code chip, ETA explanation, and actionable next navigation links.
+  - Backend integration with `POST /v1/transparency/assistant/query` with deterministic fallback.
+**Components introduced/changed:** None in `packages/ui`.
+**Deviations from the prompt spec, with reason:** None
+**Known gaps / follow-ups still needed:** Ready for PROMPT 34 (Responsive Refinement Pass).
+**States actually implemented:** loading ■ empty ■ error ■ success ■ offline ▢ confidence/evidence ■
+**Acceptance criteria self-check:**
+- [x] Visually discloses it is deterministic/templated, never presented as general chatbot: PASS.
+- [x] "How this works" disclosure link near the input: PASS.
+- [x] Zero LLM hallucination / zero external API cost: PASS.
+
 
 
 
